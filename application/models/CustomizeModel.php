@@ -653,7 +653,18 @@ class CustomizeModel extends CI_Model
     public function Custom_NewOrderNotification($order_id)
     {
 
-        $order_info             = $this->FunctionModel->Select_Fields_Row('client_id,inv_code,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id', 'vidiem_customorder', array('id' => $order_id));
+
+        $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+
+        $mail_content = '';
+
+
+        $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id', 'vidiem_customorder', array('id' => $order_id));
 
         if (isset($order_info['dealer_user_id']) && !empty($order_info['dealer_user_id'])) {
             $dealer_info        = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
@@ -676,8 +687,8 @@ class CustomizeModel extends CI_Model
         //	$subject='New Order on Vidiem Site';
         if (isset($order_info['payment_source']) && $order_info['payment_source'] == 'counter') {
             $client_mail_subject                = 'Vidiem By You Order No : ' . $order_info['inv_code'];
-
-            $client_mail_msg                    = ' <div style="width:100%;text-align:center;">
+            $mail_content                       .= $mail_header;
+            $mail_content                       .= ' <div style="width:100%;text-align:center;">
                                                         <h2> Hi ' . $order_info['billing_name'] . '</h2>,
                                                         <h2> Thanks for choosing to shop with us! </h2>
                                                     </div>
@@ -685,26 +696,31 @@ class CustomizeModel extends CI_Model
                                                     <div>
                                                     Thanks for showing interest in Vidiem By You.
                                                     </div>
-                                                    <br><br>
+                                                    
                                                     ';
-            $thanks_content                     = '<p>Regards</p>
+            $mail_content                        .= '<p>Regards</p>
                                                     <p>Vidiem Team</p>';
 
-
-            $this->FunctionModel->sendmail1($dealer_info['email'], $client_mail_msg, $client_mail_subject, InfoMail);
+            $mail_content                        .= '</div>';
+            $this->FunctionModel->sendmail1($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
 
             $admin_mail_subject                 = 'New order – Vidiem by You – ' . $order_info['inv_code'];;
-            $admin_mail_msg                     = '<p>Dear Team,<br>  <br>&nbsp;&nbsp; New Order on Vidiem By You From Dealer ' . $dealer_info['display_name'] . '-' . $dealer_info['dealer_erp_code'] . ' <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'];
+            $admin_mail_content                  = $mail_header;
+            $admin_mail_content                  .= '<p>Dear Team,<br>  <br>&nbsp;&nbsp; New Order on Vidiem By You From Dealer ' . $dealer_info['display_name'] . '-' . $dealer_info['dealer_erp_code'] . ' <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'];
+            $admin_mail_content                 .= '</div>';
+
         } else {
 
             if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id'])) {
                 $client_mail_subject            = 'Vidiem By You Order No : ' . $order_info['inv_code'];
-                $client_mail_msg                = '<p>Dear Customer,<br> Thank you for your order. We’ll send a confirmation when your order processed further.  If you would like to know the status of your order please visit Vidiem.in <br>Order Code ' . $order_info['inv_code'];
-
-                $this->FunctionModel->sendmail1($dealer_info['email'], $client_mail_msg, $client_mail_subject, InfoMail);
+                $mail_content                   .= $mail_header;
+                $mail_content                   .= '<p>Dear Customer,<br> Thank you for your order. We’ll send a confirmation when your order processed further.  If you would like to know the status of your order please visit Vidiem.in <br>Order Code ' . $order_info['inv_code'];
+                $mail_content                   .= '</div>';
+                $this->FunctionModel->sendmail1($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
             } else {
                 $client_mail_subject            = 'Vidiem Order Confirmation - ' . $order_info['inv_code'];
-                $client_mail_msg                = '
+                $mail_content               .= $mail_header;
+                $mail_content                .= '
                                                 <div style="width:100%;text-align:center;">
                                                     <h2> Hi ' . $order_info['billing_name'] . '</h2>,
                                                     <h2> Thanks for choosing to shop with us! </h2>
@@ -717,20 +733,29 @@ class CustomizeModel extends CI_Model
                                                 <br><br>
                                                 <p>Regards</p>
                                                 <p>Vidiem Team</p>
+                                                </div>
                                                 ';
             }
 
             $admin_mail_subject                 = 'New order – Vidiem by You – ' . $order_info['inv_code'];;
-            $admin_mail_msg                     = '<p>Dear Team,<br>  <br>&nbsp;&nbsp; New Order on Vidiem By You. <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'];
+            $admin_mail_content                  = $mail_header;
+            $admin_mail_content                     = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                                                    <span>
+                                                        <h1 style="color:#00BFFF;">
+                                                            <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                                                        </h1>
+                                                    </span>';
+            $admin_mail_content                     .= '<p>Dear Team,<br>  <br>&nbsp;&nbsp; New Order on Vidiem By You. <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'];
+            $admin_mail_content                     .= '</div>';
         }
-
-        $this->FunctionModel->sendmail1($clt_info['email'], $client_mail_msg, $client_mail_subject, InfoMail);
+        
+        $this->FunctionModel->sendmail1($clt_info['email'], $mail_content, $client_mail_subject, InfoMail);
 
         // $this->FunctionModel->sendmail1(AdminMail,$msg,$subject,InfoMail);
         // $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$msg,$subject,InfoMail);
         // $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,john@pixel-studios.com',$msg,$subject,InfoMail);
 
-        $this->FunctionModel->sendmail('durairaj.pixel@gmail.com, john@pixel-studios.com', $admin_mail_msg, $admin_mail_subject, InfoMail);
+        $this->FunctionModel->sendmail('durairaj.pixel@gmail.com, john@pixel-studios.com', $admin_mail_content, $admin_mail_subject, InfoMail);
 
         if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id']) && $order_info['payment_source'] == 'counter') {
             #showing interest
