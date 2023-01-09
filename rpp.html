@@ -1,0 +1,86 @@
+<html>
+<head>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+$(document).ready(function () {
+   document.getElementById("rzp-button1").click();
+});
+</script>
+</head>
+<body onload="document.getElementById('rzp-button1').click();">
+<p id="demo"><h1></h1></p>
+<p id="invno" style="display: none;"></p>
+<button id="rzp-button1" style="display: none;">Pay</button>
+<script>
+try {
+document.getElementById("demo").innerHTML = "Processing...";
+const urlParams = new URLSearchParams(window.location.search);
+const apkey = urlParams.get('apkey');
+const ordId = urlParams.get('ordId');
+const invno = urlParams.get('invno');
+const cusName = urlParams.get('cusName');
+const cusEmail = urlParams.get('cusEmail');
+const cusMobile = urlParams.get('cusMobile');
+const cusDesc = urlParams.get('cusDesc');
+const cusAmt = urlParams.get('cusAmt');
+//document.getElementById("invno").innerHTML = invno;
+//document.getElementById("demo").innerHTML = invno;
+var options = {
+    "key": apkey, // Enter the Key ID generated from the Dashboard
+    "amount": cusAmt, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Maya Appliances Pvt Ltd",
+    "description": "Service Payment",
+    "image": "https://vidiem.in/logosmall.png",
+    "order_id": ordId //This is a sample Order ID. Pass the `id` obtained in the response of Step 1      
+    , 
+    "handler": function (response){
+        document.getElementById("demo").innerHTML = "Payment Successful";
+        var lsInvNo = document.getElementById("invno").innerHTML;
+		//window.open('https://mayaappliances.in:8443/spr/ServicePaymentResponse.aspx?status=success&invoiceno='+ invno +'&paymentid='+ response.razorpay_payment_id, '_blank');
+        window.location.replace('https://mayaappliances.in:8443/spr/ServicePaymentResponse.aspx?status=success&invoiceno='+ invno +'&paymentid='+ response.razorpay_payment_id, '_self');        
+    }, 
+    "prefill": {
+        "name": cusName,
+        "email": cusEmail,
+        "contact": cusMobile
+    },
+    "notes": {
+        "address": cusDesc
+    },
+    "theme": {
+        "color": "#E70000"
+    }
+
+};
+
+var rzp1 = new Razorpay(options);
+// rzp1.on('payment.success', function (response){
+// 	alert(response.razorpay_payment_id);
+//     alert(response.razorpay_order_id);
+//     alert(response.razorpay_signature);
+// 	window.location.replace('https://mayaappliances.in:8443/spr/ServicePaymentResponse.aspx?status=success&invoiceno='+ invno +'&paymentid='+ response.razorpay_order_id +'');
+
+// }); 
+
+rzp1.on('payment.failed', function (response){
+        /*alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);*/		
+		window.location.replace('https://mayaappliances.in:8443/spr/ServicePaymentResponse.aspx?status=failed&invoiceno='+ invno +'&reason='+ response.error.code +' '+ response.error.description +'');
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+}
+catch(err) {
+  document.getElementById("demo").innerHTML = err.message;
+}
+</script>
+</body>
+</html>

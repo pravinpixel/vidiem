@@ -1,0 +1,4 @@
+select.error,input.error,textarea.error{border:1px solid #f00;}
+span.red{color: #f00;}
+label.error{font-weight: 400;color: #f00;}
+.form-margin-10{    margin-bottom: 10px;}

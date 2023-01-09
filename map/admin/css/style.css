@@ -1,0 +1,196 @@
+/*
+** Developed by Joe Iz
+** Details: http://highwardenhuntsman.blogspot.com
+*/
+
+#main { padding:20px;}
+#map_canvas { border:1px solid #ccc; margin:15px 0; width:70%; height:400px; float:right;}
+/* old
+div#logo { background:url(../images/logo.png) no-repeat; width:321px; height:92px; margin:5px;}
+*/
+/* new */
+div#logo {
+    background: rgba(0, 0, 0, 0) url("../images/logo.png") no-repeat scroll 0 0;
+    display: block;
+    float: left;
+    height: 92px;
+    margin: 5px;
+    width: 321px;
+}
+/* Footer
+-------------------------------------------------- */
+
+.footer {
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 70px;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+}
+.footer p {
+  margin-bottom: 0;
+  color: #777;
+}
+.footer-links {
+  margin: 10px 0;
+}
+.footer-links li {
+  display: inline;
+  padding: 0 2px;
+}
+.footer-links li:first-child {
+  padding-left: 0;
+}
+
+#map_canvas.newstore_map {
+	width:100%; 
+	height:250px;
+	clear:both;
+	display:block;
+}
+
+.searchbar  {
+    position: relative;
+}
+
+.searchbar .search-query {
+    padding-left: 29px;
+}
+
+.searchbar .icon-search {
+    position: absolute;
+    top: 7px;
+    left: 11px;
+
+}
+
+/**.** New Css For notifications **.**/
+.notify {
+		background: #e02222 none repeat scroll 0 0;
+		border-radius: 9px;
+		color: #fff;
+		display: block;
+		font-size: 11px;
+		height: 18px;
+		left: 18px;
+		line-height: 18px;
+		position: absolute;
+		text-align: center;
+		top: -8px;
+		width: 18px;
+	}
+.notify_label{
+    display: inline-block;
+    line-height: 22px;
+	background-color: lightgoldenrodyellow;
+    border-left: 3px solid gold;
+    border-right: 1px solid gold;
+    margin-bottom: 10px;
+    max-width: 100%;
+    padding: 7px;
+}
+.warnings {
+    /*float: left;
+    margin: 26px 28px 0 0;
+    padding-bottom: 13px;*/
+    position: relative;
+}
+.warnings a {
+    text-decoration: none;
+	
+}
+.warnings .notification-btn{
+line-height: 28px;
+    padding: 4px 12px;
+}
+.open > .dropdown-menu {
+    display: block;
+}
+.warnings .warn-menu {
+    border: 1px solid #e0dede;
+    border-radius: 0;
+    box-shadow: none;
+    left: -208px;
+    min-width: 245px;
+    padding: 0;
+    right: auto;
+}
+ .warnings .warn-menu::before {
+    border-bottom: 7px solid rgba(224, 222, 222, 0.2);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: -7px;
+}
+.warnings .warn-menu::after {
+    border-bottom: 6px solid #eee;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: 11px;
+    top: -6px;
+}
+.warnings .warn-menu .title {
+    background: #eee none repeat scroll 0 0;
+    padding: 10px 0 10px 10px;
+}
+.warnings .warn-menu .title span {
+    color: #333;
+    display: block;
+    font-size: 12px;
+}
+.warnings .warn-menu ul {
+    clear: both;
+    display: block;
+    max-height: 260px;
+    margin: 0;
+}
+.warnings .warn-menu ul li {
+    border-bottom: 1px solid #ddd;
+    color: #333;
+    display: block;
+    font-size: 12px;
+}
+.warnings .warn-menu ul li:hover {
+    background: #eee none repeat scroll 0 0;
+}
+.warnings .warn-menu ul li:last-child {
+    border: medium none;
+}
+.warnings .warn-menu ul li a {
+    clear: both;
+    overflow: hidden;
+}
+
+.warnings .warn-menu ul li a .span-txt {
+    color: #333;
+    display: block;
+    float: left;
+    font-size: 12px;
+    width: 84%;
+}
+.warnings .warn-menu ul li a .span-txt strong {
+    float: right;
+}
+ .warnings .warn-menu .link {
+    clear: both;
+    overflow: hidden;
+}
+.warnings .warn-menu .link a {
+    color: #333;
+    font-size: 13px;
+    padding: 5px 10px 14px;
+}
+
+#notification-panel ul li:hover{
+background: lightgoldenrodyellow;
+}
+#notification-panel{
+padding:0px;
+}
+/**.** New Css For notifications **.**/

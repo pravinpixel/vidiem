@@ -1,0 +1,518 @@
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd.eot');
+    src: url('fonts/EurostileLTStd.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd.woff2') format('woff2'),
+        url('fonts/EurostileLTStd.woff') format('woff'),
+        url('fonts/EurostileLTStd.svg#EurostileLTStd') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile';
+    src: url('fonts/EurostileRegular.eot');
+    src: url('fonts/EurostileRegular.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileRegular.woff2') format('woff2'),
+        url('fonts/EurostileRegular.woff') format('woff'),
+        url('fonts/EurostileRegular.svg#EurostileRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-Bold.eot');
+    src: url('fonts/EurostileLTStd-Bold.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-Bold.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-Bold.woff') format('woff'),
+        url('fonts/EurostileLTStd-Bold.svg#EurostileLTStd-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-Ex2.eot');
+    src: url('fonts/EurostileLTStd-Ex2.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-Ex2.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-Ex2.woff') format('woff'),
+        url('fonts/EurostileLTStd-Ex2.svg#EurostileLTStd-Ex2') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-DemiOblique.eot');
+    src: url('fonts/EurostileLTStd-DemiOblique.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-DemiOblique.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-DemiOblique.woff') format('woff'),
+        url('fonts/EurostileLTStd-DemiOblique.svg#EurostileLTStd-DemiOblique') format('svg');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-BoldOblique.eot');
+    src: url('fonts/EurostileLTStd-BoldOblique.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-BoldOblique.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-BoldOblique.woff') format('woff'),
+        url('fonts/EurostileLTStd-BoldOblique.svg#EurostileLTStd-BoldOblique') format('svg');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-BoldEx2.eot');
+    src: url('fonts/EurostileLTStd-BoldEx2.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-BoldEx2.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-BoldEx2.woff') format('woff'),
+        url('fonts/EurostileLTStd-BoldEx2.svg#EurostileLTStd-BoldEx2') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-Cn.eot');
+    src: url('fonts/EurostileLTStd-Cn.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-Cn.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-Cn.woff') format('woff'),
+        url('fonts/EurostileLTStd-Cn.svg#EurostileLTStd-Cn') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-Demi.eot');
+    src: url('fonts/EurostileLTStd-Demi.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-Demi.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-Demi.woff') format('woff'),
+        url('fonts/EurostileLTStd-Demi.svg#EurostileLTStd-Demi') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-Oblique.eot');
+    src: url('fonts/EurostileLTStd-Oblique.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-Oblique.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-Oblique.woff') format('woff'),
+        url('fonts/EurostileLTStd-Oblique.svg#EurostileLTStd-Oblique') format('svg');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Eurostile LT Std';
+    src: url('fonts/EurostileLTStd-BoldCn.eot');
+    src: url('fonts/EurostileLTStd-BoldCn.eot?#iefix') format('embedded-opentype'),
+        url('fonts/EurostileLTStd-BoldCn.woff2') format('woff2'),
+        url('fonts/EurostileLTStd-BoldCn.woff') format('woff'),
+        url('fonts/EurostileLTStd-BoldCn.svg#EurostileLTStd-BoldCn') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+html.fp-enabled,
+.fp-enabled body {
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+html.fp-enabled ::-webkit-scrollbar{
+    width:0px;
+}
+body{
+    background: #101010;
+}
+#fullpage h1{
+    opacity: 0;
+    font-size: 0px;
+    padding: 0;
+    margin: 0;
+}
+.header-classic{
+    background: #FFF;
+}
+.section{
+    padding: 100px 0px;
+}
+.section#section17{
+    padding: 100px 0px 0px 0px;
+}
+.section#section17 h2{
+    color: #FFF;
+}
+section.product-details-colors.fixed-bottom{
+    padding:0px 0px 0px 0px !important;
+}
+a.play-button{
+    position: absolute;
+    top: 230px;
+    right: 10%;
+}
+section.product-details-colors{
+	position: fixed;
+	bottom: 0px;
+	left:0px;
+	width: 100%;
+	z-index: 980;
+	padding: 0px !important;
+	transition: 0.3s ease;
+	backdrop-filter: blur(25px);
+-webkit-backdrop-filter: blur(25px);
+}
+section.product-details-colors a.add-to-cart, section.product-details-colors a.buy-now{
+    margin-bottom:0px !important;
+}
+#ADCModal .modal-dialog{
+	max-width: 65%;
+}
+@media (max-width: 960px){
+	#ADCModal .modal-dialog{
+		max-width: 100%;
+	}
+}
+#ADCModal iframe{
+	border: 0px;
+	width: 100%;
+	min-height: 500px;
+}
+body.modal-open{
+    margin-right: 0px !important;
+}
+.page-bg{
+    position:fixed;
+    right:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+}
+.fp-enabled body{
+    background:#222;
+}
+.fp-enabled body #header{
+    position: fixed;
+    width: 100%;
+    background: #FFF;
+    z-index: 999;
+}
+.fp-enabled body #header .top-header ul li{
+    padding:5px 0px;
+}
+.fp-enabled body #header .top-header a{
+    padding:0px 5px;
+}
+.fp-enabled body #header .top-header>.container>.row{
+    align-items: center;
+}
+.fp-enabled body #header .navbar-classic .navbar-nav .nav-item .nav-link{
+    padding: 20px 15px;
+}
+.fp-section {
+    position: relative;
+    -webkit-box-sizing: border-box; /* Safari<=5 Android<=3 */
+    -moz-box-sizing: border-box; /* <=28 */
+    box-sizing: border-box;
+}
+.fp-slide {
+    float: left;
+}
+.fp-slide, .fp-slidesContainer {
+    height: 100%;
+    display: block;
+}
+.fp-slides {
+    z-index:1;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    -webkit-transition: all 0.3s ease-out; /* Safari<=6 Android<=4.3 */
+    transition: all 0.3s ease-out;
+}
+.fp-section.fp-table, .fp-slide.fp-table {
+    display: table;
+    table-layout:fixed;
+    width: 100%;
+    overflow:hidden;
+}
+.fp-tableCell {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+    overflow-x:hidden;
+}
+#section1 .fp-tableCell{
+    vertical-align: top;
+    padding-top: 80px;
+}
+#section17 .fp-tableCell{
+    vertical-align: bottom;
+}
+#section18 .fp-tableCell{
+    padding-bottom: 30px;
+    position:relative;
+    vertical-align: bottom;
+}
+#section17 .fp-tableCell{
+    padding-bottom: 40px;
+}
+#section17 .fp-tableCell section{
+    padding: 70px 0px;
+}
+#section18 .fp-tableCell img{
+    position: relative;
+    z-index:10;
+}
+#section18 img.main-banner1-bg{
+    position:absolute;
+    left: 0;
+    bottom: 0;
+    z-index:1;
+    width:100%;
+    margin-bottom: 0px;
+}
+
+video.video{
+    width:100%;
+    pointer-events: none;
+}
+video::-webkit-media-controls-start-playback-button {
+    display: none;
+}
+h4{
+	font-family: 'Eurostile LT Std' !important;
+	color: #FFF;
+	font-size: 48px;
+	font-style: italic;
+	font-weight: 900;
+	text-align: center;
+}
+h5{
+	font-family: 'Eurostile LT Std' !important;
+	color: #FFF;
+	font-size: 24px;
+	font-style: italic;
+	font-weight: 900;
+}
+.product-details-colors h4{
+    font-size: 20px;
+    text-align: left;
+    font-style:normal;
+    font-family: 'Roboto', sans-serif !important;
+}
+.product-details-colors h4 span{
+    padding-left: 10px;
+}
+footer h4{
+    color: #FFF;
+    font-weight: 300;
+    font-size: 16px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-style:normal;
+    font-family: 'Roboto', sans-serif !important;
+}
+.fp-section h4{
+	font-family: 'Eurostile LT Std' !important;
+	color: #FFF;
+	font-size: 48px;
+	font-style: italic;
+	font-weight: 900;
+	text-align: center;
+}
+.fp-section h5{
+	font-family: 'Eurostile LT Std' !important;
+	color: #FFF;
+	font-size: 24px;
+	font-style: italic;
+	font-weight: 900;
+}
+.fp-section footer{
+    padding:70px 0px 0px 0px;
+}
+.fp-section footer h4{
+    color: #FFF;
+    font-weight: 300;
+    font-style: normal;
+    text-align:left;
+    font-size: 16px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+.fp-section h2{
+    color:#FFF;
+}
+.fp-section #MaterialButton-addon2:hover, .fp-section #MaterialButton-addon2:focus{
+    background:#FFF;
+    color: #000;
+}
+.bg-1.fp-section{
+	background: url('../images/adc-single-page/bg3.webp') center center no-repeat #000;
+	background-size: cover;
+}
+.show-mobile{
+    display:none;
+}
+.hide-mobile{
+    display:block;
+}
+#section21 .mobile-center{
+    text-align:center;
+}
+#section21 .mobile-center img{
+    display: inline-block;
+     max-height:500px;
+}
+
+@media (max-width:1400px){
+    .fp-section h4{
+        font-size: 38px;
+    }
+}
+
+@media (max-width:1300px){
+    .fp-tableCell{
+        padding-top: 0px;
+    }
+    #section8 .fp-tableCell img, #section14 .fp-tableCell img, #section15 .fp-tableCell img{
+        max-height:350px;
+    }
+    #section5 .fp-tableCell img, #section4 .fp-tableCell img, #section2 .fp-tableCell img, #section21 .fp-tableCell img, #section3 .fp-tableCell img{
+        max-height:400px;
+    }
+    a.play-button{
+        top: 150px;
+    }
+}
+@media (max-width:1100px){
+	.bg-1.fp-section{
+    	background-size: 100%;
+    }
+}
+@media (max-width:991px){
+	.mobile-center{
+		text-align: center !important;
+	}
+	.fp-tableCell .container{
+		max-width: 100%;
+	}
+	.bg-1.fp-section{
+    	background-size: 100% 100%;
+    }
+    a.play-button{
+        right: 30px;
+    }
+}
+@media (max-width:767px){
+	
+	#section2.section, #section2.section, #section3.section, #section4.section, #section5.section, #section6.section{padding:10px 0px;}
+	
+	#fullpage h4{
+	    font-family: 'Eurostile LT Std' !important;
+        color: #FFF;
+        font-style: italic;
+        font-weight: 900;
+        font-size: 30px;
+        text-align: center;
+	}
+	#fullpage h5{
+	    font-family: 'Eurostile LT Std' !important;
+        color: #FFF;
+        font-size: 18px;
+        font-style: italic;
+        font-weight: 400;
+	}
+    section.product-details-colors h4{
+        width: 100% !important;
+        padding: 10px 0px;
+    }
+    ul.product-description-details li{
+        width: 50% !important;
+    }
+    #section1 .fp-tableCell, #section17 .fp-tableCell{
+        vertical-align: middle;
+    }
+    .fp-enabled body, body{
+        background:#000;
+    }
+    #header{
+        background: #FFF;
+    }
+    .section{
+        padding: 70px 0px;
+    }
+    .fp-section h4{
+        font-size:22px;
+    }
+    .fp-section h5{
+        font-size:14px;
+    }
+    img.mob-height{
+        max-height:200px;
+    }
+    #section1.bg-1{
+        background:#000;
+        padding: 0px 0px 50px 0px;
+    }
+    #section18.bg-1{
+        padding: 0px 0px 100px 0px;
+        background:#000;
+    }
+    #section17 .fp-tableCell footer ul{
+        margin:0px 0px 10px 0px;
+    }
+    #section17 .fp-tableCell{
+        padding-top:30px;
+    }
+    #section17 .fp-tableCell section, .dis-no-mob{
+        display:none;
+    }
+    #section17 h1, #section17 h2{
+        color: #FFF;
+    }
+    #fullpage footer h4{
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 16px;
+        text-align:left;
+        font-style: normal;
+        font-weight: 500;
+    }
+    .fp-section footer h4{
+        margin-bottom:5px;
+    }
+    a.play-button{
+        left: 70px;
+        top: 50px;
+        right: inherit;
+    }
+    span.price{
+        display:block;
+    }
+    .show-mobile{
+        display:block;
+    }
+    .hide-mobile{
+        display:none;
+    }
+}

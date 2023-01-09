@@ -1,0 +1,53 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
+<script type="application/javascript">
+  try {
+    function Getdet() {
+      document.getElementById("demo").innerHTML = "enter 369";  
+      $.ajax({  
+          type: "POST",  
+          url: "https://mayaappliances.in:8444/VSIF.asmx/savePaymentRes", // add web service Name and web service Method Name  
+          data: "{'aKey':'SERAPP', 'aInvoiceNo':'INV123', 'aResponseId':'RES123'}", //web Service method Parameter Name and ,user Input value which in Name Variable.  
+          contentType: "application/json; charset=utf-8",  
+          dataType: "json",  
+          success: function (response) {  
+              //$("#spnGetdet").html(response.d); //getting the Response from JSON  
+              document.getElementById("demo").innerHTML = "success";
+              alert("success");
+          },  
+          failure: function (msg) {  
+              document.getElementById("demo").innerHTML = "failed";
+              alert(msg);  
+          }  
+      });  
+  }   
+  
+  }
+  catch(err) {
+    document.getElementById("demo").innerHTML = err.message;
+  }
+  </script>
+
+</head>
+<body onload="NewTab();">
+
+  <script type="application/javascript">
+    function NewTab() {
+        window.open(
+          "https://www.geeksforgeeks.org", "_self");
+    }
+  </script>
+
+<p id="demo"></p>
+<button id="rzp-button1" style="display: none;">Pay</button>
+<!-- <script type="application/javascript">
+document.getElementById("demo").innerHTML = "369";
+</script> -->
+
+</body>
+</html>

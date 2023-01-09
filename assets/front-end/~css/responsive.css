@@ -1,0 +1,3802 @@
+@media screen and (min-width:1610px) and (max-width:1920px){
+	.sponMani{
+    	height: 580px;
+    }
+    .banbefore{
+		height: 600px;
+	}
+
+	.banafter{
+		height: 600px;
+	}
+
+	.foMenuSet{
+		padding: 0 0 0 5%;
+	}
+
+	.ourTeamImg li{
+		height: 460px;
+	}
+
+	.teamCon{
+		padding: 20px;
+	}
+
+	.pd1{
+		padding: 25px 30px;
+	}
+
+	.priceFil{
+		padding-bottom: 50px;
+	}
+
+	.product_filters{
+		height: 860px;
+	}
+
+	.msec_2 .grid li{
+		height: 530px;
+	}
+
+	.registerPro ul li input, .registerPro ul li select{
+		height: 50px;
+	}
+
+	.conTfeature .jarImgLeft{
+		width: 20%;
+	}
+
+	.feleftImg{
+		width: 14%;
+	}
+
+	.popupQv{
+		width: 50%;
+	}
+
+	#rudr_instafeed{
+		width: 56%;
+	}
+
+	.rcipeIner{
+		padding-bottom: 350px;
+		padding-top: 130px
+	}
+
+	/*.banConOutLine{
+		height: 680px;
+	}
+
+	.reCiprCn{
+		top: 82%;
+	}*/
+
+	.popConSetRecipe{
+		padding: 0 150px 50px;
+	}
+
+	.eventPage li a .evImg{
+		height: 540px;
+	}
+
+	.eventPage li{
+		height: 740px;
+	}
+	
+	.reCiprCn{
+	    width: 40%;
+	}
+	
+	.popUpCloseInreci{
+	    top: 85px;
+	}
+
+}
+
+@media screen and (min-width:1450px) and (max-width:1600px){
+    .support li{
+        padding:25px 40px;
+    }
+
+    .sponMani{
+    	height: 500px;
+    }
+
+    .banbefore{
+		height: 493px;
+	}
+
+	.banafter{
+		height: 493px;
+	}
+
+	.ourTeamImg li{
+		height: 400px;
+	}
+
+	.teamCon{
+		padding: 25px 15px;
+	}
+
+	.product_filters{
+		height: 700px;
+	}
+
+	.msec_2 .grid li{
+		height: 500px;
+	}
+
+	.foMenuSet{
+		padding-left: 5%;
+	}
+
+	.conTfeature .jarImgLeft{
+		width: 25%;
+	}
+
+	.feleftImg{
+		width: 16%;
+	}
+
+	.popupQv{
+		width: 60%;
+	}
+
+	#rudr_instafeed{
+		width: 70%;
+	}
+
+	.rcipeIner{
+		padding-bottom: 320px;
+	}
+
+	/*.banConOutLine{
+		height: 550px;
+	}
+
+	.reCiprCn{
+		top: 77%;
+	}*/
+
+	.popConSetRecipe{
+		padding:0 80px 50px;
+	}
+
+	.eventPage li a .evImg{
+		height: 450px;
+	}
+
+	.eventPage li{
+		height: 650px;
+	}
+	
+	.reCiprCn{
+	    width: 45%;
+	}
+	
+	.popUpCloseInreci{
+	    top:80px;
+	}
+}
+
+@media screen and (min-width: 1380px) and (max-width: 1440px){
+	.banbefore{
+		height: 473px;
+	}
+
+	.banafter{
+		height: 473px;
+	}
+
+	.support li{
+		padding: 25px 20px;
+	}
+
+	.sponMani{
+		height: 450px;
+	}
+
+	.ourTeamImg li{
+		height: 370px;
+	}
+
+	.feleftImg{
+		width: 18%;
+	}
+
+
+	#rudr_instafeed{
+		width: 77%;
+	}
+
+	.eventPage li a .evImg{
+		height: 400px;
+	}
+
+	.eventPage li{
+		height: 620px;
+	}
+	
+	.reCiprCn{
+	    width: 50%;
+	}
+	
+	.popUpCloseInreci{
+	    top: 76px;
+	}
+
+
+
+
+}
+
+
+
+@media screen and (min-width: 1200px) and (max-width: 1300px){
+    .support li{
+        padding:15px 0;
+        margin:30px 0 0 0;
+        width:33.3%;
+        padding: 15px;
+    }
+
+    .mix_det_rt a {
+	    padding: 12px 8px;
+	    font-size: 11px;
+	    width: 135px;
+    }
+
+    .mix_det_rt_add2 {
+	    color: #111;
+	}
+
+	.mix_det_rt{
+		padding-top: 8px;
+	}
+
+	.ts_ctn{
+		padding: 25px 10px;
+	}
+
+	.ts_ctn p{
+		padding: 14px 5px;
+	}
+
+	.banner .mix_ban .item img{
+		width: 108%;
+		height: 185px;
+		object-position: -30px;
+	}
+
+	.sponMani{
+		height: 400px;
+	}
+
+	/*.pd1{
+		padding: 40px 15px;
+	}*/
+
+	/*.proDetails{
+		width: 	78%;
+		margin-left: 2%;
+	}*/
+
+	.conRightProDetails p{
+		font-size: 15px;
+	}
+
+	.jarImgSet li:nth-child(4) p{
+		padding-top: 0;
+	}
+
+	.keyFeatures{
+		padding: 15px;
+	}
+
+	.ckProde .ckPriceDe{
+		padding: 39px 30px;
+	}
+
+	.safepay{
+		width: 90%;
+	}
+
+	.qvCon {
+	    padding: 23px 0px 23px 10px;
+	}
+
+	.prHov a{
+		padding: 12px 10px;
+		font-size: 12px !important;
+	}
+
+	.itemsbye{
+		padding: 0 5px;
+	}
+
+	.menu li{
+		padding-right: 20px;
+	}
+
+	#rudr_instafeed{
+		width: 85%;
+	}
+
+	/*.banConOutLine{
+		height: 450px;
+	}
+
+	.reCiprCn{
+		top: 72%;
+	}*/
+
+	.eventPage li a .evImg{
+		height: 360px;
+	}
+	
+	.popUpCloseInreci{
+	    top: 75px;
+	}
+
+
+.eventsPhotoGal li {
+    width: 21%;
+}
+
+.testimonialHome{
+	background-position: left;
+}
+
+
+
+}
+
+
+
+
+/*Responsive Mano*/
+
+
+@media screen and (min-width: 300px) and (max-width: 1024px){
+	
+	.menu li{
+		padding-right: 22px;
+	}
+	
+	.menu li a{
+		font-size: 12px;
+	}
+	
+	.logoRight{
+		position: relative;
+		top: 20px;
+	}
+	
+	.owl-controls .owl-buttons .owl-prev::after{
+		width: 45px;
+		height: 45px;
+	}
+	
+	.owl-controls .owl-buttons .owl-next::after{
+		width: 45px;
+		height: 45px;
+	}
+	
+	.neName{
+		padding: 0;
+	}
+	
+	.foMenuSet ul{
+		width: 50%;
+		padding-bottom: 30px;
+	}
+	
+	.foMenuSet ul:nth-child(4n){
+		width: 20%;
+	}
+	
+	.foMenuSet ul:last-child{
+		width: 20%;
+	}
+	.payMeth {
+    	padding: 30px 3%;
+	}
+
+	.ourTeamImg li {
+    	margin: 0 5px;
+	}
+
+	.awardReg li{
+		display: inline-block;
+		float: none;
+	}
+
+
+
+.eventPage li a .evImg{
+	height: 290px;
+}
+
+.eventPage li{
+	height: 550px;
+}
+
+.reCiprCn{
+	width: 66%;
+}
+.reCiprCn h3{
+	font-size: 37px;
+}
+
+.reCiprCn p{
+	font-size: 21px;
+}
+
+.warrantySet .privacyConTot {
+    font-size: 18px;
+}
+
+.ts_ctn {
+    padding: 25px;
+
+}
+.top_sellers {
+    width: 19%;
+}
+
+.signsec {
+    width: 98%;
+    margin: 1%;
+    margin-top: 30px;
+}
+
+.proMid {
+    width: 75%;
+ }
+
+.fixedf{
+	width: 20%;
+}
+
+.msec_2 .grid li {
+    height: 550px;
+    width: 48%;
+}
+
+.top_sellers {
+    width: 100%;
+    padding: 10px;
+
+}
+
+.eventsPhotoGal li {
+    margin: 10px;
+}
+
+.msec_2 .list li .mix_det .mix_det_rt a {
+    width: 190px;
+}
+
+.msec_2 .list li .mix_det_rt,.msec_2 .list li .listdetCon{
+	float: none;
+	width: 100%;
+}
+.msec_2 .list li .mix_det,.msec_2 .list li .prodimg{
+	width: 48%;
+}
+
+.addCompSet,.qviewPopupAdCl{
+	overflow-y: scroll;
+}
+
+.popupQv {
+    width: 90%;
+    padding: 10% 4%;
+}
+
+.qviewPopupAdCl::-webkit-scrollbar-thumb {
+    background-color: #eb6424;
+}
+
+.qviewPopupAdCl::-webkit-scrollbar {
+    width: 10px;
+}
+
+.checkLeft {
+   		width: 100%;
+    	margin: 0;
+	}
+
+	.proDetaPage .top_sellers {
+    width: 100%;
+    margin: 0;
+    padding: 0 30px;
+}
+
+.checkOutDet {
+    width: 100%;
+    margin-left: 0;
+    padding: 30px;
+}
+
+.leftDashMenu{
+	width: 100%;
+	float: none;
+	position: unset;
+	height: auto;
+}
+.leftDashMenu li{
+	width: 35%;
+	margin: 0 auto;
+}
+
+.dasTabFun{
+	width: 100% !important;
+}
+
+.dasnAnwSet{
+	float: none;
+	width: 100%;
+}
+
+
+.leftDashMenu a li {
+    padding: 19px 13px;
+}
+.leftDashMenu > a{
+	display: inline-block;
+}
+
+.specTable> table tr td:last-child{
+  line-height: 1.7;
+}
+
+.comparePro{
+    width:100%;
+    margin-left: 0;
+}
+
+.testimonialHome{
+	background-position: -110px center;
+}
+
+
+}
+
+
+@media screen and (min-width: 300px) and (max-width: 980px){
+
+	.leftDashMenu > a {
+    display: inline-block;
+    width: 49%;
+}
+	.menu li {
+    	padding-right: 16px;
+	}
+	.payMeth {
+    	padding: 30px 1%;
+	}
+
+	.msec_2 .grid li {
+    width: 48%;
+    height: 530px;
+	}
+	.addSet li {
+    width: 48%;
+}
+
+	.qvCon {
+    	padding: 23px 0px 23px 30px;
+	}
+	.mix_list li {
+    	width: 32.3%;
+	}
+	.mix_list li:nth-child(5) {
+    	margin-left: 1%;
+	}
+
+	.mix_list li:nth-child(4) {
+    	margin-left: 0%;
+	}
+
+	.proDetails {
+   		width: 98%;
+	}
+
+	.proDetaPage .relatedPro {
+      width: 99%;
+    } 
+
+	.relaProImg {
+    	width: 30%;
+	}
+
+	.reProCon{
+		height: 277px;
+	}
+
+	.reProCon::before{
+		height: 47%;
+	}
+
+	.ckproimgleft {
+    	width: 40%;
+	}
+
+	.ckproimgright {
+    	width: 59%;
+	}
+	.teaMOncns{
+		width: 75%;
+	}
+
+
+
+}
+
+
+
+
+@media screen and (min-width: 300px) and (max-width: 940px){
+
+.condetails{
+	padding: 40px 15px;
+}
+
+.sociLogin .btn {
+    padding: 4px 20px 12px;
+}
+.proccedBtn {
+    width: 44%;
+}
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 900px){
+	.menu li {
+   		padding-right: 10px;
+	}
+
+	.newsLetLeft{
+		float: none;
+		text-align: center;
+	}
+	
+	.neName{
+		padding-right: 20px;
+	}
+	
+	.riMedia{
+		float: none;
+		text-align: center;
+		padding-top: 30px;
+	}
+	
+	.foMenuSet ul:nth-child(4n){
+		width: 50%;
+	}
+	
+	.foMenuSet ul:last-child{
+		width: 50%;
+	}
+	.journ li,.whatSetAs li i{
+		float: none;
+	}
+	.whatUsCon{
+		float: none;
+		width:100%;
+		margin-top: 20px;
+	}
+
+
+	.whatSetAs li{
+		margin: 0px 0px 20px 0px;
+		width: 100%;
+	}
+
+	.journ .journright{
+		width:96%;
+	}
+	.journ .journleft{
+		width: 100%;
+		text-align: center;
+	}
+
+	.whatSetAs li i{
+		width: 100%;
+		max-width: unset;
+	}
+	.whatUsCon{
+		padding-left: 0;
+	}
+	
+.vidGal li,.userManSet li {
+    width: 48%;
+}
+
+.eventPage li{
+	height: 520px;
+	 width: 48%;
+}
+
+.menuListINREci li,.siteMapCon li {
+	width: 48%;
+}
+
+
+.menuListINREci li:nth-child(3n){
+    margin-right: 2%;
+}
+
+.menuListINREci li:nth-child(2n){
+    margin-right: 0;
+
+}
+
+.recipeNameTi {
+    font-size: 17px;
+
+}
+
+
+.reCiprCn h3{
+	font-size: 36px;
+}
+
+.reCiprCn p{
+	font-size: 21px;
+}
+
+.titleIncriReci p{
+	font-size: 16px;
+}
+
+.incredeDetailRes p {
+    font-size: 14px;
+}
+
+.procedureRecipe h2{
+	font-size: 23px;
+}
+.procedureRecipe ol li{
+	font-size: 15px;
+}
+
+  .userManual h3 {
+    font-size: 21px;
+}
+.siteMapCon h2{
+	font-size: 23px;
+}
+.siteMapCon h3{
+	font-size: 19px;
+}
+
+.siteMapCon li:last-child{
+	margin-top: 30px;
+}
+
+.sociLogin .btn {
+    padding: 4px 10px 11px;
+}
+.sgInSet button,.signInput button{
+	width: 240px;
+	    padding: 15px 10px;
+}
+
+
+.eventsInnerPageCon h4 {
+    font-size: 23px;
+    line-height: 1.3;
+}
+
+.eventsPhotoGal li {
+    margin: 10px;
+    width: 30%;
+    float:none;
+    display: inline-block;
+}
+
+.mix_list li {
+    width: 32%;
+}
+.pd1_ctn .filllTT span {
+    font-size: 13px;
+}
+
+.msec_2 .list li .prodimg {
+    width: 52%;
+}
+
+.msec_2 .list li .mix_det {
+    width: 48%;
+}
+
+.popupQv{
+	padding: 10% 2%;
+}
+
+.ckPriceDe{
+	padding: 52px 15px;
+}
+
+.leftDashMenu li {
+    width: 39%;
+}
+
+.journ .journleft{
+    top:0;
+    transform: translateY(0);
+}
+
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 850px){
+
+.menu li {
+    padding-right: 6px;
+}
+.menuRight li .signIn{
+	margin: 0 3px;	
+}
+
+	.journ .journright{
+		width: 95%;
+    	padding: 20px 15px;
+	}	
+
+	.journ .journright p {
+    line-height: 1.5;
+    color: #666;
+    font-size: 15px;
+}
+
+
+
+.reCiprCn p {
+    font-size: 20px;
+}
+
+.reCiprCn h3 {
+    font-size: 35px;
+}
+
+.searchRecipe input {
+    width: 370px;
+    font-size: 15px;
+   }
+
+.signsec {
+    padding: 24px 0px 30px 40px;
+}
+.sociLogin .btn {
+    padding: 4px 10px 12px;
+}
+
+.ts_ctn p{
+	font-size: 20px;
+}
+
+.ts_ctn ul li a,.pd1 h2{
+	font-size: 14px;
+}
+  
+
+.comproList li {
+    width: 48%;
+    }
+
+.eventsPhotoGal li {
+    margin: 8px;
+}
+
+.eventPhotoSSet{
+	padding: 1px 15px;
+}
+.pd1{
+    padding: 25px 12px;
+}
+.prHov a{
+  padding: 12px 8px;
+}
+
+.mix_list2 li .prHov a {
+    font-size: 13px;
+}
+.msec_2 .grid li{
+	height: auto;
+}
+.priceFil{
+	padding-bottom: 40px;
+}
+
+.pd1 h2{
+	line-height: 1.5;
+}
+
+
+.popupQv .qvCon{
+	width: 100%;
+	float: none;
+}
+
+
+.popupQv .zoThepro {
+    width: 60%;
+    float: none;
+    margin: 0 auto;
+}
+
+.popupQv{
+	top: 0;
+	transform: translateY(0%);
+	 padding: 5% 2%;
+}
+
+.qvCon{
+	padding: 23px 30px;
+}
+
+.moreDe{
+	margin-left: 20px;
+}
+
+.reProCon {
+    height: 238px;
+}
+
+.proccedBtn {
+    width: 50%;
+}
+
+.chooseAdPo select{
+	padding: 10px 15px;
+}
+
+.showFinAdd li,.choseAdd li{
+	width: 100%;
+}
+
+.showFinAdd li:nth-child(2n){
+	margin-top: 30px;
+}
+
+
+.dashHeader{
+	padding: 30px 20px;
+}
+.dashHeader h3{
+	font-size: 24px;
+}
+.dashHeader p{
+	font-size: 15px;
+}
+
+.comparePro{
+    width: 94%;
+    overflow: hidden;
+    overflow-x: scroll;
+    padding: 0;
+    margin: 15px 3%;
+}
+
+.comparePro table{
+    width: 740px;
+}
+
+
+
+}
+
+
+@media screen and (min-width: 300px) and (max-width: 800px){
+
+	.leftDashMenu li {
+    width: 42%;
+}
+
+.menuRight{
+	margin: 6px 0px;
+}
+
+.homenu .innermenu {
+    position: static;
+}
+	
+.res_menu{
+	display: inline-block;
+	position: relative;
+	
+}
+
+.menu{
+	display:none;
+	height: 275px;
+	overflow-y: scroll;
+	width: 300px;
+	position: absolute !important;
+}
+
+.menu li{
+	float:none;
+	padding: 4px 40px;
+	z-index: 999;
+	background: #fff;
+	
+}
+
+.menu li a::after{
+	display:none;
+}
+	
+	.innermenu li{
+		padding: 4px 10px;
+	}
+
+	.proList li{
+		width: 48%;
+	}
+	
+	.payMeth li{
+		width: 47%;
+	}
+	
+	.payMeth li:last-child{
+		padding-top: 30px;
+	}
+
+	.payMeth li:nth-child(3n) {
+	    width: 47%;
+	    float: none;
+	    display: inline-block;
+	}
+
+	.payMeth li:last-child {
+	    width: 47%;
+	    float: none;
+	    display: inline-block;
+	}
+
+	.proList li:nth-child(4) {
+	 margin-left: 0px;
+    
+}
+.proList li:nth-child(5){
+		margin-left: 170px;
+	}
+	.proList li:nth-child(3){
+		    margin-top: 40px;
+	}
+	.support li:nth-child(3){
+		margin-top: 25px;
+		margin-left: 180px;
+	}
+
+	.condetails li{
+		width: 100%;
+		float: none;
+	}
+
+	.condetails .contLeft:nth-child(2){
+		margin-top: 50px;
+
+	}
+
+	.mayaAbout li p {
+    	line-height: 1.7;
+    	padding-right: 15px;
+	}
+
+	
+	.faqTab li {
+	    padding: 15px 25px;
+	}
+	.ansQus h4{
+		font-size: 14px;
+	}
+
+	.ans_section p{
+		font-size: 14px;
+	}
+.ansQus h3{
+	font-size: 20px;
+}
+.regForm .regLeft,.regForm .regRight{
+	width: 100%;
+	float: none;
+
+}
+.regForm .regRight{
+	margin-top: 30px;
+}
+.regRight img{
+	width: 80%;
+	margin: 0 auto;
+}
+
+.signsec {
+  
+    padding: 23px 0px 23px 30px;
+     
+}
+.sgInSet,.signInput{
+ 
+    margin-top: 20px;
+}
+
+.sociLogin .btn {
+    padding: 4px 10px 12px;
+}
+
+.sociLogin .btn{
+	font-size: 14px;
+}
+#owl-demo5 .owl-controls .owl-page span{
+	width: 10px;
+	height: 10px;
+}
+
+.mix_list li {
+    width: 49%;
+}
+.msec_2 .grid li {
+    width: 100%;
+}
+.msec_2 {
+    padding-bottom: 20px;
+ }
+
+.mix_list li:nth-child(4) {
+    margin-left: 1%; 
+}
+
+
+
+.pd1_ctn .filllTT input {
+    width: 13px;
+}
+
+.msec_2 .list li .mix_det, .msec_2 .list li .prodimg {
+    width: 100%;
+    float: 	none;	
+}
+
+
+.msec_2 .list li .mix_det p,.msec_2 .list li .mix_det h4{
+	text-align: center;
+}
+
+.motorSpec li {
+    width: 48%;
+} 
+
+.reProCon {
+    height: 224px;
+}
+
+.ckproimgleft {
+    width: 60%;
+    margin: 0 auto;
+    float: none;
+}
+
+.ckproimgright {
+    width: 100%;
+    text-align: center;
+    padding-left: 0;
+}
+.coupen {
+    width: 100%;
+    padding: 40px 20px;
+}
+.coupen input{
+	padding: 12px 20px;
+}
+
+.itemsbye {
+    width: 60%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.ckclosebtn{
+	top: 10px;
+}
+
+
+
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 768px){
+	.support li:nth-child(2){
+		    height: 330px;
+	}
+
+	.sgInSet button,.signInput button{
+    	width: 210px;
+    	padding: 14px 10px;
+    	margin-top: 30px;
+	}
+
+	.ts_ctn p,.siHead{
+		font-size: 19px;
+	}
+	.faqTab li {
+    padding: 15px 23px;
+}
+
+.testimonialHome{
+	background-position: center;
+}
+
+.teaMOncns{
+	width: 90%;
+	margin: 0 auto;
+	right: initial;
+	float: none;
+}
+
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 767px){
+    .inNextProImg {
+    width: 15%;
+}
+	
+	.userDetails {
+    padding: 20px 0px 30px;
+}
+	.leftDashMenu li {
+    width: 45%;
+}
+.leftDashMenu > a {
+    display: block;
+    width: 100%;
+}
+.userDelAdd .btn,.userDelAdd .deleteUeAdd{
+	width: 100%;
+}
+
+	.logoRight input{
+		display: none;
+	}
+
+.signInput button{
+	float: none;
+	width: 100%;
+}
+	.sociLogin {
+    width: 100%;
+   float: none; 
+  position:unset; ;
+   top: 0 ;
+ transform: translateY(0%); 
+   right: 0; 
+   margin-top: 20px;
+}
+
+.siginInSetTop .sgInSet{
+	width: 100%;
+	float: none;
+}
+
+.sgInSet button{
+	width: 100%;
+}
+
+	.fixed {
+    position: unset;
+	}
+
+	.comproList li{
+		width: 100%;
+	}
+.banner .owl-controls .owl-buttons .owl-prev::after ,
+.banner .owl-controls .owl-buttons .owl-next::after{
+	width: 40px;
+	height: 40px;
+}
+.cusTest{
+	width: 89%;
+	padding: 25px 30px;
+}
+.spimg,.sponCon{
+	float: none;
+}
+.sponCon{
+	width: 100%;
+	top: 25%;
+}
+
+.sponMani{
+	height: 450px;
+}
+.sponCon .btn{
+	margin-top: 20px;
+}
+.sponCon{
+	padding-left: 0;
+}
+
+.cusTestmial.owl-carousel .owl-wrapper-outer{
+	overflow: hidden !important;
+}
+
+.cusTest {
+    width: 100%;
+    padding: 40px 35px;
+}
+.testCon p{
+	font-size: 15px;
+}
+
+.recipeMenuHome{
+	background-position: -208px center;
+}
+
+.mayaAbout li,.mayaAbout li:last-child {
+    width: 100%;
+    float: none;
+}
+.mayaAbout li:last-child{
+	margin-top: 20px;
+}
+ 	.absetmaya {
+    	padding: 50px 20px 0 20px;
+	}
+
+	.ourTeamImg {
+    	padding: 20px 10px;
+    }
+
+.whatSetAs li p{
+	    line-height: 1.5;
+	    font-size: 14px;
+}
+
+.awardReg li {
+    width: 100%;
+    margin: 20px 0 10px 0px;
+    float: none;
+}
+
+.awardReg li p {
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+
+.eventPage li{
+	width: 48%;
+	height: 550px;
+}
+.evCon .eventTitleName{
+	font-size: 15px;
+}
+
+.evCon p{
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+
+.addSet li {
+    width: 48%;
+    float: left;
+}
+
+.recipeNameTi {
+    font-size: 16px;
+
+}
+
+.reCiprCn h3 {
+    font-size: 30px;
+}
+
+.reCiprCn p {
+    font-size: 19px;
+}
+
+.searchRecipe input {
+    width: 350px;
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.searchRecipe .searchAroRe{
+	top: 11px;
+    height: 16px;
+}
+
+.popUpCloseInreci{
+	width: 23px;
+    height: 23px;
+    top: 12%;
+    right: 13%;
+}
+
+.ingredientsLeftReci,.procedureRecipe{
+	width: 100%;
+	float: none;
+}
+
+.procedureRecipe{
+	margin-left: 0;
+	margin-top: 30px;
+}
+
+.userManual h3 {
+    font-size: 21px;
+
+}
+
+
+.warrantySet h4,.warrantySet .privacyConTot {
+    font-size: 17px;
+  }
+
+
+  .warrantySet li p,.userManCon a,.createAcc h5,.siginInSetTop p,.links {
+    font-size: 14px;
+}
+
+.userManual h3 {
+    font-size: 20px;
+}
+
+.userManCon h4 {
+    font-size: 15px;
+}
+
+.userManCon p{
+	line-height: 1.3;
+}
+
+.faqTab li {
+    float: none;
+    text-align: center;
+}
+
+.addSet li {
+    width: 100%;
+    height: auto;
+    margin: 3% 1%;
+}
+
+.siteMapCon li{
+	width: 50%;
+}
+
+.SignUpPage .top_sellers {
+    width: 96%;
+    margin: 20px 2% 20px 2%;
+}
+
+.sociLogin .btn{
+	width: 100%;
+	max-width: 100%;
+}
+
+.signsec {  
+	padding: 20px;
+        margin: 3%;
+    width: 94%;;
+}
+
+.comNextColse .btn {
+    width: auto;
+    padding: 10px 25px;
+}
+
+.eventsPhotoGal li {
+        width: 47%;
+    }
+.eventsInnerPageCon .innerEventImg{
+	width: 100%;
+	float: none;
+	padding: 0;
+}
+
+.product_filters{
+	top: 20px;
+	width: 25%;
+}
+.proMid {
+    width: 100%;
+}
+
+
+.top_sellers {
+	width: 100%;
+	 margin: 20px 0;
+}
+
+
+ .product_filters{
+	display: none;
+	height: 300px;
+    margin-bottom: 30px;
+    position: unset;
+    width: 100%;
+}
+
+.fixedf {
+    width: 100%;
+    height: auto;
+}
+
+
+.filter{
+	display: block;
+}
+
+.cat_filter_form{
+	width: 80%;
+	margin: 0 auto;
+}
+
+.fixedfi{
+	position: fixed;
+	top:0;
+	z-index: 1000;
+	width: 100%;
+	background-color: #fff;
+	transition: all 0.25s linear 0s;
+	box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.2);
+}
+
+.fixedf,.proMid{
+	float: left;
+}
+
+.qvProName {
+    font-size: 35px;
+}
+
+.proImgDet li {
+    float: none;
+    width: 60%;
+    margin: 0 auto;
+}
+.prodeCon{
+	width: 100% !important;
+}
+
+
+.proOrderBtn a {
+    float: left;
+    margin-right: 20px;
+}
+
+
+.feleftImg {
+    width: 50%;
+    margin: 0 auto;
+    float: none;
+}
+
+.feRightCon {
+    width: 100%;
+    float: none;
+}
+
+.readTerms label a{
+	font-size: 15px;
+}
+
+.proImgDet li img{
+	width: 100% !important;
+}
+
+.optionShipping li label p{
+	font-size: 14px;
+}
+
+
+.signInput{
+    width: 100%;
+    float: none;
+}
+.checkOutSingin .sgInSet{
+	margin-top: 20px;
+	width: 100%;
+}
+
+.tabCheckOut li,.dashHeader p {
+	font-size: 14px;
+}
+
+.proccedBtn {
+    width: 54%;
+}
+
+.ckProde,.ckPriceDe {
+	width: 100%;
+	float: none;
+}
+.ckPriceDe{
+	margin-top: 20px;
+}
+.ckfinimg {
+    width: 60%;
+    margin: 0 auto;
+}
+
+
+.ckproname {
+    font-size: 19px;
+}
+
+.safepay,.showFinAdd .btn,.proccedBtns .btn {
+    width: 100%;
+}
+
+.yourAdd h3 {
+    font-size: 23px;
+}
+
+.yourAdd p{
+	font-size: 14px;
+}
+.conshop,.nextPreBtn{
+	float: none;
+}
+.nextPreBtn .btn{
+	margin-top: 20px;
+}
+.nextBtn i{
+	float: right;
+}
+
+.itemsbye {
+    width: 38%;
+}
+
+.shippingMeth {
+    padding: 30px 15px;
+}
+.optionShipping li label, .chargeShip{
+	width: 100%;
+}
+
+.chargeShip{
+	margin-top: 10px;
+}
+
+.readTerms label {
+    font-size: 15px;
+}
+
+.addreePage{
+	padding: 0;
+}
+
+.addressFormSet li p, .addressFormSet li .rightAdDet{
+	text-align: left;
+	float: none;
+	width: 100%;
+}
+.orderImgSet {
+    width: 60%;
+    margin: 0 auto;
+    float: none;
+ }
+
+ .orderConSet {
+    padding: 20px 30px;
+    width: 100%;
+    float: none;
+    text-align: center;
+}
+.orderConSet p{
+	font-size: 14px;text-align: center;
+}
+
+.orderConSet a {
+    font-size: 15px;
+}
+.airTopTest{
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 999;
+    width: 70px;
+}
+.airbotTest{
+	width: 70px;
+	bottom:45px; 
+}
+
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 640px){
+.leftDashMenu li {
+    width: 55%;
+}
+
+.createAcc {
+    width: 100%;
+    padding: 20px;
+    }
+	
+	.proList li:nth-child(5) {
+    	margin-left: 120px;
+	}
+
+	.support li:nth-child(3){
+		 margin-left: 120px;
+	}
+.sponCon .btn{
+	padding: 15px 20px;
+}
+.sponCon P {
+    font-size: 14px;
+    line-height: 1.3;
+}
+.sponMani {
+    height: 410px;
+}
+
+.support li:nth-child(2) {
+    height: 349px;
+}
+
+.payMeth {
+    padding: 30px 6%;
+}
+.cusTest {
+    padding: 25px 15px;
+}
+
+.journ .journright p{
+	font-size: 14px;
+}
+
+.whatUsCon{
+     padding-left: 12px;
+}
+
+.conTfeature {
+    height: 220px;
+   }
+
+
+.reCiprCn h3 {
+    font-size: 26px;
+}
+
+.reCiprCn p {
+    font-size: 17px;
+}
+
+.searchRecipe input {
+    width: 320px;
+}
+.menuListINREci li {
+    margin-top: 30px;
+}
+
+.procedureRecipe h2 {
+    font-size: 22px;
+}
+.reCipeImgDetail {
+    width: 70%;
+}
+
+.warrantySet li{
+	margin-left: 15px;
+}
+.faqTab li{
+	float: none;
+	text-align: center;
+}
+
+
+.ansQus h4 {
+    font-size: 14px;
+    line-height: 1.9;
+}
+.conTitleSet h4 {
+    font-size: 20px;
+}
+
+.siteMapCon h3 {
+    font-size: 18px;
+}
+
+.siteMapCon li{
+	width: 100%;
+}
+
+.siteMapCon h2,.comHead p {
+    font-size: 21px;
+}
+
+.siteMapCon li{
+	margin-top: 30px;
+}
+.setOfsitemap li{
+	margin-top: 0;
+}
+.siteMapCon h2{
+	padding-bottom: 0;
+}
+.addCompSet .container{
+	padding: 20px;
+}
+
+
+.eventsPhotoGal li {
+    width: 46%;
+}
+
+.eventsInnerPageCon h4 {
+    font-size: 20px;
+}
+
+.jarImgSet li {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.conRightProDetails p, .keySpec li{
+    font-size: 15px;
+}
+
+.prodeCon {
+    padding-left: 10px;
+}
+.relaProImg {
+    width: 37%;
+}
+
+.reProCon {
+    height: 218px;
+}
+.reProCon p{
+	font-size: 17px;
+}
+
+.keyTi{
+	font-size: 21px;
+}
+
+.itemsbye {
+    width: 50%;
+}
+.dashHeader h3 {
+    font-size: 23px;
+}
+.dashHeader p{
+	padding-top: 10px;
+}
+
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 600px){
+	
+	.logo{
+		width: 120px;
+	}
+	
+	.logo img{
+		width: 100%;
+	}
+	
+
+	.logoRight{
+		position: relative;
+		top: 0px;
+	}
+	
+	.owl-controls .owl-buttons .owl-prev::after{
+		width: 30px;
+		height: 30px;
+	}
+	
+	.owl-controls .owl-buttons .owl-next::after{
+		width: 30px;
+		height: 30px;
+	}
+
+	.proList li{
+		width: 100%;
+	}
+	
+	.newsLetLeft p{
+		margin-top: 20px;
+	}
+	
+	.foMenuSet ul{
+		width: 100%;
+		margin-bottom: 30px;
+	}
+	
+	.payMeth li a{
+		font-size: 14px;
+	}
+	.proList li:nth-child(5), .support li:nth-child(3){
+		margin-left: 0;
+	}
+	.support li:nth-child(2){
+		height: auto;
+	}
+	.ban-next h2{
+		font-size: 23px;
+	}
+
+	.absetmaya h2,.journey h2,.ourTeamset h2{
+		font-size: 23px;
+        text-align:center;
+	}
+
+	.mayaAbout li p {
+    	line-height: 1.5;
+    	padding-right: 0px;
+    	font-size: 14px;
+	}
+
+	.mayaAbout li:last-child {
+    	margin-top: 12px;
+	}
+
+	.awardReg li h4{
+		font-size: 19px;
+	}
+	.comHead .comNextColse,.comHead p{
+		float: none;
+		text-align: center;
+	}
+
+	.comHead .comNextColse{
+		margin-top: 10px;
+	}
+	.eventsPhotoGal li {
+    width: 100%;
+    margin: 20px 0;
+    display: block;
+}
+
+
+.proOrderBtn a{
+	float: none;
+	margin-right: 0;
+	width: 100%;
+	margin: 10px 0;
+}
+.pincode input{
+	width: 100%;
+}
+
+.reProCon::before {
+    height: 60%;
+}
+
+.reProCon {
+    height: 200px;
+}
+
+.coupen p,.coupen input,.coupen button {
+    font-size: 14px;
+}
+
+.coupen p,.coupen button{
+	padding: 12px 30px;
+}
+.orderImgSet {
+    width: 70%;
+    }
+
+
+
+}
+
+
+@media screen and (min-width: 300px) and (max-width: 580px){
+    
+    .inNextProImg {
+    width: 20%;
+}
+	.dasBRide h2{
+		font-size: 20px;
+	}
+	.dasBRide p {
+    padding-top: 10px;
+    font-size: 14px;
+}
+
+.currentOrder h3{
+	font-size: 17px;
+}
+
+.sponMani {
+    padding: 50px 25px;
+}
+
+.sponCon P{
+	font-size: 13px;
+}
+
+.sponCon h3 {
+    font-size: 20px;
+}
+
+.eventPage li {
+    width: 100%;
+    height:auto;
+    margin-top: 30px !important;
+    margin: 0;
+}
+
+.addSet li{
+	 width: 100%;
+    height:auto;
+     margin: 3% 1%;
+}
+
+.pressRelSet .btn{
+	font-size: 14px;
+	width: 150px;
+}
+
+.reCiprCn {
+    width: 85%;
+}
+
+.reCipeImgDetail {
+    width: 80%;
+}
+
+.userManSet li{
+	width: 95%;
+	float: none;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+.userManual h3 {
+    font-size: 19px;
+}
+
+.sociLogin .btn {
+    font-size: 13px;
+}
+
+.comHead p {
+    font-size: 21px;
+}
+.comNextColse .btn{
+	font-size: 14px;
+}
+.eventsInnerPageCon{
+	padding: 25px;
+}
+
+.gridListBtn{
+	top: 3px;
+}
+.filter{
+	font-size: 18px;
+	padding: 25px 40px;
+}
+
+.keyTi {
+    font-size: 20px;
+}
+.reProCon {
+    height: 195px;
+}
+
+.specTable> table {
+    width: 100%;
+}
+
+.itemsbye {
+    width: 50%
+}
+
+.ckfinimg {
+    width: 70%;
+}
+
+.coupen p, .coupen input, .coupen button {
+    font-size: 14px;
+    display: block;
+    width: 90%;
+    text-align: center;
+    margin: 4%;
+}
+
+.coupen{
+	padding: 20px;
+}
+
+.proccedBtn,.proccedBtn .btn{
+	width: 100%;
+}
+.choseAdd, .showFinAdd{
+	padding: 20px 15px;
+}
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 520px){
+
+	.leftDashMenu li {
+    width: 62%;
+}
+	.AddCarHo:hover .addCartSmIn li, .notifoConSet li a{
+		font-size: 14px;
+	}
+	
+	.comHead p{
+	font-size: 20px;
+	}
+
+	.sponCon .btn {
+    	padding: 14px 18px;
+    	    margin-top: 18px;
+    	    font-size: 12px;
+	}
+	.sponCon{
+		top: 35%;
+	}
+	.payMeth {
+    padding: 30px 4%;
+	}
+	.payMeth li a {
+    	font-size: 13px;
+	}
+
+.ban-next h2 {
+    font-size: 20px;
+}
+	.conTitleSet h4 {
+    	font-size: 20px;
+    }
+
+    .enqureyForm .btn{
+    	width: 150px;
+    	padding: 15px 0;
+    }
+
+    .absetmaya {
+    	padding: 30px 20px 0 20px;
+    	text-align: center;
+	}
+	.journey{
+		padding-left:  20px;
+	}
+
+	.whatSetAs li i {
+    font-size: 75px;
+}
+
+.whatSetAs li i{
+    	width: 100%;
+    	max-width:unset;
+    }
+    .whatUsCon{
+    	text-align: center;
+    }
+
+.awardReg {
+    padding: 0px 20px;
+}
+
+.videoSet h3{
+	font-size: 19px;
+}
+
+.vidGal li{
+    width: 100%;
+    float: none;
+}
+
+.menuListINREci li {
+    width: 100%;
+    float: none;
+    margin-right: 0;
+}
+
+.menuListINREci li:nth-child(3n){
+	margin-right: 0;
+}
+
+.reCiprCn {
+    padding: 25px 18px;
+}
+
+.searchRecipe input {
+    width: 300px;
+}
+
+.procedureRecipe h2 {
+    font-size: 20px;
+}
+
+.procedureRecipe ol li {
+    font-size: 14px;
+}
+
+.reCipeImgDetail {
+    width: 90%;
+}
+
+.popUpCloseInreci {
+    width: 20px;
+    height: 20px;
+    top: 12%;
+    right: 13%;
+}
+
+.userManual h3 {
+    font-size: 20px;
+}
+
+.userManual h3 {
+    font-size: 19px;
+}
+
+.qsSet li{
+	padding-top: 20px;
+}
+
+.ans_section p {
+    padding-top: 5px;
+}
+.ansQus h3 {
+    font-size: 18px;
+}
+.qsSet {
+    padding-top: 0px;
+}
+
+.qsSet li {
+    padding-top: 17px;
+}
+
+.conTitleSet p.findRegSer,.enqureyForm ul li p{
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.showFinAdd .btn, .proccedBtns .btn{
+	padding: 13px 30px;
+	font-size: 14px;
+}
+
+.chooseAdPo select{
+	height: 44px;
+}
+
+.yourAdd h3 {
+    font-size: 22px;
+}
+
+.chooseAdPo h5 {
+    font-size: 17px;
+}
+
+.sgInSet,.signInput {
+    width: 100%;
+    float: none;
+  }
+
+  .sociLogin {
+    width: 100%;
+    transform: translateY(0%);
+}
+
+
+.proAdti {
+    font-size: 15px;
+    }
+
+.addSmimg,.addCartProde {
+    width: 100%;
+    float: none;
+}
+
+.addCartProde{
+	text-align: center;
+}
+
+.msec_2 .list li .mix_det p {
+    font-size: 17px;
+}
+
+.qvProName {
+    font-size: 34px;
+}
+
+.motorSpec li {
+    width: 100%;
+}
+
+.reProCon {
+    height: 165px;
+}
+
+.reProRi .reProView{
+	font-size: 17px;
+}
+
+.keySpec li,.specTable> table tr td{
+	font-size: 14px;
+}
+
+.jarImgSet li {
+    margin-bottom: 5px;
+}
+
+
+.specTable> table tr td:first-child{
+	width: 35%;
+	float: none;
+}
+
+.specTable> table tr td:last-child {
+    width: 100%;
+}
+.specTable> table tr td:nth-child(2){
+	float: none;
+}
+
+.tabCheckOut li {
+    font-size: 13px;
+    padding: 12px;
+}
+
+.tabCheckOut li{
+	width: 48%;
+	margin: 1%;
+}
+
+
+.itemsbye {
+    width: 55%;
+}
+
+.shippingMeth h5,.readTerms h5 {
+    font-size: 17px;
+}
+.OrderListSectCu {
+    padding: 25px 0px;
+    }
+    .dasBRide p {
+    padding-top: 4px;
+}
+
+.userDelAdd .btn, .userDelAdd .deleteUeAdd {
+    width: 100%;
+    font-size: 14px;
+    padding: 15px 10px;
+}
+
+
+
+}
+
+
+
+
+@media screen and (min-width: 300px) and (max-width: 480px){
+.createAcc {
+    width: 100%;
+    padding: 10px;
+}
+.condetails li{
+	padding: 0
+}
+
+/*.rc-anchor-normal {
+    height: 74px;
+    width: 250px;
+}
+
+iframe[Attributes Style] {
+width: 250px;
+
+}
+.rc-anchor-normal .rc-anchor-content{
+	width: 100%;
+}*/
+
+.g-recaptcha div{
+	width: 200px !important;
+}
+
+.comNextColse .btn {
+    width: auto;
+    padding: 10px 30px;
+    font-size: 14px;
+}
+.comHead .comNextColse{
+	float: none;
+}
+
+.comHead p {
+    font-size: 21px;
+}
+.payMeth {
+    padding: 30px 2%;
+}
+
+.banner .owl-controls .owl-buttons .owl-prev::after, .banner .owl-controls .owl-buttons .owl-next::after {
+    width: 30px;
+    height: 30px;
+}
+
+.rcipeIner {
+    padding: 80px 0 250px 0;
+
+    }
+
+    .whatSetAs li i{
+    	width: 100%;
+    	max-width:unset;
+    }
+
+.reCiprCn {
+    width: 92%;
+}
+
+.reCiprCn h3 {
+    font-size: 22px;
+}
+
+.reCiprCn p {
+    font-size: 15px;
+}
+
+.regRight img {
+    width: 100%;
+}
+.dashHeader h3 {
+    font-size: 22px;
+}
+.eventsInnerPageCon {
+    padding: 20px;
+}
+
+.filter {
+    font-size: 17px;
+    padding: 20px 40px;
+}
+.qvProName {
+    font-size: 32px;
+}
+
+.feRightCon{
+	padding-left: 0;
+}
+
+.feleftImg {
+    width: 70%
+}
+
+.reProCon {
+    height: 155px;
+}
+
+.checkOutSingin .siginInSetTop .signInput{
+	padding-top:0;
+}
+
+.checkOutSingin .siginInSetTop {
+    padding-top: 25px;
+}
+
+.moreDe {
+    margin-left: 15px;
+}
+
+.qvCon p{
+	padding-top: 10px;
+}
+
+.itemsbye {
+    width: 60%;
+}
+.userSetDash{
+	padding: 20px;
+}
+.airTopTest {
+    position: absolute;
+    top: 18px;
+    left: 26px;
+    z-index: 999;
+    width: 45px;
+}
+.airbotTest{
+	width: 45px;
+	bottom:45px; 
+	right: 30px;
+}
+
+
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 440px){
+
+	.leftDashMenu li {
+    width: 82%;
+}
+		
+	.logoRight{
+		margin-top: 3px;
+	}
+	
+	.yourAdd h3 {
+    font-size: 20px;
+}
+	.headerBottom{
+		padding-bottom: 10px;
+	}
+	
+	/*.logoRight input{
+		display: none;
+	}*/
+	
+	.banner .owl-carousel .item img{
+		width: 100%;
+	}
+	
+	.owl-controls .owl-buttons .owl-prev::after{
+		width: 25px;
+		height: 25px;
+	}
+	
+	.owl-controls .owl-buttons .owl-next::after{
+		width: 25px;
+		height: 25px;
+	}
+	
+	.riMedia li{
+		padding: 0;
+	}
+	
+	.riMedia li a img{
+		width: 80%;
+	}
+	
+	.title,.subtitle{
+		font-size: 18px;
+	}
+	
+	.proName{
+		font-size: 16px;
+	}
+	
+	.subPara{
+		font-size: 15px;
+	}
+	
+	.foMenuSet ul:nth-child(4n){
+		width: 100%;
+	}
+	
+	.foMenuSet ul:last-child{
+		width: 100%;
+	}
+	
+	.addInfo{
+		padding-top: 0;
+	}
+	
+	.payMeth{
+		padding: 30px 10px;
+	}
+	
+	.payMeth li{
+		width: 100%;
+		padding-bottom: 30px;
+	}
+	
+	.payMeth li:last-child{
+		padding-top: 5px;
+	}
+	
+	.cyright p{
+		float: none;
+		padding-left: 0;
+		padding-top: 5px;
+	}
+	
+	.cyright img{
+		float: none;
+	}
+
+	.payMeth li:nth-child(3n) {
+	    width: 100%;
+	    padding-bottom: 30px;
+	}
+
+	.payMeth li:last-child {
+	    width: 100%;
+	    padding-bottom: 30px;
+	}
+
+
+	.comNextColse .btn{
+		padding: 10px 25px;
+	}
+
+	.notifiCatioHo .innermenu{
+		top: 37px;
+	}
+	.sponCon {
+    	top: 40%;
+	}
+	.payMeth li a {
+    font-size: 12px;
+}
+.payMeth li a p{
+	font-size: 14px;
+}
+
+.rcipeIner{
+	width: 88%;
+}
+
+.rcipeIner {
+    padding: 79px 0 210px 0;
+}
+
+.journ .journright{
+	border: none;
+}
+	
+.journ {
+    margin-top: 20px;
+}
+
+.whatSetAs li{
+	padding: 10px;
+}
+.whatSetAs li:hover .setGlop{
+	font-size: 80px;
+}
+
+
+.awardReg li h4 {
+    font-size: 17px;
+
+}
+
+.reCiprCn {
+    width: 95%;
+}
+
+.reCiprCn h3 {
+    font-size: 20px;
+}
+
+.reCiprCn p {
+    font-size: 14px;
+}
+
+
+.searchRecipe input {
+    width: 370px;
+}
+
+.eventsInnerPageCon p{
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.mix_det_rt a {  
+    padding: 12px 4px;
+    width: 145px;
+}
+
+.mix_det p {
+    font-size: 15px;
+}
+
+
+.mix_det h4 {
+    padding-top: 10px;
+    font-size: 20px;
+}
+.gridListBtn .glBtn i{
+	font-size: 14px;
+}
+
+.mix_list li h3{
+	height: 40px;
+}
+
+.filter {
+    font-size: 16px;
+    padding: 15px 40px;
+}
+
+.msec_2 .list li .listdetCon .listConSet p{
+    font-size: 14px !important;
+    padding-top: 5px;
+}
+
+.moreDe {
+    margin-left: 0;
+    
+}
+
+.qvCon .btn{
+	width: 100%;
+}
+
+.qvCon p{
+	font-size: 14px;
+}
+
+.keySpec li{
+	    padding: 13px 40px;
+}
+
+.keySpec li {
+    font-size: 13px;
+}
+
+
+.conRightProDetails p{
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.priceDePro h4 {
+    font-size: 26px;
+}
+
+.conTfeature {
+    height:auto;
+}
+
+.conTfeature .jarImgLeft {
+    width: 50%;
+    text-align: center;
+    margin: 20px 85px auto;
+    /* position: relative; */
+    /* top: 8%; */
+    display: inline-block;
+    /* margin-top: 20px; */
+}
+
+.feInListFor{
+	  width: 100%;
+	  margin-top: 15px;
+	  padding: 15px;
+	  position: unset;
+}
+
+.feInListFor,.conTfeature .jarImgLeft {
+    float: none; 
+    transform: translateY(0%);
+}
+
+.jarImgSet li {
+    margin-bottom: 30px;
+}
+
+.relaProImg {
+    width: 60%;
+    margin: 0 auto;
+    float: none;
+}
+
+.reProCon p {
+    font-size: 16px;
+}
+
+.reProCon {
+    float: none;
+    width: 100%;
+    height: 55px;
+    text-align: center;
+}
+.reProCon::before{
+	display: none;
+}
+
+.proImgDet li{
+	width: 70%;
+}
+
+.itemsbye {
+    width: 75%;
+}
+
+.g-recaptcha {
+	width:100%;
+}
+
+.g-recaptcha iframe{
+	width: 100%;
+}
+.OrderListSectCu li{
+	padding: 10;
+}
+
+	
+}
+
+
+@media screen and (min-width: 300px) and (max-width: 420px){
+	.currentOrder h3 {
+    font-size: 16px;
+        padding: 15px 0;
+}
+.mrMrs label{
+	margin-right: 10px;
+}
+.noData {
+    font-size: 17px !important;
+    }
+.orderConSet {
+    padding: 20px 15px;
+}
+.orderConSet p span{
+	font-size: 15px;
+}
+
+.leftDashMenu{
+	padding: 10px;
+}
+
+	.comHead p {
+    font-size: 19px;
+	}
+
+	.comNextColse .btn {
+    padding: 10px 20px;
+    font-size: 13px;
+	}
+.comNextColse .btn:last-child{
+	    padding: 9px 15px;
+	    font-size: 18px;
+}
+.notifoConSet, .addCartSmIn{
+	width: 250px;
+}
+.itemsbye {
+    width: 67%;
+}
+.sponMani {
+    padding: 35px 25px;
+        height: 350px;
+}
+.testCon p{
+	font-size: 14px;
+}
+
+.rcipeIner {
+    padding: 79px 0 180px 0;
+}
+
+.ban-next h2 {
+    font-size: 19px;
+}
+
+.enqureyForm .btn {
+    width: 140px;
+    padding: 14px 0;
+}
+.popupQv .zoThepro {
+    width: 70%;
+ }
+
+.absetmaya h2, .journey h2,.ourTeamset h2,.ourTeamset h2 {
+    font-size: 22px;
+}
+
+.mayaAbout {
+    padding-top: 15px;
+    width: 100%;
+}
+.whatSetAs li h4 {
+    	font-size: 19px;
+    }
+
+
+.whatSetAs li i {
+    font-size: 70px;
+}
+.awardReg {
+    padding: 0px 15px;
+}
+
+.videoSet h3 {
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+.faqSet {
+   padding: 30px 20px;
+}
+
+.VideiConAl p{
+	font-size: 14px;
+	    line-height: 1.4;
+}
+
+.addCn p {
+    font-size: 14px;
+}
+
+.addCn h4 {
+    font-size: 19px;
+
+}
+
+.recipeNameTi {
+    font-size: 15px;
+}
+
+.menuListINREci li {
+    margin-top: 30px;
+}
+
+
+.pressRelSet .btn {
+    font-size: 13px;
+    width: 140px;
+    padding: 13px 0;
+}
+
+
+.reCiprCn {
+    padding: 16px 10px;
+    }
+
+
+.searchRecipe input {
+    width: 350px;
+}
+
+.procedureRecipe h2 {
+    font-size: 18px;
+}
+
+.reCipeImgDetail {
+    width: 100%;
+}
+
+.popUpCloseInreci {
+    width: 14px;
+    height: 14px;
+    top: 12%;
+    right: 8%;
+}
+
+.popConSetRecipe {
+    width: 90%;
+}
+
+.warrantySet h4 {
+    font-size: 16px;
+}
+
+.warrantySet {
+    padding: 30px 25px 0;
+}
+.warrantySet li{
+	padding: 7px 5px;
+}
+
+.userManual h3 {
+    font-size: 17px;
+}
+
+.userManCon h4 {
+    font-size: 14px;
+}
+
+.userManCon a {
+    font-size: 13px;
+}
+
+.ansQus h4 {
+    font-size: 13px;
+}
+
+.ans_section p {
+    font-size: 13px;
+}
+
+.conTitleSet h4,.siteMapCon h2 {
+    font-size: 19px;
+}
+
+.siteMapCon h3 {
+    font-size: 17px;
+}
+.siteMapCon li .boldConSiteM {
+    	font-size: 15px;
+}
+
+.siteMapCon li a{
+	font-size: 14px;
+}
+
+.signsec{
+	margin-top: 20px;
+}
+
+.createAcc li input{
+	padding: 10px 20px;
+}
+
+.comHead .comNextColse {
+    margin-top: 5px;
+}
+.mix_list2 li .prHov a{
+	font-size: 13px;
+}
+.eventPage li{
+	margin-top: 20px !important;
+	margin: 0;
+}
+.eventPage{
+	padding: 15px;
+}
+
+.eventsInnerPageCon h4{
+    font-size: 19px;
+}
+
+.mix_name{
+	font-size: 13px !important;
+}
+
+.gridListBtn .glBtn i{
+	font-size: 13px;
+	padding: 8px;
+}
+
+.mix_det_rt a {
+    padding: 11px 4px;
+    width: 140px;
+}
+
+.msec_2 h2{
+	font-size: 18px;
+}
+
+.qvProName {
+    font-size: 31px;
+}
+
+.qvCon {
+    padding: 23px 20px;
+}
+
+.qvCon p{
+	padding-top: 15px;
+}
+.moreDe{
+	margin-left: 0;
+}
+
+.proOrderBtn a{
+	font-size: 14px;
+}
+
+.keySpec li {
+    padding: 12px 30px;
+}
+
+.keyTi {
+    font-size: 19px;
+}
+.motorSpec li .motSpecHead{
+	font-size: 15px;
+}
+
+.motorSpec li .motSpecHead:after{
+	width: 25px;
+	height: 25px;
+}
+
+.proOrderBtn {
+    padding-top: 0px;
+}
+
+.relatedPro h3{
+	font-size: 15px;
+}
+
+.conTfeature {
+    height: auto;
+}
+
+.qvclose{
+	width: 30px;
+	height: 30px;
+	padding: 7px;
+}
+
+.reProRi .reProView {
+    font-size: 16px;
+}
+
+.itemsbye .value-button{
+	width: 25px;
+	 height: 25px;
+	padding: 4px;
+}
+
+.itemsbye input{
+	padding: 9px;
+	height: 20px;
+}
+
+.ckproname {
+    font-size: 18px;
+}
+.ckproimgright p {
+    padding-top: 6px;
+}
+.safepay p{
+	font-size: 14px;
+}
+
+.ckfinimg {
+    width: 100%;
+}
+
+.conTfeature .jarImgLeft {
+    margin: 20px 80px auto;
+}
+
+.choseAdd li, .showFinAdd li{
+	padding: 0;
+}
+.showFinAdd .btn, .proccedBtns .btn {
+    padding: 12px 15px;
+}
+.chooseAdPo select {
+    height: 40px;
+}
+
+.dasnAnwSet {
+    padding: 30px 10px;
+}
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 360px){
+.leftDashMenu{
+	padding: 0px;
+}
+.noData {
+    font-size: 15px !important;
+}
+.dasBRide p {
+    padding-top: 2px;
+}
+
+.OrderListSectCu {
+    padding: 15px 0px;
+}
+	.leftDashMenu li {
+    width: 100%;
+}
+	.conTfeature .jarImgLeft {
+    margin: 20px 62px auto;
+}
+
+.socialMediaHeaSet li a {
+    width: 30px;
+    height: 30px;
+    line-height: 32px;
+}
+.headCall,.showFinAdd .btn, .proccedBtns .btn{
+	font-size: 13px;
+}
+
+.addCompSet .container {
+    
+    padding: 32px;
+}
+
+.notifoConSet{
+	font-size: 13px;
+}
+
+
+.notifoConSet, .addCartSmIn {
+    width: 210px;
+}
+.sponCon h3{
+	font-size: 18px;
+}
+
+.spimg {
+    width: 65%;
+
+   }
+
+   .sponCon {
+    top: 35%;
+}
+
+.recipeMenuOwl .owl-controls .owl-buttons .owl-next{
+	right: -40px;
+}
+.recipeMenuOwl .owl-controls .owl-buttons .owl-prev{
+	    left: -40px;
+} .logo {
+    width: 100px;
+}
+.logoRight input {
+    padding: 10px 21px 10px 10px;
+    width: 171px;
+}
+.logoRight i{
+	width: 30px;
+    height: 25px;
+    line-height: 26px;
+    font-size: 13px;
+    top: 5px;
+}
+
+.res_menu a i{
+	font-size: 18px;
+	padding:9px;
+}
+
+.rcipeIner {
+    padding: 79px 0 160px 0;
+}
+
+.conTitleSet h4 {
+    font-size: 19px;
+}
+.conTitleSet p,.enqureyForm ul li p{
+	font-size: 14px;
+}
+.enqureyForm .btn {
+    width: 120px;
+    padding: 12px 0px;
+    font-size: 13px;
+}
+.condetails li{
+	padding: 0;
+}
+
+.absetmaya {
+    padding: 30px 10px 0 10px;
+}
+
+.journ .journright p {
+    font-size: 13px;
+}
+
+.journey {
+    padding-left: 10px;
+}
+
+.whatSetAs li h4 {
+    font-size: 17px;
+}
+
+
+.whatSetAs li i {
+    font-size: 60px;
+    }
+
+.whatSetAs li h4 {
+    font-size: 18px;
+}
+
+.whatSetAs li:hover .setGlop{
+	font-size: 70px;
+}
+
+.evCon p {
+    font-size: 13px;
+    line-height: 1.4;
+}
+.reCiprCn h3 {
+    font-size: 18px;
+}
+.reCiprCn p {
+    font-size: 13px;
+}
+
+.searchRecipe input {
+    width: 295px;
+        padding: 8px 20px;
+}
+
+.titleIncriReci p {
+    font-size: 14px;
+}
+
+.incredeDetailRes p {
+    font-size: 13px;
+}
+
+
+.warrantySet h4,.warrantySet .cancelTitle {
+    font-size: 15px;
+    line-height: 1.5;
+}
+.userManSet li{
+	height: 140px;
+}
+
+.userManCon a{
+	margin-top: 0;
+}
+
+.ban-next h2 {
+   
+    line-height: 1.6;
+}
+
+.conTitleSet p.findRegSer, .enqureyForm ul li p {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+.warrantySet p strong{
+	font-size: 14px;
+}
+
+.siHead{
+	font-size: 18px;
+    line-height: 1.5;
+}
+.createAcc h5, .siginInSetTop p, .links{
+	font-size: 13px;
+}
+
+
+.comHead p {
+    font-size: 18px;
+}
+
+.mix_list2 li .prHov a {
+    font-size: 12px;
+        padding: 11px 8px;
+        margin: 0;
+}
+
+.eventsInnerPageCon h4 {
+    font-size: 18px;
+}
+.eventsInnerPageCon a{
+	font-size: 13px;
+}
+
+
+#owl-demo5 .owl-controls .owl-page span {
+    width: 8px;
+    border: 1px solid #f00;
+    height: 8px;
+}
+
+.pd1_ctn .filllTT span{
+	left: 6px;
+}
+
+.msec_2 .list li .mix_det p {
+    font-size: 16px;
+}
+
+.msec_2 .list li .listdetCon .listConSet p {
+    font-size: 13px !important;
+    padding-top: 3px;
+}
+
+.keySpec li {
+    padding: 11px 22px;
+}
+
+.keyTi,.feRightCon h3 {
+    font-size: 18px;
+}
+
+
+
+.specTable> table tr td:first-child {
+    width: 40%;
+}
+
+.tabCheckOut li{
+	padding: 10px;
+}
+
+.itemsbye {
+    width: 80%;
+}
+
+.ckclosebtn a{
+	font-size: 13px;
+}
+
+.finPrice{
+	font-size: 16px !important;
+}
+.finPrTi {
+    font-size: 15px !important;
+}
+
+.prival li .priceti {
+    width: 58%;
+}
+
+.prival li .priceAm {
+    width: 40%;
+}
+.ckPriceDe {
+    padding: 20px 15px;
+}
+.currentOrder {
+    padding: 0px 10px;
+}
+.dasBRide p {
+    padding-top: 5px;
+}
+.currentOrder h3 {
+    font-size: 15px;
+    }
+
+
+}
+
+
+
+@media screen and (min-width: 300px) and (max-width: 320px){
+    .inNextProImg {
+    width: 30%;
+}
+	.comNextColse .btn {
+   		 padding: 10px 13px;
+	}
+	.addCompSet .container{
+		padding: 25px;
+	}
+	.spimg {
+    	width: 70%;
+	}
+
+	.sponCon .btn {
+    	padding: 12px 15px;
+    }
+    .cyright{
+    	width: 320px;
+    }
+
+    .logo {
+    width: 100px;
+}
+.logoRight input {
+    padding: 10px 21px 10px 10px;
+    width: 171px;
+}
+.logoRight i{
+	width: 30px;
+    height: 25px;
+    line-height: 26px;
+    font-size: 13px;
+    top: 5px;
+}
+
+.res_menu a i{
+	font-size: 18px;
+	padding:9px;
+}
+
+.headCall {
+    font-size: 12px;
+}
+
+.mayaAbout {
+    padding-top: 10px;
+    width: 100%;
+}
+
+.absetmaya h2, .journey h2,.ourTeamset h2,.ourTeamset h2 {
+    font-size: 20px;
+}
+
+.mayaAbout li p {
+    line-height: 1.5;
+    padding-right: 0px;
+    font-size: 13px;
+}
+
+.mayaAbout li:last-child {
+    margin-top: 6px;
+}
+
+.whatSetAs li h4 {
+    font-size: 17px;
+}
+
+.whatSetAs li{
+	margin: 0px 0px 20px 0px;
+}
+
+.awardReg {
+    padding: 0px 10px;
+}
+
+.videoSet h3 {
+    font-size: 16px;
+    line-height: 1.3;
+}
+
+.VideiConAl p{
+	font-size: 13px;
+}
+
+.addCn h4 {
+    font-size: 18px;
+}
+
+.eventPage{
+	padding: 10px;
+}
+
+.addCn p {
+    font-size: 13px;
+}
+
+.recipeNameTi {
+    font-size: 14px;
+}
+
+.menuListINREci li {
+    margin-top: 20px;
+}
+
+.pressRelSet .btn {
+    font-size: 12px;
+    width: 130px;
+    padding: 12px 0;
+}
+
+.searchRecipe input {
+    width: 240px;
+}
+
+.popUpCloseInreci{
+	top: 11%;
+    right: 9%;
+}
+
+.warrantySet li {
+    margin-left: 8px;
+}
+
+.userManSet li {
+    width: 90%;
+}
+
+.ansQus h3,.userManual h3  {
+    font-size: 17px;
+}
+
+
+.siteMapCon h2{
+	font-size: 18px;
+}
+
+
+.siteMapCon li {
+    margin-top: 20px;
+}
+
+.setOfsitemap li{
+	margin-top: 0px;
+}
+
+.warrantySet h4, .warrantySet .cancelTitle {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.signsec {
+    margin-top: 10px;
+}
+
+.createAcc li input {
+    padding: 8px 20px;
+}
+
+.mix_list2 li .prHov a i{
+	font-size: 14px;
+}
+
+
+.eventsInnerPageCon h4 {
+    font-size: 17px;
+}
+
+.pd1_ctn .filllTT span {
+    font-size: 12px;
+}
+
+.prodimg {
+    border: solid 1px #ccc;
+}
+
+.mix_name {
+    font-size: 12px !important;
+}
+
+.faqSet {
+    padding: 25px 10px;
+}
+
+.msec_2 h2 {
+    font-size: 17px;
+}
+
+.gridListBtn .glBtn i {
+    font-size: 13px;
+    padding: 7px;
+}
+.mix_det p {
+    font-size: 14px;
+}
+
+.mix_det h4{
+	font-size: 19px;
+}
+
+.pd1 {
+    padding: 25px 7px;
+}
+
+.mix_list2 li .prHov a i {
+    font-size: 12px;
+}
+
+.mix_list2 li .prHov a{
+	padding: 11px 6px;
+}
+
+.mix_det_rt a {
+    padding: 9px 2px;
+}
+.proAdti {
+    font-size: 14px;
+    }
+
+.qvProName {
+    font-size: 30px;
+}
+
+.qvPrice {
+    font-size: 23px;
+}
+
+.qvCon{
+	padding: 10px;
+}
+.popupQv{
+	padding: 12% 2%;
+}
+.proOrderBtn a,.specTable> table tr td {
+    font-size: 13px;
+}
+
+.keySpec li {
+    padding: 11px 15px;
+}
+
+.feRightCon li{
+	font-size: 14px;
+}
+
+.feRightCon li img{
+	padding-right:  10px;
+}
+
+.motorSpec li .motSpecHead {
+    font-size: 14px;
+}
+
+.relatedPro h3{
+	font-size: 14px;
+}
+
+.feInListFor p{
+	padding-top: 5px;
+	    font-size: 13px;
+    line-height: 1.4;
+}
+
+.conTfeature {
+    height: auto;
+}
+
+.reProCon p {
+    font-size: 15px;
+}
+.qvProName {
+    font-size: 28px;
+}
+
+.itemsbye {
+    width: 100%;
+}
+
+.conTfeature .jarImgLeft {
+    margin: 20px 57px auto;
+}
+.siHead {
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+
+.shippingMeth h5, .readTerms h5 {
+    font-size: 16px;
+}
+.dashHeader h3 {
+    font-size: 20px;
+}
+.dashHeader p {
+    padding-top: 8px;
+    font-size: 13px;
+}
+
+.userSetDash {
+    padding: 10px;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
