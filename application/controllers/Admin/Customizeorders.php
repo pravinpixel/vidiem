@@ -120,12 +120,23 @@ class Customizeorders extends CI_Controller {
 
         $order_info                 = $this->FunctionModel->Select_Row('vidiem_customorder',array('id'=>$id));
 
+        $mail_header                = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                                            <span>
+                                                <h1 style="color:#00BFFF;">
+                                                    <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                                                </h1>
+                                            </span>';
+        $mail_content               = '';
+
 
         if( isset( $order_info['dealer_id'] ) && !empty( $order_info['dealer_id']) ) {
-            $dealer_info        = $this->FunctionModel->Select_Fields_Row('display_name,dealer_erp_code,location_code, phone, email','vidiem_dealers',array('id'=>$order_info['dealer_id']));
-        }
 
-        $clt_info                   = $this->FunctionModel->Select_Fields_Row('name,mobile_no,email','vidiem_clients',array('id'=>$order_info['client_id']));
+            $dealer_info            = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
+            // $dealer_info        = $this->FunctionModel->Select_Fields_Row('display_name,dealer_erp_code,location_code, phone, email','vidiem_dealers',array('id'=>$order_info['dealer_id']));
+
+        }
+        
+        $clt_info                   = $this->FunctionModel->Select_Fields_Row('name,mobile_no,email','vidiem_clients',array( 'id' => $order_info['client_id'] ) );
 		$UpdateData                 = array(
                                         'status'       => $this->input->post('status'),
                                         'courier'      => $this->input->post('courier'),
@@ -151,26 +162,36 @@ class Customizeorders extends CI_Controller {
 
             $ins_trac['status_name']= 'Order in Process';  
 
-           
-            
-            $sms_content            = 'sir your order on vidiem site is in processing';
-            // $this->SMSContent($clt_info['mobile_no'],$sms_content);
-            $this->ProjectModel->SMS($client_mobile_no,$sms_content);
-
             $subject    = 'Subject : Vidiem Order Status - Order in Process';
-            $msg        = '<style>
-                            div.mail > p{
-                                margin:0px 0px 1em;padding:0px;color:rgb(51,51,51);font-family:q_serif,Georgia,Times,&quot;Times New Roman&quot;,&quot;Hiragino Kaku Gothic Pro&quot;,Meiryo,serif;font-size:16px
-                            } 
-                            </style>
-                            <div class="mail"><p>Dear '.$client_name.'</p><p><b>RE: Vidiem&nbsp;current status for the&nbsp;<span>Order</span>&nbsp;number '.$order_info['inv_code'].' dated '.date("d-M-Y", strtotime($order_info['created'])).'.</b></p><p>I here by write to you in regards with the above&nbsp;<span>order</span>&nbsp;which was made by&nbsp; you is&nbsp;<span style="font-family:Arial,Helvetica,sans-serif;font-size:small;color:rgb(34,34,34)">in processing</span></p><p>If you require any other information in relationship to the above, please do not hesitate to contact us/me.</p><p>Your early response will be highly appreciable.</p><p>Thanking you in advance.</p><p>Best Wishes,</p><p>Vidiem Team.</p></div>';
-            $this->FunctionModel->sendmail1($client_email,$msg,$subject,InfoMail);
-            $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,johnpaul@pixel-studios.com",$msg,$subject,InfoMail);
+
+            $mail_content        .= $mail_header;
+            $mail_content        .= '<div style="width:100%;text-align:center;">
+                                        <h2>Dear '.$client_name.'</h2>
+                                        <p><b>RE: Vidiem&nbsp;current status for the&nbsp;
+                                        <span>Order</span>
+                                        &nbsp;number '.$order_info['inv_code'].' dated '.date("d-M-Y", strtotime($order_info['created'])).'.</b>
+                                        </p>
+                                        <p>I here by write to you in regards with the above&nbsp;
+                                        <span>order</span>
+                                        &nbsp;which was made by&nbsp; you is&nbsp;
+                                        <span style="font-family:Arial,Helvetica,sans-serif;font-size:small;color:rgb(34,34,34)">in processing</span>
+                                        </p>
+                                        <p>If you require any other information in relationship to the above, please do not hesitate to contact us/me.</p>
+                                        <p>Your early response will be highly appreciable.</p>
+                                    </div>
+                                    <p>Thanking you in advance.</p>
+                                    <p>Best Wishes,</p>
+                                    <p>Vidiem Team.</p>
+                                    </div>';
+
+            $this->FunctionModel->sendmail1($client_email,$mail_content,$subject,InfoMail);
+            // $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,johnpaul@pixel-studios.com",$mail_content,$subject,InfoMail);
+            $this->FunctionModel->sendmail1("durairaj.pixel@gmail.com,johnpaul@pixel-studios.com",$mail_content,$subject,InfoMail);
 
             if( isset( $order_info['dealer_id'] ) && !empty( $order_info['dealer_id'])) {
                 $this->FunctionModel->sendmail1( $dealer_info['email'], $msg, $subject, InfoMail );
                 // $sms_content    = "Dear Dealer Vasanth & Co, Our Customer showing interest on Vidiem By You. To confirm order 123132132, please collect the amount in bill counter. -VIDIEM";
-                // $this->ProjectModel->SMSContentDealer('9551706025',$sms_content);
+                // $this->ProjectModel->SMSContent('9551706025',$sms_content);
 
             }
 	
@@ -189,41 +210,54 @@ class Customizeorders extends CI_Controller {
               
             // $this->SMS($clt_info['mobile_no'],$sms_content);
             $billing_mobile_no          =  ($order_info['billing_mobile_no'] != '' &&  $order_info['billing_mobile_no'] != null)  ? $order_info['billing_mobile_no'] :  $clt_info['mobile_no'];
-            SMS($billing_mobile_no,$sms_content);
             $this->ProjectModel->SMS($clt_info['mobile_no'],$sms_content);
             
             if( isset( $order_info['dealer_id'] ) && !empty( $order_info['dealer_id'])) {
                 /** dealer sms content  */
                 $sms_content    = "Hi ".$dealer_info['display_name'].", your Vidiem By You order ".$order_info['inv_code']." has been shipped! Your Tracking number is ".$tracking_code.". Track your order here: ".base_url()."tracking. -VIDIEM";
-                $this->ProjectModel->SMSContentDealer( $dealer_info['phone'], $sms_content );
+                $this->ProjectModel->SMSContent( $dealer_info['mobile_no'], $sms_content );
 
-                $subject = ' Vidiem By You Order No : '.$order_info['order_no'].' Shipped';
-                $msg ='<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;" >
-                <span ><h1 style="color:#00BFFF;"><img src="'.base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto"/></h1></span>
-                <div style="width:100%;text-align:center" ><h2> Hi '.($client_name).', <br>Thanks for choosing to shop with us!</h2></div>
-                <hr><div style="text-align:center">Your Vidiem By You order #'.@$order_info['order_no'].'is now on the way. Track your shipment to see the latest delivery status.<br></div>
+                $subject        = ' Vidiem By You Order No : '.$order_info['order_no'].' Shipped';
+                $mail_content   .= $mail_header;
+
+                $mail_content   .= '<div style="width:100%;text-align:center" >
+                                        <h2> Hi '.($client_name).', <br>Thanks for choosing to shop with us!</h2>
+                                    </div>
+                                    <hr>
+                                    <div style="text-align:center">Your Vidiem By You order #'.@$order_info['order_no'].'is now on the way. Track your shipment to see the latest delivery status.<br></div>
                 
-                <hr><br><br> Regards<br>Vidiem Team    </div>';
+                                    <hr><br><br> Regards<br>Vidiem Team </div>';
 
+                $this->FunctionModel->sendmail1( $dealer_info['email'], $mail_content, $subject, InfoMail );
 
-                $this->FunctionModel->sendmail1( $dealer_info['email'], $msg, $subject, InfoMail );
             } else {
 
                 $subject        = 'Subject : Vidiem Order Status - Shipped';
-                $msg            = '<style>
-                                        div.mail > p{
-                                            margin:0px 0px 1em;padding:0px;color:rgb(51,51,51);font-family:q_serif,Georgia,Times,&quot;Times New Roman&quot;,&quot;Hiragino Kaku Gothic Pro&quot;,Meiryo,serif;font-size:16px
-                                        } 
-                                        </style>
-                                        <div class="mail"><p>We here by write to you in regards with the above order which was made by you is <b>"Shipped"</b> with our Courier Partner <b>'.ucfirst($courier_name).'.</b> Tracking Number : <b>'.$tracking_code.'.</b></p>
-                                    <p>If you require any other information in relationship to the above, please do not hesitate to contact us/me.</p>
-                                <p>Your early response will be highly appreciable.</p>
-                                <p>Thanking you in advance.</p><p>Best Wishes,</p><p>Vidiem Team.</p></div>';
+
+                $mail_content   .= $mail_header;
+
+                $mail_content   .= ' <div style="width:100%;text-align:center" >
+                                        <h2> Hi '.($client_name).'</h2>
+                
+                                        <div class="mail">
+                                        <p> We here by write to you in regards with the above order which was made by you is 
+                                            <b>"Shipped"</b> with our Courier Partner 
+                                            <b>'.ucfirst($courier_name).'.</b> Tracking Number : 
+                                            <b>'.$tracking_code.'.</b>
+                                        </p>
+                                        <p> If you require any other information in relationship to the above, please do not hesitate to contact us/me.</p>
+                                        <p> Your early response will be highly appreciable.</p>
+                                    </div>
+                                        <p> Thanking you in advance.</p>
+                                        <p>Best Wishes,</p>
+                                        <p>Vidiem Team.</p>
+                                    </div>';
 
             }
             
-            $this->FunctionModel->sendmail1($client_email,$msg,$subject,InfoMail);
-            $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,johnpaul@pixel-studios.com",$msg,$subject,InfoMail);
+            $this->FunctionModel->sendmail1($client_email,$mail_content,$subject,InfoMail);
+            // $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,johnpaul@pixel-studios.com",$mail_content,$subject,InfoMail);
+            $this->FunctionModel->sendmail1("durairaj.pixel@gmail.com,johnpaul@pixel-studios.com",$mail_content,$subject,InfoMail);
         }
 
         if($status==3) {
@@ -232,7 +266,6 @@ class Customizeorders extends CI_Controller {
 
             $UpdateData['delivered_at'] = date('Y-m-d');
 
-            $order_info             = $this->FunctionModel->Select_Fields_Row('client_id,inv_code,amount,created','vidiem_customorder',array('id'=>$id));
             $clt_info               = $this->FunctionModel->Select_Fields_Row('mobile_no,email','vidiem_clients',array('id'=>$order_info['client_id']));
           
             $sms_content            = 'Hi <b>'.$clt_info['name'].'</b>, your order <b>'.$order_info['inv_code'].'</b> has been delivered. Thank you for shopping with us. Keep visiting <a href="www.vidiem.in">vidiem.in</a> for exciting offers. -VIDIEM';
@@ -251,30 +284,48 @@ class Customizeorders extends CI_Controller {
                 /*** Dealer sms content */
 
                 $sms_content    = "Hi ".$dealer_info['display_name'].", Vidiem By You order ".$order_info['inv_code']."  ".$order_info['order_no']." has been delivered. -VIDIEM";
-                $this->ProjectModel->SMS($dealer_info['phone'],$sms_content);
+                $this->ProjectModel->SMS($dealer_info['mobile_no'],$sms_content);
 
                 $subject = ' Vidiem By You Order No : '.$order_info['order_no'].' Delivered';
-                $msg ='<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;" >
-                <span ><h1 style="color:#00BFFF;"><img src="'.base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto"/></h1></span>
-                <div style="width:100%;text-align:center" ><h2> Hi '.($client_name).', <br>Thanks for choosing to shop with us!</h2></div>
-                <hr><div style="text-align:center">Your Vidiem By You order #'.@$order_info['order_no'].'is now successfully delivered. <br></div>
-                
-                <hr><br><br> Regards<br>Vidiem Team    </div>';
 
-                $this->FunctionModel->sendmail1( $dealer_info['email'], $msg, $subject, InfoMail );
+                $mail_content   .= $mail_header;
+                $mail_content   .= ' <div style="width:100%;text-align:center" >
+                                        <h2> Hi '.($client_name).', <br>Thanks for choosing to shop with us!</h2>
+                                    </div>
+                                    <hr>
+                                    <div style="text-align:center">Your Vidiem By You order #'.@$order_info['order_no'].'is now successfully delivered. 
+                                        <br>
+                                    </div>
+                
+                                    <hr><br><br> Regards<br>Vidiem Team    
+                                    </div>';
+
+                $this->FunctionModel->sendmail1( $dealer_info['email'], $mail_content, $subject, InfoMail );
                 
             } else {
                 $subject    = 'Subject : Vidiem Order Status - Delivered ';
-                $msg        = '<style>
-                                div.mail > p{
-                                    margin:0px 0px 1em;padding:0px;color:rgb(51,51,51);font-family:q_serif,Georgia,Times,&quot;Times New Roman&quot;,&quot;Hiragino Kaku Gothic Pro&quot;,Meiryo,serif;font-size:16px
-                                } 
-                                </style>
-                                <div class="mail"><p>Dear '.$clt_info['name'].'</p><p><b>RE: Vidiem&nbsp;current status for the&nbsp;<span>Order</span>&nbsp;number '.$order_info['inv_code'].' dated '.date("d-M-Y", strtotime($order_info['created'])).'.</b></p><p>I here by write to you in regards with the above&nbsp;<span>order</span>&nbsp;which was made by&nbsp; you is&nbsp;<span style="font-family:Arial,Helvetica,sans-serif;font-size:small;color:rgb(34,34,34)"> Delivered</span></p><p>If you require any other information in relationship to the above, please do not hesitate to contact us/me.</p><p>Your early response will be highly appreciable.</p><p>Thanking you in advance.</p><p>Best Wishes,</p><p>Vidiem Team.</p></div>';
+
+                $mail_content   .= $mail_header;
+                $mail_content   .= ' <div style="width:100%;text-align:center" >
+                                        <div class="mail">
+                                        <p>Dear '.$clt_info['name'].'</p>
+                                        <p><b>RE: Vidiem&nbsp;current status for the&nbsp;
+                                        <span>Order</span>
+                                        &nbsp;number '.$order_info['inv_code'].' dated '.date("d-M-Y", strtotime($order_info['created'])).'.</b>
+                                        </p>
+                                        <p>I here by write to you in regards with the above&nbsp;<span>order</span>&nbsp;which was made by&nbsp; you is&nbsp;
+                                        <span style="font-family:Arial,Helvetica,sans-serif;font-size:small;color:rgb(34,34,34)"> Delivered</span></p>
+                                        <p>If you require any other information in relationship to the above, please do not hesitate to contact us/me.</p>
+                                        <p>Your early response will be highly appreciable.</p><p>Thanking you in advance.</p>
+                                    </div>
+                                    <p>Best Wishes,</p>
+                                    <p>Vidiem Team.</p>
+                                    </div>';
             }
            
-            $this->FunctionModel->sendmail1($client_email,$msg,$subject,InfoMail);
-            $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,johnpaul@pixel-studios.com",$msg,$subject,InfoMail);
+            $this->FunctionModel->sendmail1($client_email,$mail_content,$subject,InfoMail);
+            // $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,johnpaul@pixel-studios.com",$mail_content,$subject,InfoMail);
+            $this->FunctionModel->sendmail1("durairaj.pixel@gmail.com,johnpaul@pixel-studios.com",$mail_content,$subject,InfoMail);
         }
 
         $this->FunctionModel->Insert($ins_trac,' vidiem_order_tracking');

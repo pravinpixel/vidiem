@@ -404,7 +404,7 @@ class FunctionModel extends CI_Model {
 							->get('vidiem_dealer_users');
 
 		if( $details->num_rows() > 0 ) {
-			return $details->result();
+			return $details->row_array();
 		} else {
 			return null;
 		}

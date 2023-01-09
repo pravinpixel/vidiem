@@ -706,7 +706,17 @@ class CustomizeModel extends CI_Model
 
             $admin_mail_subject                 = 'New order – Vidiem by You – ' . $order_info['inv_code'];;
             $admin_mail_content                  = $mail_header;
-            $admin_mail_content                  .= '<p>Dear Team,<br>  <br>&nbsp;&nbsp; New Order on Vidiem By You From Dealer ' . $dealer_info['display_name'] . '-' . $dealer_info['dealer_erp_code'] . ' <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'];
+            $admin_mail_content                  .= '<div style="width:100%;text-align:center;">
+                                                            <h2>Dear Team,</h2>  
+                                                            <br>&nbsp;&nbsp; 
+                                                            New Order on Vidiem By You From Dealer ' . $dealer_info['display_name'] . '-' . $dealer_info['dealer_erp_code'] . ' 
+                                                            <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'].'
+                                                            <br><br>
+                                                            </div>
+                                                    <div>
+                                                        <p>Regards</p>
+                                                        <p>Vidiem Team</p>
+                                                    </div>';
             $admin_mail_content                 .= '</div>';
 
         } else {
@@ -714,7 +724,17 @@ class CustomizeModel extends CI_Model
             if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id'])) {
                 $client_mail_subject            = 'Vidiem By You Order No : ' . $order_info['inv_code'];
                 $mail_content                   .= $mail_header;
-                $mail_content                   .= '<p>Dear Customer,<br> Thank you for your order. We’ll send a confirmation when your order processed further.  If you would like to know the status of your order please visit Vidiem.in <br>Order Code ' . $order_info['inv_code'];
+                $mail_content                   .= '<div style="width:100%;text-align:center;">
+                                                        <h2>Dear Customer,</h2>
+                                                        <br> Thank you for your order. 
+                                                        We’ll send a confirmation when your order processed further.  
+                                                        If you would like to know the status of your order please visit Vidiem.in 
+                                                        <br>Order Code ' . $order_info['inv_code'].'
+                                                        <br><br></div>
+                                                        <div>
+                                                            <p>Regards</p>
+                                                            <p>Vidiem Team</p>
+                                                        </div>';
                 $mail_content                   .= '</div>';
                 $this->FunctionModel->sendmail1($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
             } else {
@@ -739,13 +759,21 @@ class CustomizeModel extends CI_Model
 
             $admin_mail_subject                 = 'New order – Vidiem by You – ' . $order_info['inv_code'];;
             $admin_mail_content                  = $mail_header;
-            $admin_mail_content                     = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
-                                                    <span>
-                                                        <h1 style="color:#00BFFF;">
-                                                            <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
-                                                        </h1>
-                                                    </span>';
-            $admin_mail_content                     .= '<p>Dear Team,<br>  <br>&nbsp;&nbsp; New Order on Vidiem By You. <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'];
+            $admin_mail_content                     = '<div style="width:100%;text-align:center;border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                                                        <span>
+                                                            <h1 style="color:#00BFFF;">
+                                                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                                                            </h1>
+                                                        </span>';
+            $admin_mail_content                     .= '<h2>Dear Team,</h2>
+                                                            <br>  
+                                                            <br>&nbsp;&nbsp; 
+                                                            New Order on Vidiem By You. 
+                                                            <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'].'
+                                                            <br><br>
+                                                            <p>Regards</p>
+                                                            <p>Vidiem Team</p>
+                                                            </div>';
             $admin_mail_content                     .= '</div>';
         }
         
@@ -764,13 +792,13 @@ class CustomizeModel extends CI_Model
 
             /*** Dealer sms content */
             $sms_content    = 'Dear Dealer ' . $dealer_info['display_name'] . ', Our Customer showing interest on Vidiem By You. To confirm order ' . $order_info['order_no'] . ', please collect the amount in bill counter. -VIDIEM';
-            $this->ProjectModel->SMSContent($dealer_info['phone'], $sms_content);
+            $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
         } else if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id'])) {
             $sms_content    = "Thank you for shopping with Vidiem through our Dealer " . $dealer_info['display_name'] . ". Your order number " . $order_info['inv_code'] . " is under production. We'll share the tracking details once the shipment is ready. -VIDIEM";
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
             /** dealer sms content */
             $sms_content    = "Dear Dealer" . $dealer_info['display_name'] . ", Your Vidiem By You order number " . $order_info['inv_code'] . " is under Production. We'll share the tracking details once the shipment is ready. -VIDIEM";
-            $this->ProjectModel->SMSContent($dealer_info['phone'], $sms_content);
+            $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
         } else {
             $sms_content    = 'Thank you for shopping with Vidiem. Your order number ' . $order_info['inv_code'] . ' is under process. We\'ll share the tracking details once the shipment is ready. -VIDIEM';
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content, '1107164362643761375');

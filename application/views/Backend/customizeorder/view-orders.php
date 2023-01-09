@@ -186,16 +186,14 @@
                       <textarea name="" id="inputRemarks" cols="30" rows="4" class="form-control order_notes"></textarea>
                     </div>
                   </div>
-                  <div class="form-group"> 
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-primary custom-update-order-status">Submit</button>
-                    </div>
+                  
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary custom-update-order-status">Submit</button>
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
                   </div>
                 </form>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-              </div>
+              
             </div>
             <!-- /.modal-content -->
           </div>
