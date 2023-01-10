@@ -664,8 +664,8 @@ class CustomizeModel extends CI_Model
         $mail_content = '';
 
 
-        $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id', 'vidiem_customorder', array('id' => $order_id));
-
+        $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id, pg_type', 'vidiem_customorder', array('id' => $order_id));
+        
         if (isset($order_info['dealer_user_id']) && !empty($order_info['dealer_user_id'])) {
             $dealer_info        = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
         }
@@ -685,7 +685,7 @@ class CustomizeModel extends CI_Model
         $this->ProjectModel->SMS(AdminMobile, $sms_content);
 
         //	$subject='New Order on Vidiem Site';
-        if (isset($order_info['payment_source']) && $order_info['payment_source'] == 'counter') {
+        if (isset($order_info['payment_source']) && $order_info['payment_source'] == 'counter' && empty( $order_info['pg_type'] ) ) {
             $client_mail_subject                = 'Vidiem By You Order No : ' . $order_info['inv_code'];
             $mail_content                       .= $mail_header;
             $mail_content                       .= ' <div style="width:100%;text-align:center;">
@@ -785,19 +785,20 @@ class CustomizeModel extends CI_Model
 
         $this->FunctionModel->sendmail('durairaj.pixel@gmail.com, john@pixel-studios.com', $admin_mail_content, $admin_mail_subject, InfoMail);
 
-        if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id']) && $order_info['payment_source'] == 'counter') {
+        if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id']) && $order_info['payment_source'] == 'counter' && empty( $order_info['pg_type'] ) ) {
             #showing interest
-            $sms_content    = 'Thanks for showing interest with our Dealer ' . $dealer_info['display_name'] . ' on Vidiem By You. To confirm order, please pay online or in bill counter. -VIDIEM -VIDIEM';
+            $sms_content    = 'Thanks for showing interest with our Dealer ' . $dealer_info['display_name'] .' '.$dealer_info['location_name']. ' on Vidiem By You. To confirm order, please pay online or in bill counter. -VIDIEM -VIDIEM';
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
 
             /*** Dealer sms content */
-            $sms_content    = 'Dear Dealer ' . $dealer_info['display_name'] . ', Our Customer showing interest on Vidiem By You. To confirm order ' . $order_info['order_no'] . ', please collect the amount in bill counter. -VIDIEM';
+            $sms_content    = 'Dear Dealer ' . $dealer_info['display_name'] . ' '.$dealer_info['location_name']. ', Our Customer showing interest on Vidiem By You. To confirm order ' . $order_info['order_no'] . ', please collect the amount in bill counter. -VIDIEM';
             $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
         } else if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id'])) {
-            $sms_content    = "Thank you for shopping with Vidiem through our Dealer " . $dealer_info['display_name'] . ". Your order number " . $order_info['inv_code'] . " is under production. We'll share the tracking details once the shipment is ready. -VIDIEM";
+
+            $sms_content    = "Thank you for shopping with Vidiem through our Dealer " . $dealer_info['display_name'] .' '.$dealer_info['location_name']. ". Your order number " . $order_info['inv_code'] . " is under production. We'll share the tracking details once the shipment is ready. -VIDIEM";
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
             /** dealer sms content */
-            $sms_content    = "Dear Dealer" . $dealer_info['display_name'] . ", Your Vidiem By You order number " . $order_info['inv_code'] . " is under Production. We'll share the tracking details once the shipment is ready. -VIDIEM";
+            $sms_content    = "Dear Dealer" . $dealer_info['display_name'] . ' '.$dealer_info['location_name']. ", Your Vidiem By You order number " . $order_info['inv_code'] . " is under Production. We'll share the tracking details once the shipment is ready. -VIDIEM";
             $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
         } else {
             $sms_content    = 'Thank you for shopping with Vidiem. Your order number ' . $order_info['inv_code'] . ' is under process. We\'ll share the tracking details once the shipment is ready. -VIDIEM';

@@ -199,7 +199,6 @@ class Customizeorders extends CI_Controller {
         if($status==2){
             
             $ins_trac['status_name']    = 'Order Shipped';
-
             
             $courier_id                 = $this->input->post('courier');
             $tracking_code              = $this->input->post('tracking_code');
@@ -214,8 +213,12 @@ class Customizeorders extends CI_Controller {
             
             if( isset( $order_info['dealer_id'] ) && !empty( $order_info['dealer_id'])) {
                 /** dealer sms content  */
-                $sms_content    = "Hi ".$dealer_info['display_name'].", your Vidiem By You order ".$order_info['inv_code']." has been shipped! Your Tracking number is ".$tracking_code.". Track your order here: ".base_url()."tracking. -VIDIEM";
+                $sms_content    = "Hi ".$dealer_info['display_name'].' '.$dealer_info['location_name'].", your Vidiem By You order ".$order_info['inv_code']." has been shipped! Your Tracking number is ".$tracking_code.". Track your order here: ".base_url()."tracking. -VIDIEM";
                 $this->ProjectModel->SMSContent( $dealer_info['mobile_no'], $sms_content );
+
+                /*** customer sms template */
+                $sms_client_content = 'Hi '.$client_name.', your Vidiem By You order '.$order_info['inv_code'].' has been shipped! Your Tracking number is '.$tracking_code.'. Track your order here: '.base_url().'tracking. -VIDIEM';
+                $this->ProjectModel->SMSContent( $client_mobile_no, $sms_client_content );
 
                 $subject        = ' Vidiem By You Order No : '.$order_info['order_no'].' Shipped';
                 $mail_content   .= $mail_header;
@@ -283,8 +286,13 @@ class Customizeorders extends CI_Controller {
 
                 /*** Dealer sms content */
 
-                $sms_content    = "Hi ".$dealer_info['display_name'].", Vidiem By You order ".$order_info['inv_code']."  ".$order_info['order_no']." has been delivered. -VIDIEM";
+                $sms_content    = "Hi ".$dealer_info['display_name'].' '.$dealer_info['location_name'].", Vidiem By You order ".$order_info['inv_code']."  ".$order_info['order_no']." has been delivered. -VIDIEM";
                 $this->ProjectModel->SMS($dealer_info['mobile_no'],$sms_content);
+
+                /*** customer sms template */
+                
+                $sms_client_content = 'Hi '.$client_name.' your Vidiem By You order '.$order_info['inv_code'].' '.$order_info['order_no'].' has been delivered. Thank you for shopping with our Dealer '.$dealer_info['display_name'].' '.$dealer_info['location_name'].' and us. Keep visiting vidiem.in for exciting offers. -VIDIEM';
+                $this->ProjectModel->SMSContent( $client_mobile_no, $sms_client_content );
 
                 $subject = ' Vidiem By You Order No : '.$order_info['order_no'].' Delivered';
 

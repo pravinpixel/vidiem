@@ -318,8 +318,8 @@ class Dealers extends CI_Controller {
                                                         'payment_status'    => 'success',
                                                         'modified'          => date('Y-m-d H:i:s')
                                                     );
-            $code                                   = $this->FunctionModel->Select_Field('inv_code,pg_type','vidiem_customorder',array('id'=>$id),'inv_code','DESC',1);
-
+            $code                                   = $this->FunctionModel->Select_Fields('inv_code,pg_type','vidiem_customorder',array('id'=>$id),'inv_code','DESC',1);
+            
             if( empty( $code ) ) {
                 $InsertData['inv_code']             = $this->CustomizeModel->CustomInvoiceCode();
             }
