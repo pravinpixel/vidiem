@@ -1282,8 +1282,21 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 							
 							<table border="0"  cellspacing="5" style="width:600px;border:1px solid #CCC;margin-bottom:10px;padding:10px;font-size:11px;">
 					 
-							<tr><td><span style="color:#ff0000;font-size:12px;"><strong>Warranty Information</strong></span><br><br>
-							- 2 Years Warranty on Product <br> - 5 Years Warranty on Motor <br> <span style="color:#ff0000;font-size:10px;"><i>(For Domestic Purpose Only)</i></span></td></tr></table>
+							<tr>
+                                <td>
+                                    <span style="color:#ff0000;font-size:12px;"><strong>Warranty Information</strong>
+                                    </span>
+                                    <br><br>
+							            - 2 Years Warranty on Product <br> 
+                                        - 5 Years Warranty on Motor <br> 
+                                        <span style="color:#ff0000;font-size:10px;">
+                                        <i>(For Domestic Purpose Only)</i>
+                                        <br>
+                                        Non Returnable / No Cancellation in all vidiem by you orders
+                                        </span>
+                                </td>
+                            </tr>
+                        </table>
 							
 					</td>
 				</tr>

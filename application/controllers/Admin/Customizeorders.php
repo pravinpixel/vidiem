@@ -287,7 +287,7 @@ class Customizeorders extends CI_Controller {
                 /*** Dealer sms content */
 
                 $sms_content    = "Hi ".$dealer_info['display_name'].' '.$dealer_info['location_name'].", Vidiem By You order ".$order_info['inv_code']."  ".$order_info['order_no']." has been delivered. -VIDIEM";
-                $this->ProjectModel->SMS($dealer_info['mobile_no'],$sms_content);
+                $this->ProjectModel->SMSContent($dealer_info['mobile_no'],$sms_content);
 
                 /*** customer sms template */
                 

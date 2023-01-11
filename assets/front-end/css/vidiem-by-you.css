@@ -1765,11 +1765,11 @@ ul.mobile-step {
     }
 
     .product-image img {
-        max-height: 300px;
+        max-height: 35vh;
     }
     
     .product-image img.full-width {
-        max-height: 500px;
+        max-height: 45vh;
     }
 
     .motor-select-scroll .slick-slide {
@@ -1780,6 +1780,10 @@ ul.mobile-step {
     .motor_view_info {
         padding-left: 30px;
     }
+	
+	#content.pb-5{
+		padding-bottom: 0px !important;
+	}
 
     .motor-select {
         width: 100%;

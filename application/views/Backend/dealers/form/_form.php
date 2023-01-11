@@ -124,10 +124,9 @@
                     <div class="form-group">
                         <label for="promoter_code" class="col-sm-4 control-label">
                             Enter Promoter Code
-                            <span class="red">*</span>
                         </label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="promoter_code" required name="promoter_code" value="<?= $order_data->promoter_code ?? '' ?>">
+                            <input type="text" class="form-control" id="promoter_code" name="promoter_code" value="<?= $order_data->promoter_code ?? '' ?>">
                         </div>
                     </div>
 
@@ -151,10 +150,10 @@
                         ?>
                         <div class="form-group">
                             <label for="dealer_invoice" class="col-sm-4 control-label">
-                                Upload Dealer Invoice <span class="red">*</span>
+                                Upload Dealer Invoice 
                             </label>
                             <div class="col-sm-8">
-                                <input type="file" name="dealer_invoice" id="dealer_invoice" class="form-control" required>
+                                <input type="file" name="dealer_invoice" id="dealer_invoice" class="form-control">
                             </div>
                         </div>
                     <?php } ?>
@@ -162,7 +161,6 @@
                     <div class="form-group">
                         <label for="vidiem_invoice" class="col-sm-4 control-label">
                             Upload Vidiem Invoice
-
                         </label>
                         <div class="col-sm-8">
                             <?php

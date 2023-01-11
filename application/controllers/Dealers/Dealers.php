@@ -294,7 +294,6 @@ class Dealers extends CI_Controller {
     {
 
         $this->form_validation->set_rules('receipt_no', 'Display Name', 'required');
-        $this->form_validation->set_rules('promoter_code', 'Promoter Code', 'required');
         $this->form_validation->set_rules('receipt', 'Receipt', 'callback_file_selected_dynamic[receipt]');
         $this->form_validation->set_rules('dealer_invoice', 'Dealer Invoice', 'callback_file_selected_dynamic[dealer_invoice]');
         $this->form_validation->set_rules('vidiem_invoice', 'Vidiem Invoice', 'callback_file_selected_dynamic[vidiem_invoice]');
@@ -318,11 +317,13 @@ class Dealers extends CI_Controller {
                                                         'payment_status'    => 'success',
                                                         'modified'          => date('Y-m-d H:i:s')
                                                     );
-            $code                                   = $this->FunctionModel->Select_Fields('inv_code,pg_type','vidiem_customorder',array('id'=>$id),'inv_code','DESC',1);
+                                                    
+            $code                                   = $this->FunctionModel->Select_Row('vidiem_customorder',array('id'=>$id));
             
-            if( empty( $code ) ) {
+            if( isset( $code['inv_code'] ) && empty( $code['inv_code'] ) ) {
                 $InsertData['inv_code']             = $this->CustomizeModel->CustomInvoiceCode();
             }
+            
 
             if( isset( $this->upload_data['receipt']['file_name'] ) && !empty( $this->upload_data['receipt']['file_name'] ) ) {
                 $InsertData['receipt_file']         = $this->upload_data['receipt']['file_name'];

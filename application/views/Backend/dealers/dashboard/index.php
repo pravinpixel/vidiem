@@ -47,7 +47,6 @@
                                     <th>Order No</th>
                                     <th>Location</th>
                                     <th>Location Code</th>
-                                    <th>Order ID</th>
                                     <th>Category</th>
                                     <th>Model Name</th>
                                     <th>Customer Info</th>
@@ -75,7 +74,7 @@
                                     <td><?= $items->inv_code ?? $items->order_no ?></td>
                                     <td><?= $items->location_name ?></td>
                                     <td><?= $items->location_code ?></td>
-                                    <td><?= $items->code ?></td>
+                                    <!-- <td><?= $items->code ?></td> -->
                                     <td><?= $showItems->catname ?? '' ?></td>
                                     <td><?= $showItems->basetitle ?? '' ?></td>
                                     <td>

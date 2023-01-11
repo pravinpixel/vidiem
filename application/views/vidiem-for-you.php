@@ -112,7 +112,7 @@ if( isset( $dealer_session['user']) ) {
 					   } else {
 						 ?>
                         <img id="fullbaseimg" src="<?= base_url(); ?>assets/front-end/images/vidiem-by-you/Full_bg1.jpg"
-                            id="product-image" alt="" class="img-fluid" />
+                            id="product-image" alt="" class="img-fluid full-width" />
                         <?php } ?>
                         <a href="#" class="red-btn view-selected-items" data-toggle="modal"
                             data-target="#SelectedItemsModal">Selected Items</a>
@@ -388,8 +388,7 @@ if( isset( $dealer_session['user']) ) {
                                                 
 					                            ?>
                                                 <p class="jar-options" <?php echo $j_opt_sel; ?>>Choose from our Jar, Handle &amp; Lid options
-                                                    <br /><a href="#" data-toggle="modal" data-target="#JarsModal"  >Click
-                                                        Here!</a></p>
+                                                    <br /><a href="#" data-toggle="modal" data-target="#JarsModal"  >Click Here!</a></p>
                                                 <p class="jar-options-selected" <?php echo $j_opt_sel; ?>>
                                                     <strong>
                                                         You have selected 
@@ -1220,6 +1219,8 @@ function fnbaseclick(ele, bid, baseimg, price) {
 $(".select-body").click(function() {
     $(".selected-items-mobile").addClass('show');
     $("li.step1").addClass('active');
+	$("#fullbaseimg").removeClass('full-width');
+	
 });
 
 $(".selected-items-mobile").click(function() {

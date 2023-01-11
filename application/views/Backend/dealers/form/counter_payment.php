@@ -94,17 +94,13 @@ $(document).ready(function() {
             receipt_no:{
                 required: true,
             },
-            promoter_code:{
-                required: true,
-            },
+           
         },
         messages:{
             receipt_no:{
                 required: "This Receipt No is required",
             },
-            promoter_code:{
-                required: "This Promoter Code is required",
-            },
+           
         },
         submitHandler: function(form) { 
 
