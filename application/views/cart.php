@@ -1,5 +1,6 @@
 <?php include('container/header.php'); ?>
 <div class="bgPro proDetaPage clearfix light-gray-bg">
+<!-- div class="cart-coupon">Due to the year end process, all our shipments will be delivered within 8 to 10 business working days.</div -->
 	<form method="POST" action="<?= base_url('checkout'); ?>">
 	<section class="checkOutDet clearfix ck_product_all">
 	<div class="container">
@@ -32,16 +33,29 @@
 	  if(!empty($content)){ ?>
 	  <div class="addSetCarFu clearfix">	
 		<ul class="ckProde clearfix ck_product_listing">
-			<?php foreach($content as $key=>$info){ ?>
+			<?php foreach($content as $key=>$info){ 
+				$cur_prod_cat_id=$this->FunctionModel->Select_Field('cat_id','vidiem_products',array('id'=>$info['id']));
+				$cur_prod_cat_slug=$this->FunctionModel->Select_Field('slug','vidiem_category',array('id'=>$cur_prod_cat_id));
+
+				if($data['id']==114) { 
+					$productNewurl = base_url('vidiem-adc'); 
+				} else if($data['id']==122) { 
+					$productNewurl = base_url('vidiem-iris'); 
+				} else if($data['id']==137) { 
+					$productNewurl = base_url('vidiem-tusker'); 	
+				} else { 
+					$productNewurl = base_url($cur_prod_cat_slug.'/'.$info['slug']);
+				 } 
+				?>
 			<li class="clearfix">
 				<div class="ckproimgleft">
 					<div class="ckfinimg">
-					<a href="<?= base_url('product/'.$info['slug']); ?>" >
+					<a href="<?= $productNewurl; ?>" >
 						<img src="<?= base_url('uploads/images/'.$info['image']); ?>" alt="" class="img-fluid" />
 					</a>	
 					</div>	
 					<div class="ckproimgright clearfix">
-						<a href="<?= base_url('product/'.$info['slug']); ?>" >
+						<a href="<?= $productNewurl; ?>" >
 						<h4 class="ckproname"><?= $info['name']; ?></h4>
 						</a>
 						<p>Model: <?= $info['modal_no']; ?></p>

@@ -337,12 +337,10 @@ class Dealers extends CI_Controller {
             
             $result                                 = $this->FunctionModel->Update($InsertData,'vidiem_customorder', ['id' => $id]);
 
-            if( isset( $code['pg_type'] ) && empty($code['pg_type']) ) {
-                //do actions
-            } else {
+            if( isset( $receipt_no ) && !empty($receipt_no) ) {
                 $this->CustomizeModel->Custom_NewOrderNotification($id);  
                 $this->CustomizeModel->CustomOrderInvoicing($id); 
-            }
+            } 
             
             $this->session->set_flashdata('title', "Thank You");     
             $this->session->set_flashdata('msg', "Payment is successful and You will receive email from our side further instrucions.");     

@@ -87,4 +87,38 @@ class Dealer extends CI_Controller {
         redirect('vidiem-dealer', 'refresh');
     }
 
+    public function passwordLinkList()
+    {
+        
+       $data = $this->db->select('vidiem_dealer_users.*, vidiem_dealers.vidiem_erp_code, vidiem_dealers.display_name, vidiem_dealer_locations.location_name, vidiem_dealer_locations.location_code')
+                    ->join('vidiem_dealers', 'vidiem_dealers.id = vidiem_dealer_users.dealer_id and vidiem_dealers.status="1"' )
+                    ->join('vidiem_dealer_locations', 'vidiem_dealer_locations.id = vidiem_dealer_users.location_id and vidiem_dealer_locations.status="1"' )
+                    ->where('vidiem_dealer_users.user_type', 'sale_person')
+                    ->where('vidiem_dealer_users.open_password is NOT NULL', NULL, FALSE)
+                    ->get('vidiem_dealer_users');
+        $data = $data->result();
+        
+        if( isset( $data ) && !empty( $data ) && count($data) > 0 ) {
+echo <<<THEADER
+
+<table class="url-header" border-spacing="0" cell-spacing="0" style="border-collapse: collapse;">
+    <tr>
+        <th> Ho Name</th>
+        <th> Location Name </th>
+        <th> Customer Code </th>
+        <th> Url </th>
+    </tr>
+THEADER;
+            foreach($data as $items ){
+                $password = @base64_encode($items->open_password);
+echo <<<HEADER
+<tr>
+    <td>$items->display_name</td><td>$items->location_name</td><td>$items->vidiem_erp_code</td><td>https://www.vidiem.in/vidiem-dealer/qrlogin?userid=$items->user_id&password=$password</td>
+</tr>
+HEADER;
+            }
+        }
+        
+    }
+
 }

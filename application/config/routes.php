@@ -3,17 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['default_controller'] = 'home';
 
-$route['category/(:any)'] = 'home/category/$1';
+
 $route['category'] = 'home/category';
 $route['exclusive-products/(:any)'] = 'home/exclusiveProduct/$1';
 $route['exclusive-products'] = 'home/exclusiveProductAllData';
-$route['product/(:any)'] = 'home/product/$1';
+// $route['product/(:any)'] = 'home/product/$1';
+
 $route['product'] = 'home/product';
 $route['compare'] = 'home/compare';
 $route['cart'] = 'home/cart';
 $route['checkout'] = 'home/checkout';
 $route['payment'] = 'home/payment';
-$route['about-us'] = 'home/about_us';
+$route['about-us'] = 'home/about_us'; 
 $route['contact-us'] = 'home/contact_us';
 $route['cancellation-policy'] = 'home/cancellation_policy';
 $route['disclaimer'] = 'home/Disclaimer';
@@ -86,8 +87,10 @@ $route['testmail'] = 'home/testmail';
 $route['testnew'] = 'home/testnew';
 
 /*** Dealer routes */
+$route['dealer-list'] = 'dealer/passwordLinkList';
 $route['vidiem-dealer'] = 'dealer/index';
 $route['vidiem-dealer/login'] = 'dealer/login';
+$route['vidiem-dealer/qrlogin'] = 'qrdealer/login';
 
 /*** Dealer admin and counter persons login */
 $route['dealer-admin'] = 'Dealers/dashboard/index';
@@ -108,6 +111,7 @@ $route['dealer-admin/location/save'] = 'Dealers/Location/save';
 $route['dealer-admin/dealers/reports'] = 'Dealers/Report/index';
 
 // Dashboard Redirect 
+//$route['Admin'] = 'Admin/home';
 $route['Admin/forgot_password'] = 'Admin/home/forgot_password';
 $route['Admin/logout'] = 'Admin/home/logout';
 
@@ -131,9 +135,7 @@ $route['googlefeedxml'] = 'home/googlexmlgenrate';
 
 $route['404_override'] = 'home/page_not_found';
 $route['translate_uri_dashes'] = FALSE;
-
 $route['user/test'] = 'user/test';
-
 //$route['cron/cron-uncompleted-orders'] ='home/uncompletedorder_cron';
 $route['cron/cron-uncompleted-orders'] = 'cronjobs/uncompletedorder_cron';
 $route['trackingorder'] = 'trackingorder/index';
@@ -145,8 +147,19 @@ $route['Admin/dealer_management/(:any)/location/add'] = 'Admin/Dealer_management
 $route['Admin/dealer_management/(:any)/location/add/(:any)'] = 'Admin/Dealer_management/location_add/$1/$2';
 $route['Admin/dealer_management/(:any)/location_delete_status_update/(:any)'] = 'Admin/Dealer_management/location_delete_status_update/$1/$2';
 
-
 $route['test-mail'] = 'tracking/test_mail';
 $route['test-sms'] = 'tracking/test_sms';
-
 $route['Admin/payment/update/(:any)'] = 'Home/adminOrderPayment/$1';
+$route['home/AjaxProductFilter'] = 'home/AjaxProductFilter';
+// print_r($_REQUEST); exit;
+$actual_link = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+$except = true;
+if(strpos($actual_link,"/Admin")!==false)  $except = false;
+if(strpos($actual_link,"/dealer") !==false) $except = false;
+if(strpos($actual_link,"/user") !==false) $except = false;
+if($except) {
+$route['(:any)/(:any)']['get'] = 'home/product/$1/$2';
+$route['(:any)']['get'] = 'home/category/$1';
+} 
+

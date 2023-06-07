@@ -118,6 +118,7 @@ class Location extends CI_Controller {
 
                         if( isset( $_POST['s_password'] ) && !empty( $_POST['s_password'] ) ) {
                             $_insert_user_location['password'] = sha1($_POST['s_password']);
+                            $_insert_user_location['open_password'] = $_POST['s_password'];
                         }
 
                         $this->FunctionModel->Update($_insert_user_location,'vidiem_dealer_users', ['id' => $sale_user_id ]);
@@ -127,6 +128,7 @@ class Location extends CI_Controller {
                             'dealer_id' => $this->input->post('dealer_id'),
                             'user_id' => $_POST['s_user_name'],
                             'password' => sha1($_POST['s_password']),
+                            'open_password' => $_POST['s_password'],
                             'user_code' => $_POST['s_user_code'],
                             'is_admin' => 'no',
                             'is_main_admin' => 'no',
@@ -159,6 +161,7 @@ class Location extends CI_Controller {
                             'dealer_id' => $this->input->post('dealer_id'),
                             'user_id' => $_POST['c_user_name'],
                             'password' => sha1($_POST['c_password']),
+                            'open_password' => $_POST['c_password'],
                             'user_code' => $_POST['c_user_code'],
                             'is_admin' => 'no',
                             'is_main_admin' => 'no',

@@ -624,7 +624,18 @@ class CustomizeModel extends CI_Model
         return $this->db->from('vidiem_carts c')->count_all_results();
     }
 
+    public function checkCartHas75Lfixed($cart_id)
+    {
 
+        $this->db->join('vidiem_cart_jar  cj', ' cj.cart_id=c.cart_id and cj.Isactive=1 ');
+        $this->db->join('vidiem_jar j', ' j.jar_id=cj.jar_id and j.isactive=1 ');
+        $this->db->join('vidiem_capacity cpt', 'cpt.capacity_id = j.capacity_id');
+        $this->db->where(" c.IsActive=1 ");
+        $this->db->where(" c.cart_id= " . $cart_id);
+        $this->db->where('capacityname >=',  '1.75L');
+        return $this->db->from('vidiem_carts c')->count_all_results();
+    }
+    
     public function CustomOrderCode()
     {
         $code = $this->FunctionModel->Select_Field('code', 'vidiem_customorder', array(), 'id', 'DESC', 1);
@@ -648,11 +659,835 @@ class CustomizeModel extends CI_Model
             return str_pad($code, '4', '0', STR_PAD_LEFT);
         }
     }
+     public function UploadAdminInvoiceNotification($order_id)
+    {
+           
+           $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+
+        $mail_content = '';
+
+
+        $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id, pg_type,vidiem_invoice', 'vidiem_customorder', array('id' => $order_id));
+          //echo '<pre>';print_r($order_info); die;
+  
+            if (isset($order_info['dealer_user_id']) && !empty($order_info['dealer_user_id'])) {
+            $dealer_info        = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
+            
+            }
+           
+             $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Vidiem Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+            $mail_content                       .= $mail_header;
+            $mail_content                       .= ' <div style="width:100%;text-align:center;">
+                                                        <h2> Hello '. $dealer_info['display_name'].'<br> We appreciate you joining our team! </h2>,
+                                                       
+                                                    </div>
+                                                    <br><br>
+                                                    <div>
+                                                    Please see the Vidiem invoice attached. By You place the order for the item with the   '.$order_info['order_no'] .' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . '.
+                                                   
+                                                    </div>
+                                                    
+                                                    ';
+            $mail_content                        .= '<p>Regards</p>
+                                                    <p>Vidiem Team</p>';
+
+            $mail_content                        .= '</div>';
+            
+            $attachdata = 'uploads/dealer/orders/'.$order_info['vidiem_invoice'];
+            $to_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
+          // $to_mail ='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com';
+            $cc_mail='orders@vidiem.in,itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,saranmini.85@gmail.com,prodmgsrk@mayaappliances.com,john@pixel-studios.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+           
+        
+         
+                  $this->FunctionModel->send_dealer_attach_mail($to_mail,$cc_mail, $mail_content, $client_mail_subject,  'orders@vidiem.in',$attachdata);
+            
+              
+
+    } 
+    public function UploadDealerRecipetNotification($order_id)
+    {
+           
+           $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+
+        $mail_content = '';
+
+
+        $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id, pg_type,dealer_invoice,receipt_file', 'vidiem_customorder', array('id' => $order_id));
+          //echo '<pre>';print_r($order_info); die;
+  
+            if (isset($order_info['dealer_user_id']) && !empty($order_info['dealer_user_id'])) {
+            $dealer_info        = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
+            
+            }
+     
+           
+             $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Confirmed | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+            $mail_content                       .= $mail_header;
+            
+            $mail_content                       .= ' <div style="width:100%;text-align:center;">
+                                                    <h2> Hi ' . $order_info['billing_name'] . '</h2>,
+                                                    <h2> Thanks for choosing to shop with us! </h2>
+                                                </div>
+                                                <br><br>
+                                                <div>
+                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['inv_code'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' . As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
+                                                </div>
+                                                <div style="text-align:center">Happy Cooking, Love Team Vidiem </div>
+                                                <br><br>
+                                                <p>Regards</p>
+                                                <p>Vidiem Team</p>
+                                                </div>
+                                                    
+                                                    ';
+            $mail_content                        .= '<p>Regards</p>
+                                                    <p>Sincerely,</p>
+                                                    <p>Team ' . $dealer_info['display_name'] . '</p>';
+
+            $mail_content                        .= '</div>';
+            
+            $attachdata = 'uploads/dealer/orders/'.$order_info['receipt_file'];
+          
+            $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
+            //$to_mail ='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com';
+            //$to_mail='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,saranmini.85@gmail.com,prodmgsrk@mayaappliances.com,john@pixel-studios.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+           $to_mail ='saravanan.p@mayaappliances.com,'.$order_info['billing_emailid'];
+        
+         
+                  $this->FunctionModel->send_dealer_attach_mail($to_mail,$cc_mail, $mail_content, $client_mail_subject,  'orders@vidiem.in',$attachdata);
+            
+              
+
+    }
+
+     public function CustomerInvoiceDealer($order_id,$order_pass_type)
+    {
+        $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,billing_address2,delivery_address2,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id, pg_type,receipt_file,vidiem_invoice,dealer_invoice', 'vidiem_customorder', array('id' => $order_id));
+        $admin_to_mail_list='john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+        $admin_mail_ids='orders@vidiem.in,itsupport@mayaappliances.com,saravannan.p@mayaappliances.com';
+        $dealer_info        = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
+        $clt_info               = $this->FunctionModel->Select_Fields_Row('mobile_no,email', 'vidiem_clients', array('id' => $order_info['client_id']));
+        $clt_info['mobile_no'] = $order_info['billing_mobile_no'];
+        $clt_info['email']  = $order_info['billing_emailid'];
+        
+       /****** Showing interest Mail and SMS Content Start *******/
+        if($order_pass_type=='Showing interest')
+        {
+            $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+
+            $mail_content = '';
+            
+            
+            /******* Showing Interest Mail Content Start ********/
+            $client_mail_subject                = 'Vidiem By You - Showing Interest Reference No : | ' .$order_info['order_no'].' | '. $dealer_info['display_name'] . ' - ' . $dealer_info['location_name'] ;
+            $mail_content                       .= $mail_header;
+            $mail_content                       .= ' <div style="width:100%;text-align:center;">
+                                                        <h2> Hi ' . $order_info['billing_name'] . '</h2>,
+                                                        <h2> Thanks for choosing to shop with us! </h2>
+                                                    </div>
+                                                    <br><br>
+                                                    <div>
+                                                    Thanks for showing interest in Vidiem By You ' . $dealer_info['display_name'] . ' - ' . $dealer_info['location_name'] . '.
+                                                    </div>
+                                                    
+                                                    ';
+            $mail_content                        .= '<p>Regards</p>
+                                                    <p>Vidiem Team</p>';
+
+            $mail_content                        .= '</div>';
+            $this->FunctionModel->send_office_mail($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
+            $this->FunctionModel->send_office_mail($clt_info['email'], $mail_content, $client_mail_subject, InfoMail);
+            $this->FunctionModel->send_office_mail($admin_mail_ids, $mail_content, $client_mail_subject, InfoMail);
+            
+             /******* Showing Interest Mail Content End ********/
+            
+            /***** SMS Content Customer and Dealer Start ****/
+            $sms_content    = 'Thanks for showing interest with our Dealer ' . $dealer_info['display_name'] .' - '.$dealer_info['location_name']. ' on Vidiem By You. To confirm order, please pay online or in bill counter. -VIDIEM';
+            $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
+            $sms_content    = 'Dear Dealer ' . $dealer_info['display_name'] . ' - '.$dealer_info['location_name']. ', Our Customer showing interest on Vidiem By You. To confirm order ' . $order_info['order_no'] . ', please collect the amount in bill counter. -VIDIEM';
+            $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
+            
+            
+              /***** SMS Content Customer and Dealer End ****/
+        }
+        /****** Showing interest Mail and SMS Content End *******/
+        
+        /****** Amount Paid Dealer Counter *******/
+        
+        if($order_pass_type=='Counter Pay')
+        {
+                $order_data         = $this->FunctionModel->Select_Row('vidiem_customorder', array('id' => $order_id));
+                $basiciteminfo      = $this->getOrderBasicDetails($order_id);
+                $jarinfo            = $this->getOrderJarsDetails($order_id);
+                $jar_count          = 0;
+        
+                $order_no           = $order_data['order_no'] ?? '';
+                $client_mail_subject = 'New order – Vidiem by You | ' .$dealer_info['display_name'] .' - '.$dealer_info['location_name'];
+                $template2 = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;" >
+                <span ><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></span>
+                <div style="width:100%;text-align:center" ><h2> Hi ' . ($client['name'] ?? @$order_data['billing_name']) . ', <br>Thanks for choosing to shop with us!</h2></div>
+                <hr><div style="text-align:center">We’re happy to confirm your order on ' . date('d/m/Y') . '! Your order number is ' . @$order_data['order_no'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_code'] . ' As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!<br></div>
+                
+                <div style="width:100%;text-align:center">Happy Cooking, Love Team Vidiem </div><hr><br><br> Regards<br>Vidiem Team </div>';
+
+$template = '
+    <head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">';
+
+        $template .= "<title>Invocie</title>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900italic,900,300italic,300,100italic,100' rel='stylesheet' type='text/css'>
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+<style>
+     .inTi li{font-family: arial;list-style: none;padding-top:10px;}
+     .fullIn{width:80%;margin: 0 auto;padding:20px 5%;background-color:#f8f8f8; over-flow:hidden; overflow-x:scroll}
+     .inCon{ width: 800px;font-family: Roboto, sans-serif; border: solid 2px #00bfff; margin: 0 auto;font-family:arial; box-sizing:border-box; padding: 1% 30px; margin-top:40px; }
+</style>
+</head>";
+        $template .= '<body style="margin:0; padding:0;">
+    <div class="fullIn">
+    <ul class="inTi">
+        <li></li>
+    </ul>';
+
+        $template .= '<div >
+        <div style="float:left;"><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></div>
+        
+        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">PROFORMA INVOICE</h1></div>
+        <p style="clear:both;"></p>
+    <div class="header_bottom" style="width:100%; padding:10px 0;">
+        <div class="detail" style="float:left; width:35%; margin-top:-15px;">
+            <ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                <li style="font-size:14px; text-transform:uppercase;">No. 3/140, Old Mahabalipuram Road,
+Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Landline</span> : &nbsp; 044-6635 6635 / 77110 06635
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Website</span> : &nbsp; http://vidiem.in/
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">GST NO</span> : &nbsp; 33AAACM6280D1ZT
+                </li>
+            </ul>
+            <ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#3B4E87;;">BILL TO </h3>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; ' . @$order_data['billing_name'] . '
+                </li>';
+        if (!empty($order_data['billing_company_name'])) {
+            $template .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; ' . @$order_data['billing_company_name'] . '</li>';
+        }
+        $template .= '</li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address'] . ' - ' . $order_info['billing_address2'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; ' . @$order_data['billing_city'] . '-' . $order_data['billing_zip'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">State</span> : &nbsp; ' . @$order_data['billing_state'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Country</span> : &nbsp; ' . @$order_data['billing_country'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Mobile</span> : &nbsp; ' . @$order_data['billing_mobile_no'] . '
+                </li>
+            </ul>
+        </div>
+        <div class="logo" style="float:left; width:35%; "></div>
+         <div class="contact" style="float:right; width:30%; margin-top:-15px;">
+            <ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                
+                 <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">DATE</span> :&nbsp;
+                &nbsp;' . date("d-M-Y", strtotime(@$order_data['created'])) . '</li>
+                 <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">PROFORMA INVOICE</span> :&nbsp;
+                &nbsp;' . @$order_data['inv_code'] . '</li>
+            </ul>
+
+             <ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#3B4E87;;">SHIPPING ADDRESS </h3>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; ' . @$order_data['delivery_name'] . '
+                </li>';
+        if (!empty($order_data['delivery_company_name'])) {
+            $template .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; ' . @$order_data['delivery_company_name'] . '</li>';
+        }
+        $template .= '</li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . ' - ' . $order_info['delivery_address2'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; ' . @$order_data['delivery_city'] . '-' . $order_data['delivery_zip'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">State</span> : &nbsp; ' . @$order_data['delivery_state'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Country</span> : &nbsp; ' . @$order_data['delivery_country'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Mobile</span> : &nbsp; ' . @$order_data['delivery_mobile_no'] . '
+                </li>
+            </ul>';
+
+        $template .= '</div>
+        </div>        
+        <div class="form" style="width:100%;"> ';
+        $invoice .= ' <table style="width:100%; padding:20px 0 40px 0;">
+                <tr>
+					<td style="width:15%">
+						<img src="' . base_url('uploads/customizeimg/' . $basiciteminfo['basecolorpath']) . '" style="margin: 0; border: 0; padding: 0; display: block;" width="160" height="160">
+					</td>
+					<td style="width:85%">
+						<table border="0" cellpadding="7" cellspacing="0" style="width:600px;border:1px solid #CCC; margin-bottom: 20px;">
+								<tbody>
+									<tr>
+										<td style="border-bottom:1px solid #CCC;"><strong>Customization Code</strong></td>
+										<td style="border-bottom:1px solid #CCC;"><strong>' . $basiciteminfo['cart_code'] . '</strong></td>
+									</tr>
+									<tr>
+										<td>Body Design</td>
+										<td>' . $basiciteminfo['basetitle'] . '</td>
+									</tr>
+									<tr>
+										<td>Color</td>
+										<td>' . $basiciteminfo['bc_title'] . '</td>
+										<td>' . $basiciteminfo['basecolorprice'] . '</td>
+									</tr>
+									<tr>
+										<td>Selected Jars</td>
+										<td>' . count($jarinfo) . '</td>
+										<td>Price breakup as below</td>
+									</tr>
+									<tr>
+										<td>Motor Power</td>
+										<td>' . $basiciteminfo['motorname'] . '</td>
+										<td>' . $basiciteminfo['motorprice'] . '</td>
+									</tr> ';
+        if ($basiciteminfo['canvas_text'] != '') {
+            $invoice .= '	<tr>
+										<td>Personalised message</td>
+										<td>' . $basiciteminfo['canvas_text'] . '</td>
+											<td>' . $basiciteminfo['textprice'] . '</td>
+									</tr> ';
+        }
+        if ($basiciteminfo['occasion_text'] != '') {
+            $invoice .= '	<tr>
+										<td>Gift Occasion</td>
+										<td>' . $basiciteminfo['occasion_text'] . '</td>
+									</tr> ';
+        }
+        if ($basiciteminfo['message_text'] != '') {
+            $invoice .= '	<tr>
+										<td>Gift Box Message</td>
+										<td>' . $basiciteminfo['message_text'] . '</td>
+									</tr> ';
+        }
+        if ($basiciteminfo['package_id'] != '' && !empty($basiciteminfo['package_id'])) {
+            $invoice .= '		<tr>
+										<td>Gift Wrapping Preference</td>
+										<td>' . $basiciteminfo['packagename'] . '</td>
+										<td>' . $basiciteminfo['packageprice'] . '</td>
+									</tr> ';
+        }
+        $invoice .= '			</tbody>
+							</table> ';
+
+        if (count($jarinfo) > 0) {
+            $invoice .= '	<table border="0" cellpadding="7" cellspacing="0" style="width:600px;border:1px solid #CCC; margin-bottom: 20px;">
+								<thead>
+									<tr>
+										<th style="border-bottom:1px solid #CCC;"></th>
+										<th style="border-bottom:1px solid #CCC;"></th>
+										<th style="text-align:center;border-bottom:1px solid #CCC;">No. Jars</th>
+										<th style="text-align:center;border-bottom:1px solid #CCC;">Unit Price</th>
+										<th style="text-align:center;border-bottom:1px solid #CCC;">Total Price</th>
+									</tr>
+								</thead>
+								<tbody> ';
+            foreach ($jarinfo as $jar) {
+
+                $jar_count += $jar['qty'];
+                $invoice .= '<tr>
+										<td>
+												<img src="' . base_url("uploads/customizeimg/jar/" . $jar['jarimgpath']) . '" alt="" style="margin: 0; border: 0; padding: 0; display: block;" width="60" height="60" >											
+										</td>
+										<td>' . $jar['jarname'] . '</td>
+										<td style="text-align:center;color:#F7000A;">
+											' . $jar['qty'] . ' Jars
+										</td>
+										<td style="text-align:center;color:#F7000A;">
+											Rs.' . number_format($jar['price']) . '
+										</td>
+										<td style="text-align:center;color:#F7000A;">
+											Rs. ' . number_format($jar['qty'] * $jar['price']) . '
+										</td>
+									</tr> ';
+            }
+        }
+
+        $invoice .= '	</tbody>
+							</table>
+							
+					</td>
+				</tr>
+            </table> ';
+
+
+
+
+
+        $invoice .= '<table style="width:100%; padding:20px 0 40px 0;">
+				 <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align:right;">SubTotal</th>
+                    <th style="padding:10px 0;text-align:right;"><b>Rs. ' . number_format($order_data['sub_total'], 2, '.', '') . '</b></th>
+                </tr>';
+        // $invoice.='<tr>/<td></td>/<td></td>/<td></td>/<th style="text-align:right;">GST18%</th><th style="padding:10px 0;text-align:right;"><b>Rs. '.number_format($order_data['tax'],2,'.','').'</b></th></tr>';
+
+        $invoice .= '<tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align:right;font-size:14px;">TOTAL</th>
+                    <th style="color:#fff;padding:10px 0; background:#F7000A;;text-align:right;">Rs. ' . number_format($order_data['amount'], 2, '.', '') . '</th>
+                </tr>';
+
+        $invoice .= '<tr><td></td><td style="font-size:12px;">Note: This is computer generated invoice hence no signature required.</td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td colspan="4" style="text-align:center; font-size:12px;">If you have any questions about this invoice, please write us to below email id</td></tr>
+                  <tr><td colspan="4" style="text-align:center; font-size:12px;">orders@vidiem.in</td></tr>
+                  <tr><td colspan="4" style="text-align:center; font-size:12px;"><b>Thank You For Your Association with Vidiem</b></td></tr>
+            </table>
+        </div>
+    </div>
+    <p style="font-size:14px; margin-left:40px; line-height:25px;">
+                Warm Regards<br>
+                Vidiem<br>
+                044-6635 6635 / 77110 06635<br>
+            </p>';
+
+        $invoice = '
+   <style>h1 {
+    margin-top: -5px;
+}</style>
+   <div style="border:1px solid black;">
+   <div class="container inCon">
+      <div style="border:1px solid black;">
+   <div class="container inCon">
+        <div style="float:left;"><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></div>
+        <div style="float:left;"><ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                <li style="font-size:12px; text-transform:uppercase;">Maya Appliances Pvt Ltd,<br>No. 3/140, Old Mahabalipuram Road, Oggiam Thoraipakkam, Chennai - 600097, Tamilnadu, INDIA. 
+               |   <span style="list-style:none;line-height:28px; display:inline-block;">Phone</span> : &nbsp; 044-6635 6635 / 77110 06635  | Website</span> : &nbsp; http://vidiem.in/
+                 | GST NO</span> : &nbsp; 33AAACM6280D1ZT </li>
+            </ul></div>
+       
+        <p style="clear:both;"></p>
+    <div class="header_bottom" style="width:100%; padding:10px 0;">
+         <div style="width:100%;float:right;"><h1 style="color:#000000;">PROFORMA INVOICE</h1> 
+
+              <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;">Order Date:&nbsp; ' . date("d-M-Y", strtotime(@$order_data['created'])) . ' 
+                 | Order No. :&nbsp;' . @$order_data['inv_code'] . ' </h3> 
+
+<div class="detail" style="float:left; width:50%;">
+            
+            <ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;;">Billing Address</h3>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; ' . @$order_data['billing_name'] . '
+                </li>';
+        if (!empty($order_data['billing_company_name'])) {
+            $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['billing_company_name'] . '</li>';
+        }
+        $invoice .= '</li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['billing_city'] . '-' . $order_data['billing_zip'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">State</span> : &nbsp; ' . @$order_data['billing_state'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Country</span> : &nbsp; ' . @$order_data['billing_country'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Mobile</span> : &nbsp; ' . @$order_data['billing_mobile_no'] . '
+                </li>
+            </ul>
+        </div>
+         
+         <div class="contact" style="float:left; width:49%;">
+            
+
+             <ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;;">Shipping Address</h3>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; ' . @$order_data['delivery_name'] . '
+                </li>';
+        if (!empty($order_data['delivery_company_name'])) {
+            $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['delivery_company_name'] . '</li>';
+        }
+        $invoice .= '</li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['delivery_city'] . '-' . $order_data['delivery_zip'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">State</span> : &nbsp; ' . @$order_data['delivery_state'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Country</span> : &nbsp; ' . @$order_data['delivery_country'] . '
+                </li>
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Mobile</span> : &nbsp; ' . @$order_data['delivery_mobile_no'] . '
+                </li>
+            </ul>';
+
+        $invoice .= '</div>
+        </div>        
+        <div class="form" style="width:100%;"> ';
+
+        $invoice .= ' <table style="width:100%; padding:20px 0 40px 0;">
+                <tr>
+					<td style="width:15%">
+						<img src="' . base_url('uploads/customizeimg/' . $basiciteminfo['basecolorpath']) . '" style="margin: 0; border: 0; padding: 0; display: block;" width="160" height="160">
+					</td>
+					<td style="width:85%">
+						<table border="0" cellpadding="7" cellspacing="0" style="width:600px;border:1px solid #CCC; margin-bottom: 20px;">
+								<tbody>
+									<tr>
+										<td style="border-bottom:1px solid #CCC;"><strong>Customization Code</strong></td>
+										<td style="border-bottom:1px solid #CCC;"><strong>' . $basiciteminfo['cart_code'] . '</strong></td>
+									</tr>
+									<tr>
+										<td>Body Design</td>
+										<td>' . $basiciteminfo['basetitle'] . '</td>
+									</tr>
+									<tr>
+										<td>Color</td>
+										<td>' . $basiciteminfo['bc_title'] . '</td>
+										<td>' . $basiciteminfo['basecolorprice'] . '</td>
+									</tr>
+									<tr>
+										<td>Selected Jars</td>
+										<td>' . $jar_count . '</td>
+										<td>Price Breakup Below</td>
+									</tr>
+									<tr>
+										<td>Motor Power</td>
+										<td>' . $basiciteminfo['motorname'] . '</td>
+										<td>' . $basiciteminfo['motorprice'] . '</td>
+									</tr> ';
+        if ($basiciteminfo['canvas_text'] != '') {
+            $invoice .= '	<tr>
+										<td> Personalised message </td>
+										<td>' . $basiciteminfo['canvas_text'] . '</td>
+										<td>' . $basiciteminfo['textprice'] . '</td>
+									</tr> ';
+        }
+        if ($basiciteminfo['occasion_text'] != '') {
+            $invoice .= '	<tr>
+										<td>Gift Occasion</td>
+										<td>' . $basiciteminfo['occasion_text'] . '</td>
+									</tr> ';
+        }
+        if ($basiciteminfo['message_text'] != '') {
+            $invoice .= '	<tr>
+										<td>Gift Box Message</td>
+										<td>' . $basiciteminfo['message_text'] . '</td>
+									</tr> ';
+        }
+        if ($basiciteminfo['package_id'] != '' && !empty($basiciteminfo['package_id'])) {
+            $invoice .= '		<tr>
+										<td> Gift Wrapping Preference </td>
+										<td>' . $basiciteminfo['packagename'] . '</td>
+                                        <td>' . $basiciteminfo['packageprice'] . '</td>
+									</tr> ';
+        }
+        $invoice .= '			</tbody>
+							</table> ';
+
+        if (count($jarinfo) > 0) {
+            $invoice .= '	<table border="0" cellpadding="7" cellspacing="0" style="width:600px;border:1px solid #CCC; margin-bottom: 20px;">
+								<thead>
+									<tr>
+										<th style="border-bottom:1px solid #CCC;"></th>
+										<th style="border-bottom:1px solid #CCC;">Jar Information</th>
+										<th style="text-align:center;border-bottom:1px solid #CCC;">No. Jars</th>
+										<th style="text-align:center;border-bottom:1px solid #CCC;">Unit Price</th>
+										<th style="text-align:center;border-bottom:1px solid #CCC;">Total Price</th>
+									</tr>
+								</thead>
+								<tbody> ';
+            foreach ($jarinfo as $jar) {
+                $invoice .= '<tr>
+										<td>
+												<img src="' . base_url("uploads/customizeimg/jar/" . $jar['jarimgpath']) . '" alt="" style="margin: 0; border: 0; padding: 0; display: block;" width="60" height="60" >
+												<br/>
+												<span>' . $jar['capacityname'] . '|' . $jar['typeofjarname'] . '|' . $jar['typeofhandlename'] . '|' . $jar['typeoflidname'] . '
+											
+										</td>
+										<td>' . $jar['jarname'] . '</td>
+										<td style="text-align:center;color:#F7000A;">
+											' . $jar['qty'] . ' Jars
+										</td>
+										<td style="text-align:center;color:#F7000A;">
+											Rs.' . number_format($jar['price']) . '
+										</td>
+										<td style="text-align:center;color:#F7000A;">
+											Rs. ' . number_format($jar['qty'] * $jar['price']) . '
+										</td>
+									</tr> ';
+            }
+        }
+
+        $invoice .= '	</tbody>
+							</table>
+							
+							<table border="0"  cellspacing="5" style="width:600px;border:1px solid #CCC;margin-bottom:10px;padding:10px;font-size:11px;">
+					 
+							<tr>
+                                <td>
+                                    <span style="color:#ff0000;font-size:12px;"><strong>Warranty Information</strong>
+                                    </span>
+                                    <br><br>
+							            - 2 Years Warranty on Product <br> 
+                                        - 5 Years Warranty on Motor <br> 
+                                        <span style="color:#ff0000;font-size:10px;">
+                                        <i>(For Domestic Purpose Only)</i>
+                                        <br>
+                                        Non Returnable / No Cancellation in all vidiem by you orders
+                                        </span>
+                                </td>
+                            </tr>
+                        </table>
+							
+					</td>
+				</tr>
+            </table>
+							
+					</td>
+				</tr>
+            </table> ';
+
+
+
+
+
+        $invoice .= '<table style="width:100%; padding:20px 0 40px 0;">
+				 <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align:right;">SubTotal</th>
+                    <th style="padding:10px 0;text-align:right;"><b>Rs. ' . number_format($order_data['sub_total'], 2, '.', '') . '</b></th>
+                </tr>';
+        // $invoice.='<tr>/<td></td>/<td></td>/<td></td>/<th style="text-align:right;">GST18%</th><th style="padding:10px 0;text-align:right;"><b>Rs. '.number_format($order_data['tax'],2,'.','').'</b></th></tr>';
+
+        $invoice .= '<tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align:right;">Package Price</th>
+                    <th style="padding:10px 0;text-align:right;"><b>Rs. ' . number_format($order_data['packageprice'], 2, '.', '') . '</b></th>
+                </tr>';
+
+        $invoice .= '<tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th style="text-align:right;font-size:14px;">TOTAL</th>
+                    <th style="color:#fff;padding:10px 0; background:#F7000A;;text-align:right;">Rs. ' . number_format($order_data['amount'], 2, '.', '') . '</th>
+                </tr>';
+
+        $invoice .= '<tr><td></td><td style="font-size:12px;">Note: This is computer generated invoice hence no signature required.| If you have any questions about this invoice, please write us to orders@vidiem.in </td></tr>
+                  <tr><td>&nbsp;</td></tr>
+                  <tr><td colspan="4" style="text-align:center; font-size:12px;"><b>Thank You For Your Association with Vidiem</b></td></tr>
+            </table>
+        </div>
+    </div>
+    </div>';
+
+
+
+        $this->load->library('m_pdf');
+        $this->m_pdf->pdf->AddPage(
+            'P', // L - landscape, P - portrait
+            '',
+            '',
+            '',
+            '',
+            7, // margin_left
+            3, // margin right
+            5, // margin top
+            5, // margin bottom
+            5, // margin header
+            5
+        ); // margin footer
+        //generate the PDF from the given html
+        $file_name = 'uploads/invoice/vidiem_billing_Invoice.pdf';
+        $this->m_pdf->pdf->WriteHTML($invoice);
+        $attachdata = $this->m_pdf->pdf->Output($file_name, 'S');
+        
+         $attachdata2 = 'uploads/dealer/orders/'.$order_data['receipt_file'];
+          $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
+        //  $cc_mail=$admin_to_mail_list.','.$cc_mail1;
+          $to_mail=$order_info['billing_emailid'];
+         $this->FunctionModel->send_office_mail_dealer($to_mail,$cc_mail, $template2, $client_mail_subject, 'orders@vidiem.in', $attachdata,$attachdata2);
+        // $this->FunctionModel->send_office_mail_dealer('naveenkumar.pixel@gmail.com', $template2, $client_mail_subject, 'orders@vidiem.in', $attachdata,$attachdata2);
+       
+        $sms_content    = "Thank you for shopping with Vidiem through our Dealer " . $dealer_info['display_name'] .' - '.$dealer_info['location_name']. ". Your order number " . $order_info['inv_code'] . " is under production. We'll share the tracking details once the shipment is ready. -VIDIEM";
+            $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
+            
+            /** dealer sms content */
+            $sms_content    = "Dear Dealer" . $dealer_info['display_name'] . ' - '.$dealer_info['location_name']. ", Your Vidiem By You order number " . $order_info['inv_code'] . " is under Production. We'll share the tracking details once the shipment is ready. -VIDIEM";
+            $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);       
+            
+        }
+         /****** Amount Paid Dealer Counter  *******/
+         
+         /****** Amount Paid Online  *******/
+        
+        if($order_pass_type=='Online Pay')
+        {
+            
+        }
+         /****** Amount Paid Dealer Online  *******/
+         
+          if($order_pass_type=='Admin Invoice')
+        {
+                $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+
+                $mail_content = '';
+                $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Vidiem Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+                $mail_content                       .= $mail_header;
+                $mail_content                       .= ' <div style="width:100%;text-align:center;">
+                                                            <h2> Hello '. $dealer_info['display_name'].'<br> We appreciate you joining our team! </h2>,
+                                                           
+                                                        </div>
+                                                        <br><br>
+                                                        <div>
+                                                        Please see the Vidiem invoice attached. By You place the order for the item with the   '.$order_info['order_no'] .' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . '.
+                                                       
+                                                        </div>
+                                                        
+                                                        ';
+                $mail_content                        .= '<p>Regards</p>
+                                                        <p>Vidiem Team</p>';
+    
+                $mail_content                        .= '</div>';
+                
+                $attachdata = 'uploads/dealer/orders/'.$order_info['vidiem_invoice'];
+                $to_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
+                $cc_mail=$admin_mail_ids.',whchennai@mayaappliances.com';
+                $this->FunctionModel->send_dealer_attach_mail($to_mail,$cc_mail, $mail_content, $client_mail_subject,  'orders@vidiem.in',$attachdata);
+        }
+          /****** Admin Invoice End  *******/
+          
+           /****** Dealer Invoice Start  *******/
+        if($order_pass_type=='Dealer Invoice')
+        {
+                $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+
+                $mail_content = '';
+                $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Dealer Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+                $mail_content                       .= $mail_header;
+                $mail_content                       .= ' <div style="width:100%;text-align:center;">
+                                                        <h2> Greetings, Vidiem. <br> We appreciate your partnership. </h2>,
+                                                       
+                                                    </div>
+                                                    <br><br>
+                                                    <div>
+                                                    You may access the Dealer Invoice here. By You order for the order with the  '.$order_info['order_no'] .' at the ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' against your shared vidiem invoice.
+                                                   
+                                                    </div>
+                                                    
+                                                    ';
+                $mail_content                        .= '<p>Regards</p>
+                                                    <p>Sincerely,</p>
+                                                    <p>Team ' . $dealer_info['display_name'] . '</p>';
+
+                $mail_content                        .= '</div>';
+                
+                
+                $attachdata = 'uploads/dealer/orders/'.$order_info['receipt_file'];
+                $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'].',whchennai@mayaappliances.com';
+                $to_mail=$admin_mail_ids;
+                $this->FunctionModel->send_dealer_attach_mail($to_mail,$cc_mail, $mail_content, $client_mail_subject,  'orders@vidiem.in',$attachdata);
+
+        }
+         /****** Dealer Invoice End *******/
+        
+        
+    }
+    
+         public function UploadDealerInvoiceNotification($order_id)
+    {
+           
+           $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+
+        $mail_content = '';
+
+
+        $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id, pg_type,dealer_invoice', 'vidiem_customorder', array('id' => $order_id));
+          //echo '<pre>';print_r($order_info); die;
+  
+            if (isset($order_info['dealer_user_id']) && !empty($order_info['dealer_user_id'])) {
+            $dealer_info        = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
+            
+            }
+           
+          
+           
+             $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Dealer Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+            $mail_content                       .= $mail_header;
+            $mail_content                       .= ' <div style="width:100%;text-align:center;">
+                                                        <h2> Greetings, Vidiem. <br> We appreciate your partnership. </h2>,
+                                                       
+                                                    </div>
+                                                    <br><br>
+                                                    <div>
+                                                    You may access the Dealer Invoice here. By You order for the order with the  '.$order_info['order_no'] .' at the ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' against your shared vidiem invoice.
+                                                   
+                                                    </div>
+                                                    
+                                                    ';
+            $mail_content                        .= '<p>Regards</p>
+                                                    <p>Sincerely,</p>
+                                                    <p>Team ' . $dealer_info['display_name'] . '</p>';
+
+            $mail_content                        .= '</div>';
+            
+            $attachdata = 'uploads/dealer/orders/'.$order_info['dealer_invoice'];
+          
+            $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
+            //$to_mail ='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com';
+            $to_mail='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,saranmini.85@gmail.com,prodmgsrk@mayaappliances.com,john@pixel-studios.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+           
+        
+         
+                  $this->FunctionModel->send_dealer_attach_mail($to_mail,$cc_mail, $mail_content, $client_mail_subject,  'orders@vidiem.in',$attachdata);
+            
+              
+
+    }
+
+
 
 
     public function Custom_NewOrderNotification($order_id)
     {
 
+        $admin_to_mail_list='saravanan.p@mayaappliances.com,naveenkumar.pixel@gmail.com,john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
 
         $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
                         <span>
@@ -686,7 +1521,7 @@ class CustomizeModel extends CI_Model
 
         //	$subject='New Order on Vidiem Site';
         if (isset($order_info['payment_source']) && $order_info['payment_source'] == 'counter' && empty( $order_info['pg_type'] ) ) {
-            $client_mail_subject                = 'Vidiem By You Order No : ' . $order_info['inv_code'];
+            $client_mail_subject                = 'Vidiem By You - Showing Interest '. $dealer_info['display_name'] . ' - ' . $dealer_info['location_name'] ;
             $mail_content                       .= $mail_header;
             $mail_content                       .= ' <div style="width:100%;text-align:center;">
                                                         <h2> Hi ' . $order_info['billing_name'] . '</h2>,
@@ -694,7 +1529,7 @@ class CustomizeModel extends CI_Model
                                                     </div>
                                                     <br><br>
                                                     <div>
-                                                    Thanks for showing interest in Vidiem By You.
+                                                    Thanks for showing interest in Vidiem By You ' . $dealer_info['display_name'] . ' - ' . $dealer_info['location_name'] . '.
                                                     </div>
                                                     
                                                     ';
@@ -702,14 +1537,15 @@ class CustomizeModel extends CI_Model
                                                     <p>Vidiem Team</p>';
 
             $mail_content                        .= '</div>';
-            $this->FunctionModel->sendmail1($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
+            $this->FunctionModel->send_office_mail($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
+           // $this->FunctionModel->send_office_mail($admin_to_mail_list, $mail_content, $client_mail_subject, InfoMail);
 
-            $admin_mail_subject                 = 'New order – Vidiem by You – ' . $order_info['inv_code'];;
+            $admin_mail_subject                 = 'New order – Vidiem by You – ' . $order_info['inv_code'].' | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'];
             $admin_mail_content                  = $mail_header;
             $admin_mail_content                  .= '<div style="width:100%;text-align:center;">
                                                             <h2>Dear Team,</h2>  
                                                             <br>&nbsp;&nbsp; 
-                                                            New Order on Vidiem By You From Dealer ' . $dealer_info['display_name'] . '-' . $dealer_info['dealer_erp_code'] . ' 
+                                                            New Order on Vidiem By You From Dealer ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' 
                                                             <br>Invoice Code' . $order_info['inv_code'] . '. Invoice Amount' . $order_info['amount'].'
                                                             <br><br>
                                                             </div>
@@ -720,13 +1556,14 @@ class CustomizeModel extends CI_Model
             $admin_mail_content                 .= '</div>';
 
         } else {
-
+            $dealer_mail_content = '';
             if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id'])) {
-                $client_mail_subject            = 'Vidiem By You Order No : ' . $order_info['inv_code'];
+                 $dealer_data=$dealer_info['display_name'] .' - '.$dealer_info['location_name'];
+                $client_mail_subject            = 'New order – Vidiem by You '. $order_data['order_no'] . ' | ' . $dealer_data;
                 $mail_content                   .= $mail_header;
-                $mail_content                   .= '<div style="width:100%;text-align:center;">
-                                                        <h2>Dear Customer,</h2>
-                                                        <br> Thank you for your order. 
+                $dealer_mail_content            .= '<div style="width:100%;text-align:center;">
+                                                        <h2>Dear '.$dealer_info['display_name'] . '-' . $dealer_info['location_name'].',</h2>
+                                                        <br> Thank you for your order at Vidiem. 
                                                         We’ll send a confirmation when your order processed further.  
                                                         If you would like to know the status of your order please visit Vidiem.in 
                                                         <br>Order Code ' . $order_info['inv_code'].'
@@ -735,8 +1572,28 @@ class CustomizeModel extends CI_Model
                                                             <p>Regards</p>
                                                             <p>Vidiem Team</p>
                                                         </div>';
-                $mail_content                   .= '</div>';
-                $this->FunctionModel->sendmail1($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
+                $dealer_mail_content                   .= '</div>';
+
+                $mail_content                .= '
+                                                <div style="width:100%;text-align:center;">
+                                                    <h2> Hi ' . $order_info['billing_name'] . '</h2>,
+                                                    <h2> Thanks for choosing to shop with us! </h2>
+                                                </div>
+                                                <br><br>
+                                                <div>
+                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['inv_code'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' . As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
+                                                </div>
+                                                <div style="text-align:center">Happy Cooking, Love Team Vidiem </div>
+                                                <br><br>
+                                                <p>Regards</p>
+                                                <p>Vidiem Team</p>
+                                                </div>
+                                                ';
+
+
+                $this->FunctionModel->send_office_mail($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
+                $this->FunctionModel->send_office_mail($dealer_info['dealer_admin_email'], $dealer_mail_content, $client_mail_subject, InfoMail);
+                
             } else {
                 $client_mail_subject            = 'Vidiem Order Confirmation - ' . $order_info['inv_code'];
                 $mail_content               .= $mail_header;
@@ -777,33 +1634,41 @@ class CustomizeModel extends CI_Model
             $admin_mail_content                     .= '</div>';
         }
         
-        $this->FunctionModel->sendmail1($clt_info['email'], $mail_content, $client_mail_subject, InfoMail);
+        $this->FunctionModel->send_office_mail($clt_info['email'], $mail_content, $client_mail_subject, InfoMail);
 
         // $this->FunctionModel->sendmail1(AdminMail,$msg,$subject,InfoMail);
-        // $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$msg,$subject,InfoMail);
-        // $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,john@pixel-studios.com',$msg,$subject,InfoMail);
+         if($order_info['payment_source'] != 'counter')
+         {
+             $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,naveenkumar.pixel@gmail.com,john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$msg,$subject,InfoMail);
+         }
+         
+        // $this->FunctionModel->sendmail('',$msg,$subject,InfoMail);
 
-        $this->FunctionModel->sendmail('durairaj.pixel@gmail.com, john@pixel-studios.com', $admin_mail_content, $admin_mail_subject, InfoMail);
+      //  $this->FunctionModel->send_office_mail('durairaj.pixel@gmail.com, john@pixel-studios.com', $admin_mail_content, $admin_mail_subject, InfoMail);
 
         if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id']) && $order_info['payment_source'] == 'counter' && empty( $order_info['pg_type'] ) ) {
             #showing interest
-            $sms_content    = 'Thanks for showing interest with our Dealer ' . $dealer_info['display_name'] .' '.$dealer_info['location_name']. ' on Vidiem By You. To confirm order, please pay online or in bill counter. -VIDIEM -VIDIEM';
+            $sms_content    = 'Thanks for showing interest with our Dealer ' . $dealer_info['display_name'] .' - '.$dealer_info['location_name']. ' on Vidiem By You. To confirm order, please pay online or in bill counter. -VIDIEM -VIDIEM';
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
 
             /*** Dealer sms content */
-            $sms_content    = 'Dear Dealer ' . $dealer_info['display_name'] . ' '.$dealer_info['location_name']. ', Our Customer showing interest on Vidiem By You. To confirm order ' . $order_info['order_no'] . ', please collect the amount in bill counter. -VIDIEM';
+            $sms_content    = 'Dear Dealer ' . $dealer_info['display_name'] . ' - '.$dealer_info['location_name']. ', Our Customer showing interest on Vidiem By You. To confirm order ' . $order_info['order_no'] . ', please collect the amount in bill counter. -VIDIEM';
             $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
         } else if (isset($order_info['dealer_id']) && !empty($order_info['dealer_id'])) {
 
-            $sms_content    = "Thank you for shopping with Vidiem through our Dealer " . $dealer_info['display_name'] .' '.$dealer_info['location_name']. ". Your order number " . $order_info['inv_code'] . " is under production. We'll share the tracking details once the shipment is ready. -VIDIEM";
+            $sms_content    = "Thank you for shopping with Vidiem through our Dealer " . $dealer_info['display_name'] .' - '.$dealer_info['location_name']. ". Your order number " . $order_info['inv_code'] . " is under production. We'll share the tracking details once the shipment is ready. -VIDIEM";
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
             /** dealer sms content */
-            $sms_content    = "Dear Dealer" . $dealer_info['display_name'] . ' '.$dealer_info['location_name']. ", Your Vidiem By You order number " . $order_info['inv_code'] . " is under Production. We'll share the tracking details once the shipment is ready. -VIDIEM";
+            $sms_content    = "Dear Dealer" . $dealer_info['display_name'] . ' - '.$dealer_info['location_name']. ", Your Vidiem By You order number " . $order_info['inv_code'] . " is under Production. We'll share the tracking details once the shipment is ready. -VIDIEM";
             $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
         } else {
             $sms_content    = 'Thank you for shopping with Vidiem. Your order number ' . $order_info['inv_code'] . ' is under process. We\'ll share the tracking details once the shipment is ready. -VIDIEM';
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content, '1107164362643761375');
         }
+    }
+    public function dealer_login_shwing_interest()
+    {
+        
     }
 
     public function Cartdestroy($cart_id)
@@ -845,8 +1710,10 @@ class CustomizeModel extends CI_Model
         if (isset($order_data['dealer_id']) && !empty($order_data['dealer_id'])) {
             $dealer_info        = $this->FunctionModel->Select_Fields_Row('display_name,dealer_erp_code,location_code', 'vidiem_dealers', array('id' => $order_data['dealer_id']));
         }
+        
         if (isset($order_data['payment_source']) && $order_data['payment_source'] == 'counter' && $order_data['payment_status'] == 'pending') {
-
+             $dealer_data=$dealer_info['display_name'] .' - '.$dealer_info['location_code'];
+             
             $client_mail_subject = 'Vidiem By You - Reference No : ' . $order_data['order_no'];
             $client_mail_msg     = '
                     <div>
@@ -866,12 +1733,13 @@ class CustomizeModel extends CI_Model
         } else {
 
             if (isset($order_data['dealer_id']) && !empty($order_data['dealer_id'])) {
+                 $dealer_data=$dealer_info['display_name'] .' - '.$dealer_info['location_code'];
 
-                $client_mail_subject = ' Vidiem By You Order No : ' . $order_data['order_no'] . ' Confirmed';
+                $client_mail_subject = 'New order – Vidiem by You | ' . $dealer_data;
                 $template2 = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;" >
                 <span ><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></span>
                 <div style="width:100%;text-align:center" ><h2> Hi ' . ($client['name'] ?? @$order_data['billing_name']) . ', <br>Thanks for choosing to shop with us!</h2></div>
-                <hr><div style="text-align:center">We’re happy to confirm your order on ' . date('d/m/Y') . '! Your order number is ' . @$order_data['order_no'] . ' As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!<br></div>
+                <hr><div style="text-align:center">We’re happy to confirm your order on ' . date('d/m/Y') . '! Your order number is ' . @$order_data['order_no'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_code'] . ' As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!<br></div>
                 
                 <div style="width:100%;text-align:center">Happy Cooking, Love Team Vidiem </div><hr><br><br> Regards<br>Vidiem Team    </div>';
             } else {
@@ -879,7 +1747,7 @@ class CustomizeModel extends CI_Model
                 $template2 = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;" >
                 <span ><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></span>
                 <span > Dear Customer, <br>Thank you for your order at Vidiem Online Store. Please find the attached proforma invoice for your order reference. 
-                Once your package ships we will send an email with a link to track your order. <br><br>If you have questions about your order, you can email us at care@vidiem.in. </span>
+                Once your package ships we will send an email with a link to track your order. <br><br>If you have questions about your order, you can email us at orders@vidiem.in. </span>
                 <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;">Order Date:&nbsp; ' . date("d-M-Y", strtotime(@$order_data['created'])) . '  | Order No. :&nbsp;' . @$order_data['inv_code'] . ' </h3>  
                 <hr> Thank you for shopping with us!<br>Team Vidiem  <br><br>  <span style="font-size:12px; text-transform:uppercase;">Maya Appliances Pvt Ltd,<br>No. 3/140, Old Mahabalipuram Road,<br> Oggiam Thoraipakkam, 
                 <br>Chennai - 600097, Tamilnadu, INDIA.  <br> Phone : &nbsp; 044-6635 6635 / 77110 06635  | Website  : &nbsp;  <a href="https://www.vidiem.in">vidiem.in</a>             | GST NO  : &nbsp; 33AAACM6280D1ZT </span></div>';
@@ -1100,7 +1968,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         $invoice .= '<tr><td></td><td style="font-size:12px;">Note: This is computer generated invoice hence no signature required.</td></tr>
                   <tr><td>&nbsp;</td></tr>
                   <tr><td colspan="4" style="text-align:center; font-size:12px;">If you have any questions about this invoice, please write us to below email id</td></tr>
-                  <tr><td colspan="4" style="text-align:center; font-size:12px;">care@vidiem.in</td></tr>
+                  <tr><td colspan="4" style="text-align:center; font-size:12px;">orders@vidiem.in</td></tr>
                   <tr><td colspan="4" style="text-align:center; font-size:12px;"><b>Thank You For Your Association with Vidiem</b></td></tr>
             </table>
         </div>
@@ -1143,7 +2011,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['billing_company_name'] . '</li>';
         }
         $invoice .= '</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address'] . ',  ' . @$order_data['billing_address'] . '
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address'] . '
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['billing_city'] . '-' . $order_data['billing_zip'] . '
                 </li>
@@ -1167,7 +2035,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['delivery_company_name'] . '</li>';
         }
         $invoice .= '</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . ',  ' . @$order_data['delivery_address'] . '
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . '
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['delivery_city'] . '-' . $order_data['delivery_zip'] . '
                 </li>
@@ -1336,7 +2204,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                     <th style="color:#fff;padding:10px 0; background:#F7000A;;text-align:right;">Rs. ' . number_format($order_data['amount'], 2, '.', '') . '</th>
                 </tr>';
 
-        $invoice .= '<tr><td></td><td style="font-size:12px;">Note: This is computer generated invoice hence no signature required.| If you have any questions about this invoice, please write us to care@vidiem.in </td></tr>
+        $invoice .= '<tr><td></td><td style="font-size:12px;">Note: This is computer generated invoice hence no signature required.| If you have any questions about this invoice, please write us to orders@vidiem.in </td></tr>
                   <tr><td>&nbsp;</td></tr>
                   <tr><td colspan="4" style="text-align:center; font-size:12px;"><b>Thank You For Your Association with Vidiem</b></td></tr>
             </table>
@@ -1368,10 +2236,10 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         if (isset($order_data['payment_source']) && $order_data['payment_source'] == 'counter' && $order_data['payment_status'] == 'pending') {
             $attachdata = '';
         }
-        $this->FunctionModel->sendmail($client['email'], $template2, $client_mail_subject, 'care@vidiem.in', $attachdata);
-        // $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$template,'New Order - Vidiem By You','care@vidiem.in',$attachdata);
-        //   $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com, john@pixel-studios.com',$template2,'New Order - Vidiem By You','care@vidiem.in',$attachdata);
-        $this->FunctionModel->sendmail('durairaj.pixel@gmail.com, john@pixel-studios.com', $template2, $client_mail_subject, 'care@vidiem.in', $attachdata);
+        $this->FunctionModel->send_office_mail($client['email'], $template2, $client_mail_subject, 'orders@vidiem.in', $attachdata);
+         $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$template,'New Order - Vidiem By You','orders@vidiem.in',$attachdata);
+           $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,john@pixel-studios.com,naveenkumar.pixel@gmail.com',$template2,'New Order - Vidiem By You','orders@vidiem.in',$attachdata);
+        //$this->FunctionModel->send_office_mail('durairaj.pixel@gmail.com, john@pixel-studios.com', $template2, $client_mail_subject, 'care@vidiem.in', $attachdata);
         /*  $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com',$template,'New Order - Vidiem By You','care@vidiem.in',$attachdata);
       $this->FunctionModel->sendmail('palani.j@mayaappliances.com',$template,'New Order - Vidiem By You','care@vidiem.in',$attachdata);
       $this->FunctionModel->sendmail('venkatesan@mayaappliances.com',$template,'New Order - Vidiem By You','care@vidiem.in',$attachdata);
@@ -1453,10 +2321,12 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 
     public function custom_Select_Orders()
     {
+       // print_r('GG'); die;
 
-        $this->db->select('vidiem_dealers.dealer_erp_code, vidiem_dealers.display_name, o.*,if(o.client_id=0,o.delivery_name,c.name) as name ,if(o.client_id=0,o.delivery_emailid,c.email) as email,if(o.client_id=0,o.delivery_mobile_no,c.mobile_no) as mobile_no');
+        $this->db->select('vidiem_dealers.dealer_erp_code, vidiem_dealers.display_name, vidiem_dealer_locations.location_name,o.*,if(o.client_id=0,o.delivery_name,c.name) as name ,if(o.client_id=0,o.delivery_emailid,c.email) as email,if(o.client_id=0,o.delivery_mobile_no,c.mobile_no) as mobile_no');
         $this->db->join('vidiem_clients c', 'c.id=o.client_id', 'left');
         $this->db->join('vidiem_dealers', 'vidiem_dealers.id = o.dealer_id', 'left');
+         $this->db->join('vidiem_dealer_locations', 'vidiem_dealer_locations.id = o.dealer_location_id', 'left');
         if (isset($_POST['order_type']) && $_POST['order_type'] == 1) {
             $this->db->where('o.dealer_id is NOT NULL', null, FALSE);
             $this->db->where('o.dealer_id !=', 0);
@@ -1465,6 +2335,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         if (isset($_POST['dealer_id']) && !empty($_POST['dealer_id'])) {
             $this->db->where('o.dealer_id', $_POST['dealer_id']);
         }
+        // $this->db->group_by('o.pg_type');
 
         $this->db->order_by('o.id', 'DESC');
 
@@ -1475,10 +2346,13 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 
     public function custom_Select_unCompletedOrders()
     {
+         // print_r('GG'); die;
         $this->db->select('o.*,c.name,c.email,c.mobile_no');
         $this->db->join('vidiem_clients c', 'c.id=o.client_id');
-        $query = $this->db->get_where('vidiem_customorder o', array('o.status !=' => 4, 'o.payment_status !=' => 'success'));
-        return $query->result_array();
+        $this->db->order_by("id", "desc");
+        $query =  $this->db->get_where('vidiem_customorder o', array('o.status !=' => 4, 'o.payment_status !=' => 'success'));
+       
+         return $query->result_array();
     }
 
     public function custom_Select_Cancelled_Order()

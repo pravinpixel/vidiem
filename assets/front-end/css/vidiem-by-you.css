@@ -12,6 +12,23 @@ body.modal-open {
     height: 100vh;
 }
 
+.arrow-animate{
+	animation: riglef 1s linear infinite;
+	font-size: 15px;
+}
+
+@keyframes riglef {
+	0% {
+		transform: translateX(-7px);
+	}
+	50% {
+		transform: translateX(5px);
+	}
+	100% {
+		transform: translateX(-7px);
+	}
+}
+
 #loader {
     position: fixed;
     left: 0px;
@@ -710,6 +727,14 @@ span.mobile-text {
     display: none;
 }
 
+.jar-options-selected a.red-btn, .jar-options a.red-btn{
+    display: inline-block;
+    width: auto;
+    margin-top: 10px;
+	white-space: nowrap;
+}
+
+
 .selected-price {
     text-align: center;
     font-size: 36px;
@@ -813,9 +838,20 @@ span.mobile-text {
     color: #FFF;
     left: 0;
     text-align: center;
-    top: 22%;
-    font-size: 13px;
+    top: 22%;   
+    font-size: 20px;
     width: 45%;
+    text-transform: uppercase;
+}
+
+@media (max-width: 760px){
+    .show-message{
+        font-size: 11px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .show-mobile {
@@ -1023,11 +1059,15 @@ ul.mobile-step {
         align-items: center;
         justify-content: space-around;
         position: absolute;
-        top: 60px;
+        top: 65px;
         left: 0px;
         width: 100%;
         display: none;
+        z-index: 999;
+        padding: 5px 0px;
         transition: all 0.3s ease;
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0px 12px 10px rgba(0,0,0,0.1);
     }
 
     ul.mobile-step.active {

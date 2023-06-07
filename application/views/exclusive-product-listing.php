@@ -28,6 +28,9 @@
 			<?php 
 				if(count($product_list) > 0) {
 			   		foreach($product_list as $data){ 
+
+						$product_cat_slug = (!empty($cat_slug)) ? $cat_slug : 'product';
+
 			?>
 				<div class="col-sm-12 col-md-6 col-lg-4 mb-5">
 					
@@ -40,7 +43,7 @@
 					   <?php } else if($data['id']==137) { ?>
 				    	<a href="<?= base_url('vidiem-tusker'); ?>">	
 				    <?php } else { ?>
-					<a href="<?= base_url('product/'.$data['slug']); ?>">
+					<a href="<?= base_url($product_cat_slug.'/'.$data['slug']); ?>">
 					<?php } ?>  
 					    
 					    

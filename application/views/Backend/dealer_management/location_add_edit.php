@@ -231,6 +231,10 @@
                                                 <?= form_error('s_password'); ?>
                                             </div>
                                         </div>
+                                        <hr>
+                                        <div class="form-group">
+                                        <span>https://www.vidiem.in/vidiem-dealer/qrlogin?userid=<?= @$info->s_user_name ?>&password=<?= @base64_encode($info->open_password) ?></span>
+                                        </div>
                                         
                                     </div>
                                 </div>

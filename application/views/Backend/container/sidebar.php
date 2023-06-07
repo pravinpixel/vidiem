@@ -1,4 +1,5 @@
   <!-- Left side column. contains the logo and sidebar -->
+  <?php $uri2 = $this->uri->segment(2); ?>
   <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
@@ -268,8 +269,13 @@
               </li>
               <?php } ?>
 
-              <?php if(hasPermission('customize_order_index')) {?>
-              <li class="treeview">
+              <?php 
+                
+                
+              if(hasPermission('customize_order_index')) {
+                
+                ?>
+              <li class="treeview <?= isset($uri2) && $uri2 == 'Customizeorders' ? 'menu-open' : '' ?>">
                   <a href="#">
                       <i class="fa fa-files-o"></i>
                       <span>Customize Orders</span>
@@ -277,8 +283,8 @@
                           <i class="fa fa-angle-left pull-right"></i>
                       </span>
                   </a>
-                  <ul class="treeview-menu">
-                      <li><a href="<?= base_url('Admin/Customizeorders'); ?>"><i class="fa fa-list-alt"></i> View
+                  <ul class="treeview-menu" style="display: <?= isset($uri2) && $uri2 == 'Customizeorders' ? 'block' : '' ?>;">
+                      <li class="<?= isset($uri2) && $uri2 == 'Customizeorders' ? 'active' : '' ?>"><a href="<?= base_url('Admin/Customizeorders'); ?>"><i class="fa fa-list-alt"></i> View
                               Orders</a></li>
                       <li><a href="<?= base_url('Admin/Customizeorders/uncompleted'); ?>"><i class="fa fa-list-alt"></i>
                               Un Completed Orders</a></li>

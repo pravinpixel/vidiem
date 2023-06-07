@@ -123,6 +123,7 @@
 								if(!empty($product_list)){ 
 								
 								 foreach ($product_list as $data) { 
+
 								?>
 							  
 								<div class="item">
@@ -132,8 +133,10 @@
 								    	<a href="<?= base_url('vidiem-iris'); ?>">
 									  <?php } else if($data['id']==137) { ?>
 								    	<a href="<?= base_url('vidiem-tusker'); ?>">	
-								    <?php } else { ?>
-									<a href="<?= base_url('product/'.$data['slug']); ?>">
+								    <?php } else { 
+										//base_url($info["slug"].'/'.$data['slug']);
+										?>
+									<a href="<?= base_url($info["slug"].'/'.$data['slug']); ?>">
 									<?php } ?>
 									<h3><strong>Vidiem</strong> <?= $data['name']; ?></h3>
 									<p class="price">₹ <?= @number_format($data['price']); ?> <span class="strike"> <?php if(isset($data['old_price']) && $data['old_price']>0){ ?> ₹ <?= @number_format($data['old_price']); } ?></span></p>
@@ -161,7 +164,7 @@
 								</div>
 							
 							<p class="text-center mb-0">
-								<a href="<?= base_url('category/'.$info['slug']); ?>" class="black-button">View All Products</a>
+								<a href="<?= base_url($info['slug']); ?>" class="black-button">View All Products</a>
 							</p>	
 								
 							</div>
@@ -256,7 +259,6 @@
 			//echo $this->db->last_query();
 			//die();
 				 
-			//print_r($product_list); 
 								
 								
 								if(!empty($product_list)){ 
@@ -272,7 +274,7 @@
 									  <?php } else if($data['id']==137) { ?>
 								    	<a href="<?= base_url('vidiem-tusker'); ?>">	
 								    <?php } else { ?>
-									<a href="<?= base_url('product/'.$data['slug']); ?>">
+									<a href="<?= base_url($info['slug'].'/'.$data['slug']); ?>">
 									<?php } ?>
 									<h3><strong>Vidiem</strong> <?= $data['name']; ?></h3>
 									<p class="price">₹ <?= @number_format($data['price']); ?> <span class="strike"> <?php if(isset($data['old_price']) && $data['old_price']>0){ ?> ₹ <?= @number_format($data['old_price']); } ?></span></p>
@@ -300,7 +302,7 @@
 								</div>
 							
 							<p class="text-center mb-0">
-								<a href="<?= base_url('category/'.$info['slug']); ?>" class="black-button">View All Products</a>
+								<a href="<?= base_url($info['slug']); ?>" class="black-button">View All Products</a>
 							</p>	
 								
 							</div>

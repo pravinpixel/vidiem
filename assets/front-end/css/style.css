@@ -133,6 +133,14 @@ small {
     font-weight: 300;
 }
 
+.cart-coupon{
+	background: #f70009;
+	padding: 10px;
+	text-align: center;
+	color: #FFF;
+	font-size: 18px;
+}
+
 .datepicker table tr td.disabled,
 .datepicker table tr td.disabled:hover {
     background: #f3f3f3;
@@ -234,20 +242,14 @@ small {
 	margin-right: 15px;
 }
 
-@media (max-width: 768px) {
-    .dealer-logo {
-        position: absolute;
-		left: 0;
-		top: 65px;
-		padding: 15px 5px;
-		background: #FFF;
-		width: 100%;
-		z-index: 999;
+@media (max-width: 768px) {    
+	.dealer-logo {
+        padding: 0px;
 		border-left: none;
-		text-align: center;
     }
 	.dealer-logo img{
 		max-width: 150px !important;
+		max-height: 30px;
 	}
 	header.fixed .dealer-logo{
 		display: none;
@@ -4256,7 +4258,7 @@ img.w-65 {
 }
 
 #responsive-tabs1.nav-tabs li {
-    width: 20%;
+    width: 16.66%;
 }
 
 #responsive-tabs1.nav-tabs li a {
@@ -5214,4 +5216,8 @@ a.customize-cart-link {
     .customization-jar-table table tbody tr td {
         font-size: 13px;
     }
+}
+
+.highlighted-text-red{
+    color: #e31e24;
 }

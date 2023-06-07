@@ -13,7 +13,90 @@
         <li class="active">View Orders</li>
       </ol>
     </section>
+<style>
+  .light-gray-bg {
+    background: #f8f8f8;
+    padding-left: 57px;
+    padding-right: 35px;
+    padding-top:8px;
+}
+ul.track-order{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 50px 0px 0px 0px;
+    padding: 0px;
+    position: relative;
+}
 
+
+ul.track-order li{
+    width: 25%;
+    list-style: none;
+    position: relative;
+    color: #CCC;
+    text-align: center;
+    padding: 60px 0px 0px 0px;
+}
+ul.track-order li h5{
+    color: #CCC;
+    font-weight: 500;
+}
+ul.track-order li.active, ul.track-order li.active h5{
+    color: #000;
+}
+ul.track-order li span{
+    position: absolute;
+    left: calc(50% - 15px);
+    top: 0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c6c6c6;
+    color:#666;
+    z-index: 99;
+}
+ul.track-order li.active span{
+    background: #f70009;
+    color: #FFF;
+}
+ul.track-order li:before{
+    background: #CCC;
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    left: 0;
+    top: 13px;
+    content: "";
+    z-index: 10;
+}
+ul.track-order li.active:after{
+    background: #f70009;
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    left: 0;
+    top: 13px;
+    content: "";
+    z-index: 15;
+}
+
+ul.track-order li.active:first-child:after{
+    width: 50%;
+    left: 50%;
+}
+
+ul.track-order li:first-child:before, ul.track-order li.active.full:first-child:after{
+    width: 50%;
+    left: 50%;
+}
+ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
+    width: 50%;
+}
+  </style>
     <!-- Main content -->
     <section class="content">
        <?php if(!empty($this->session->flashdata('msg'))){ ?>
@@ -88,13 +171,16 @@
                   <td><?= $info['tax']; ?></td>
                   <td><?= $info['discount']; ?></td>
                   <td><?= $info['amount']; ?></td>
-                  <td><?= $order_status[$info['status']]; ?></td>
+                  <td><?= $order_status[$info['status']]; ?>
+                  <a href="#" class="btn bg-green customize_track_order" data-toggle="modal" data-target="#customize-track-order" ><span class="fa fa-ship"></span></a>
+                </td>
                   <td><?= ($info['status']==3)?$info['delivered_at']:''; ?></td>
                   <td><?= $info['notes']; ?></td>
                   <td><?= $info['created']; ?></td>
                   <td><a href="<?= base_url('Admin/customizeorders/invoice/'.$info['id']); ?>" class="btn bg-aqua" data-toggle="tooltip" data-placement="top"  data-original-title="Invoice"><span class="fa fa-download"></span></a></td>
                   <td>
-                      <a href="javascript:void(0);" class="btn bg-navy custom_order_view_trigger" data-id="<?= $info['id']; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view"><span class="fa fa-eye"></span></a>
+                     <a href="javascript:void(0);" class="btn bg-navy custom_order_view_trigger" data-id="<?= $info['id']; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view"><span class="fa fa-eye"></span></a> 
+                       <!-- <a href="javascript:void(0);" class="btn bg-navy custom_order_pdf"  data-original-title="view"  data-id="<?= $info['id']?>"><span class="fa fa-eye"></span></a>-->
                       <a href="javascript:void(0);" class="btn bg-green custom_trigger_order_status" data-toggle="modal" data-target="#feature" data-id="<?= $info['id']?>"><span class="fa fa-cogs"></span></a></td>
                     <td>
                       <a href="javascript:void(0);" class="btn btn-danger order_cacel_trigger" data-toggle="tooltip" data-placement="top" data-original-title="Delete" data-url="<?= base_url('Admin/customizeorders/orderCancel/'.$info['id']);?>">
@@ -124,9 +210,12 @@
     </div>
     </section>
     <!-- /.content -->
+    
   </div>
   <!-- /.content-wrapper -->
-
+  <div class="modal" id="customOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  
+</div>
   <!-- Client Status Update Modal -->
     <div class="modal fade" id="feature">
           <div class="modal-dialog">
@@ -200,6 +289,50 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        
+        
+         <!-- modal  -->
+     <div class="modal fade" id="customize-track-order">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Track Order</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="track-form" action="">
+                      <div class="form-group">
+                        <label class="control-label col-sm-3" for="inputClientStatus">Invoice No</label>
+                       
+                        <div class="col-sm-9">
+                            <input type="text"  name="code" id="code"  class="form-control invoice_no" required>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3" for="inputClientStatus">Mail Address</label>
+                       
+                        <div class="col-sm-9">
+                        <input type="text"  name="email" id="email" class="form-control order_no" required>
+                        </div>
+                      </div>
+                     
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right"> 
+                      <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary track_order_status">Submit</button>
+                    </div>
+                </div>
+                <div id="tracking-pane">
+                        
+                        </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal  end -->
+        
         <!-- Client Status Update Modal -->
         <div class="modal fade" id="clientStatus">
           <div class="modal-dialog">
@@ -310,4 +443,64 @@
       $('#dealer_pane').hide();
     }
   })
+
+$(function(){
+		$(document).on('click','.custom_order_pdf', function(){
+		  
+
+			let id = $(this).data('id');
+
+    $.ajax({
+      url: '<?= base_url()?>Admin/customizeorders/AjaxSingleView',
+      type: 'POST',
+      data:{id:id},
+      success: function(res) {
+        $('#customOrderModal').modal('show');
+        $('#customOrderModal').html(res);
+      }
+    })
+		});
+  });
+
+  $(function(){
+		$(document).on('click','.customize_track_order', function(){
+			$("#code").val('');
+			$("#email").val('');
+      $(document).on('click','.track_order_status', function(e){
+		e.preventDefault();
+
+		let code = $("#code").val();
+		let email = $("#email").val();
+
+		if(code == '') {
+			swal("invoice no field required", {
+				title: "Information",
+				icon: "error",
+			});
+			return false;
+		}
+		if(email == '') {
+			swal("Email field required", {
+				title: "Information",
+				icon: "error",
+			});
+			return false;
+		}
+		
+    $.ajax({
+                type: "POST",
+                url: "<?= base_url() ?>tracking/get_tracking_info",
+                data: {code:code,email:email},
+                dataType: 'json',
+                success: function (res) {
+                    if( res.view ) {
+                        $('#tracking-pane').html(res.view);
+                    }
+                }
+            });
+  });
+  });
+  });
+
+ 
 </script>

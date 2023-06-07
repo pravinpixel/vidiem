@@ -1,8 +1,13 @@
 RewriteEngine On
+
+RewriteRule ^category/(.+)$ http://192.168.0.48:8081/vidiem/$1 [R=301,L]
+
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
 RewriteCond %{HTTP_HOST} vidiem\.in [NC]
 RewriteCond %{SERVER_PORT} 8081
 RewriteRule ^(.*)$ http://192.168.0.48:8081/vidiem/$1 [R,L]
+
 Options -Indexes

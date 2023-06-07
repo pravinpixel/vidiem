@@ -1031,6 +1031,8 @@ $(function(){
 		$("#uncompleted_order_id").val(id);
 	});
 
+	
+
 	$(document).on('click','.update_uncompleted_order_status', function(e){
 		e.preventDefault();
 		let id = $("#uncompleted_order_id").val();
@@ -1070,6 +1072,110 @@ $(function(){
 					url: base_url+'orders/updateOrderUncompletedToNewOrder',
 					type: 'POST',
 					data: {id:id,status:order_status_id},
+					success:function(res){
+						var response = JSON.parse(res);
+						if(response.status == true) {
+							swal(response.msg, {
+								title: "Information",
+								icon: "success",
+							}).then(() => {window.location.href = '';});
+							return false;
+						} else {
+							swal(response.msg, {
+								title: "Information",
+								icon: "error",
+							}).then(() => {window.location.href = '';});
+							return false;
+						}
+					}
+				});
+			  }
+		  })
+		  $("#order_status_id").val('');
+	});
+	$('#roleTable').DataTable({
+	    "responsive": true,
+	    "autoWidth": false,
+		"processing": true,
+		"pageLength": 10
+	});
+		
+});
+
+	$(function(){
+		$(document).on('click','.customize_uncompleted_order', function(){
+			$("#order_status_id").val('');
+			$("#order_ref_no").val('');
+			$("#bank_ref_no").val('');
+			$("#invoice_no").val('');
+			let id = $(this).data('id');
+			$("#customize_uncompleted_order_id").val(id);
+		});
+
+	$(document).on('click','.update_customize_uncompleted_order_status', function(e){
+		e.preventDefault();
+		let id = $("#customize_uncompleted_order_id").val();
+		let order_status_id = $("#order_status_id").val();
+		let order_ref_no = $("#order_ref_no").val();
+		let bank_ref_no = $("#bank_ref_no").val();
+		let invoice_no = $("#invoice_no").val();
+		if(invoice_no == '') {
+			swal("invoice no field required", {
+				title: "Information",
+				icon: "error",
+			});
+			return false;
+		}
+		if(order_ref_no == '') {
+			swal("order reference no field required", {
+				title: "Information",
+				icon: "error",
+			});
+			return false;
+		}
+		if(bank_ref_no == '') {
+			swal("bank reference no field required", {
+				title: "Information",
+				icon: "error",
+			});
+			return false;
+		}
+		if(order_status_id == '') {
+			swal("order status field required", {
+				title: "Information",
+				icon: "error",
+			});
+			return false;
+		}
+		
+		var base_url=tmp_base_url+'Admin/';
+		swal({
+			title: "Are you sure to process this action?",
+			type: "warning",
+			buttons: {
+				
+				cancel: {
+				  text: "Cancel",
+				  value: false,
+				  visible: true,
+				  className: "",
+				  closeModal: true,
+				},
+				confirm: {
+					text: "OK",
+					value: true,
+					visible: true,
+					className: "",
+					closeModal: true
+				  }
+			  }
+		  }).then(function(isConfirm) {
+			  if(isConfirm) {
+				$('#customizeuncompleted-order').modal('hide');
+				$.ajax({
+					url: base_url+'Customizeorders/cutomizeupdateOrderUncompletedToNewOrder',
+					type: 'POST',
+					data: {id:id,status:order_status_id,order_ref_no:order_ref_no,bank_ref_no:bank_ref_no,invoice_no:invoice_no},
 					success:function(res){
 						var response = JSON.parse(res);
 						if(response.status == true) {

@@ -49,162 +49,10 @@
 						</div>
 					</div>
 					<?php  } ?>
-					<!--Login User Start  -->
-					<?php if($client_id!=''){ ?>
-					<h4 class="text-dark mb-2">Shipping Address Details</h4>
 					
-					<div class="bg-white shadow1 mb-4 p-4">
 					
-						
-						      <div id="address_list_1">
-								<?php if(!empty($shipping_address)){
-									$cnt=1;
-									foreach ($shipping_address as $displayaddress) { ?>
-								<div class="row pb-3 mb-3 border-bottom">
-								  <div class="col-12 col-sm-5">
-									
-									  <p><input class="dot" type="radio" id="slctadd_<?php echo $cnt; ?>" name="shippingaddressid" value="<?php echo $displayaddress['id']; ?>"> <?php echo $displayaddress['name']; ?></p>
-									  <p><?php echo $displayaddress['mobile_no']; ?><p> 
-								
-								  </div>
-								  <div class="col-12 col-sm-5">
-									<p><?php echo $displayaddress['address']; ?><p> 
-								  </div>
-								  <div class="col-12 col-sm-2"> <a id="edit-shipping-address" href="javascript:void(0);" class="cust_link edit btn btn-primary btn-sm m-0 pt-2 pb-2 pr-3 pl-3" title="Edit" data-toggle="tooltip" onClick="javascript:triggershippingaddress_edit(<?php echo $displayaddress['id']; ?>);"><span  data-target=".addnew-address" aria-expanded="false" aria-controls="addnew-address"><i class="lni lni-pencil-alt"></i><span> </a>  </div>
-								</div>
-									<?php $cnt++; } } ?>
-							 
-						
-						</div>
-						 <a href="javascript:void(0);" class="red-btn small" onClick="javascript:triggershippingaddress();">Add to new address</a>
-						</div>
-						<?php } ?>
-						
-						
-						
-					<h4 class="text-dark mb-2 shippingaddressdiv">Add Shipping Address</h4>
-					<div class="bg-white shadow1 mb-4 p-4 shippingaddressdiv">
-					<?php $states=$this->ProjectModel->states(); ?>
-					<form method="POST" action="" id="shippingaddressForm">
-					    <input type="hidden" value="1" name="type">
-						<input type="hidden" value="1" name="id" id="clientaddid">
-						
-						<div class="row">
-							<div class="col-sm-12 col-md-6">
-								<div class="md-form">
-								  <input type="text" id="name_ship" name="name" class="form-control jsrequired" value="<?= set_value('name',$this->session->userdata('client_name')); ?>">
-								  <label for="name_ship">Name</label>
-								 
-								</div>
-							</div>
-							<div class="col-sm-12 col-md-6">
-								<div class="md-form">
-								  <input type="text" id="company_ship" name="company" class="form-control" value="<?= set_value('company'); ?>">
-								  <label for="company_ship">Company</label>
-								 
-								</div>
-							</div>
-							<div class="col-sm-12 col-md-12">
-								<div class="md-form">
-								  <input type="text" id="address_ship" class="form-control jsrequired" name="address" value="<?= set_value('address'); ?>">
-								  <label for="address_ship">Address Line 1</label>
-								 
-								</div>
-							</div>
-							<div class="col-sm-12 col-md-12">
-								<div class="md-form">
-								  <input type="text" id="address2_ship" class="form-control" name="address2" value="<?= set_value('address2'); ?>">
-								  <label for="address2_ship">Address Line 2</label>
-								</div>
-							</div>
-							
-							<div class="col-sm-12 col-md-6">
-								<div class="md-form">
-								  <input type="text" id="zip_code_ship" class="form-control jsrequired" name="zip_code" value="<?= set_value('zip_code'); ?>">
-								  <label for="zip_code_ship">Zip/Postal Code</label>
-								  
-								</div>
-							</div>
-							
-							<div class="col-sm-12 col-md-6">
-								<div class="md-form">
-								  <input type="text" id="city_ship" class="form-control jsrequired" name="city" value="<?= set_value('city'); ?>">
-								  <label for="city_ship">City</label>
-								 
-								</div>
-							</div>
-							
-							<div class="col-sm-12 col-md-6 pt-4 mb-2">
-								  <select id="country_ship" name="country" class="js-states form-control">
-									<option>India</option>
-								  </select>
-							</div>
-							<div class="col-sm-12 col-md-6 pt-4 mb-2">
-								  <select id="state_ship" name="state" class="js-states form-control jsrequired">
-								  
-									<option>Select State</option>
-								<?php if(!empty($states)){
-									foreach ($states as $info) { ?>
-										<option value="<?= $info;?>" <?= set_select('state',$info);?>><?= $info;?></option>
-								<?php
-									} } ?>
-									
-								  </select>
-							</div>
-							
-							<div class="col-sm-12 col-md-12">
-								<div class="md-form">
-								  <input type="text" id="add_information_ship" class="form-control " name="add_information" value="<?= set_value('add_information'); ?>">
-								  <label for="add_information_ship">Additional Information</label>
-								</div>
-							</div>
-							
-							<div class="col-sm-12 col-md-6">
-								<div class="md-form">
-								  <input type="text" id="mobile_no_ship" minlength="10"     maxlength="10"  class="form-control jsrequired" name="mobile_no" value="<?= set_value('mobile_no'); ?>">
-								  <label for="mobile_no_ship">Mobile Number</label>
-								 
-								</div>
-							</div>
-							
-							<div class="col-sm-12 col-md-6">
-								<div class="md-form">
-								  <input type="text" id="emailid_ship" class="form-control jsrequired" name="emailid" value="<?= set_value('emailid'); ?>">
-								  <label for="emailid_ship">Email Id</label>
-								 
-								</div>
-							</div>
-							<?php
-							
-							  $client_id=$this->session->userdata('client_id');
-							if($client_id!=''){	
-							?>
-							<div class="col-sm-12 col-md-12 col-lg-12 text-right">
-								<button type="button" class="red-btn small" onClick="javascript:saveaddress('shippingaddressForm','<?= base_url('home/AjaxAddShippingAddress'); ?>','Shipping Address Added');"><i class="lni lni-save"></i> &nbsp; Save</button>
-							</div>
-							<?php } ?>
-						</div>
-						</form>
-					</div>
+									<?php if($client_id!=''){ ?>
 
-					<div id="shippingaddressupdatediv"></div>						
-					
-					<div class="bg-white shadow1 mb-5 p-4">
-							<div class="row">
-							<div class="col">
-							<div class="custom-checkbox tick">
-							<label class="filllTT">
-							<input type="checkbox" data-ng-model="example.check" name="same_billing" id="same_billing"  class="tigger-billingaddress" value="1,2" onclick="samebillingfunction();">
-							  <span class="box"></span>
-							  Use the delivery address as the billing address.
-							</label>
-							</div>
-							</div>
-							</div>
-						
-					</div>
-						
-					<?php if($client_id!=''){ ?>
 					<h4 class="text-dark mb-3 displaybillingaddressdiv">Billing Address Details</h4>
 					
 					<div class="bg-white shadow1 mb-4 p-4 displaybillingaddressdiv">
@@ -313,16 +161,16 @@
 							
 							<div class="col-sm-12 col-md-6">
 								<div class="md-form">
-								  <input type="text" id="mobile_no"  minlength="10"     maxlength="10"   maxlength="10"  class="form-control jsrequired" name="mobile_no" value="<?= set_value('mobile_no'); ?>">
-								  <label for="mobile_no">Mobile Number</label>
+								  <input type="text" id="billing_mobile_no"  minlength="10"     maxlength="10"   maxlength="10"  class="form-control jsrequired" name="mobile_no" value="<?= set_value('mobile_no'); ?>" onChange="mobile_val_ajax(this)" >
+								  <label for="billing_mobile_no">Mobile Number</label>
 								  
 								</div>
 							</div>
 							
 							<div class="col-sm-12 col-md-6">
 								<div class="md-form">
-								  <input type="text" id="emailid_ship" class="form-control jsrequired" name="emailid" value="<?= set_value('emailid'); ?>">
-								  <label for="emailid_ship">Email Id</label>
+								  <input type="text" id="billing_emailid_ship" class="form-control jsrequired" name="emailid" value="<?= set_value('emailid'); ?>" onChange="email_val_ajax(this)" >
+								  <label for="billing_emailid_ship">Email Id</label>
 								 
 								</div>
 							</div>
@@ -339,7 +187,257 @@
 						</form>
 					</div>					
 					
-					<div id="billingaddressupdatediv"></div>
+					<div id="billingaddressupdatediv"></div>	
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+										
+					<div class="bg-white shadow1 mb-5 p-4">
+						<div class="row">
+							<div class="col">
+    							<div class="custom-checkbox tick">
+    							    <label class="filllTT">
+        							<input type="checkbox" data-ng-model="example.check" name="same_billing" id="same_billing"  class="tigger-billingaddress" value="1,2" onclick="samebillingfunction();">
+        							  <span class="box"></span>
+        							  Use the billing address as the delivery address.
+        							</label>
+    							</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<!--Login User Start  -->
+					<?php if($client_id!=''){ ?>
+					<h4 class="text-dark mb-2">Shipping Address Details</h4>
+					
+					<div class="bg-white shadow1 mb-4 p-4">
+					
+						
+						      <div id="address_list_1">
+								<?php if(!empty($shipping_address)){
+									$cnt=1;
+									foreach ($shipping_address as $displayaddress) { ?>
+								<div class="row pb-3 mb-3 border-bottom">
+								  <div class="col-12 col-sm-5">
+									
+									  <p><input class="dot" type="radio" id="slctadd_<?php echo $cnt; ?>" name="shippingaddressid" value="<?php echo $displayaddress['id']; ?>"> <?php echo $displayaddress['name']; ?></p>
+									  <p><?php echo $displayaddress['mobile_no']; ?><p> 
+								
+								  </div>
+								  <div class="col-12 col-sm-5">
+									<p><?php echo $displayaddress['address']; ?><p> 
+								  </div>
+								  <div class="col-12 col-sm-2"> <a id="edit-shipping-address" href="javascript:void(0);" class="cust_link edit btn btn-primary btn-sm m-0 pt-2 pb-2 pr-3 pl-3" title="Edit" data-toggle="tooltip" onClick="javascript:triggershippingaddress_edit(<?php echo $displayaddress['id']; ?>);"><span  data-target=".addnew-address" aria-expanded="false" aria-controls="addnew-address"><i class="lni lni-pencil-alt"></i><span> </a>  </div>
+								</div>
+									<?php $cnt++; } } ?>
+							 
+						
+						</div>
+						 <a href="javascript:void(0);" class="red-btn small" onClick="javascript:triggershippingaddress();">Add to new address</a>
+						</div>
+						<?php } ?>
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					<h4 class="text-dark mb-2 shippingaddressdiv">Add Shipping Address</h4>
+					<div class="bg-white shadow1 mb-4 p-4 shippingaddressdiv">
+					<?php $states=$this->ProjectModel->states(); ?>
+					<form method="POST" action="" id="shippingaddressForm">
+					    <input type="hidden" value="1" name="type">
+						<input type="hidden" value="1" name="id" id="clientaddid">
+						
+						<div class="row">
+							<div class="col-sm-12 col-md-6">
+								<div class="md-form">
+								  <input type="text" id="name_ship" name="name" class="form-control jsrequired" value="<?= set_value('name',$this->session->userdata('client_name')); ?>">
+								  <label for="name_ship" class="name_ship_label">Name</label>
+								 
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-6">
+								<div class="md-form">
+								  <input type="text" id="company_ship" name="company" class="form-control" value="<?= set_value('company'); ?>">
+								  <label for="company_ship" class="company_ship_label">Company</label>
+								 
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<div class="md-form">
+								  <input type="text" id="address_ship" class="form-control jsrequired" name="address" value="<?= set_value('address'); ?>">
+								  <label for="address_ship" class="address_ship_label">Address Line 1</label>
+								 
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-12">
+								<div class="md-form">
+								  <input type="text" id="address2_ship" class="form-control" name="address2" value="<?= set_value('address2'); ?>">
+								  <label for="address2_ship" class="address2_ship_label">Address Line 2</label>
+								</div>
+							</div>
+							
+							<div class="col-sm-12 col-md-6">
+								<div class="md-form">
+								  <input type="text" id="zip_code_ship" class="form-control jsrequired" name="zip_code" value="<?= set_value('zip_code'); ?>">
+								  <label for="zip_code_ship" class="zip_code_ship_label">Zip/Postal Code</label>
+								  
+								</div>
+							</div>
+							
+							<div class="col-sm-12 col-md-6">
+								<div class="md-form">
+								  <input type="text" id="city_ship" class="form-control jsrequired" name="city" value="<?= set_value('city'); ?>">
+								  <label for="city_ship" class="city_ship_label">City</label>
+								 
+								</div>
+							</div>
+							
+							<div class="col-sm-12 col-md-6 pt-4 mb-2">
+								  <select id="country_ship" name="country" class="js-states form-control">
+									<option>India</option>
+								  </select>
+							</div>
+							<div class="col-sm-12 col-md-6 pt-4 mb-2">
+								  <select id="state_ship" name="state" class="js-states form-control jsrequired">
+								  
+									<option>Select State</option>
+								<?php if(!empty($states)){
+									foreach ($states as $info) { ?>
+										<option value="<?= $info;?>" <?= set_select('state',$info);?>><?= $info;?></option>
+								<?php
+									} } ?>
+									
+								  </select>
+							</div>
+							
+							<div class="col-sm-12 col-md-12">
+								<div class="md-form">
+								  <input type="text" id="add_information_ship" class="form-control " name="add_information" value="<?= set_value('add_information'); ?>">
+								  <label for="add_information_ship" class="add_information_ship_label">Additional Information</label>
+								</div>
+							</div>
+							
+							<div class="col-sm-12 col-md-6">
+								<div class="md-form">
+								  <input type="text" id="mobile_no_ship" minlength="10" maxlength="10"  class="form-control jsrequired" name="mobile_no" value="<?= set_value('mobile_no'); ?>"  onChange="mobile_val_ajax(this)">
+								  <label for="mobile_no_ship" class="mobile_no_ship_label">Mobile Number</label>
+								 
+								</div>
+							</div>
+							
+							<div class="col-sm-12 col-md-6">
+								<div class="md-form">
+								  <input type="text" id="emailid_ship" class="form-control jsrequired" name="emailid" value="<?= set_value('emailid'); ?>" onChange="email_val_ajax(this)">
+								  <label for="emailid_ship" class="emailid_ship_label">Email Id</label>
+								 
+								</div>
+							</div>
+							<?php
+							
+							  $client_id=$this->session->userdata('client_id');
+							if($client_id!=''){	
+							?>
+							<div class="col-sm-12 col-md-12 col-lg-12 text-right">
+								<button type="button" class="red-btn small" onClick="javascript:saveaddress('shippingaddressForm','<?= base_url('home/AjaxAddShippingAddress'); ?>','Shipping Address Added');"><i class="lni lni-save"></i> &nbsp; Save</button>
+							</div>
+							<?php } ?>
+						</div>
+						</form>
+					</div>
+
+					<div id="shippingaddressupdatediv"></div>						
+
+						
+
 					
 						<h4 class="text-dark mb-2">Shipping Method</h4>
 					<div class="bg-white shadow1 mb-4 p-4">
@@ -370,6 +468,13 @@
 							</div>
 						</div>
 					</div>
+					<div class="bg-white shadow1 mb-4 p-4">
+						<div class="row">
+							<div class="col-sm-12 col-md-6 col-lg-8">	
+								<h6 class="highlighted-text-red mb-0">Non Returnable / No Cancellation in all Vidiem by you orders</h6>
+							</div>
+						</div>
+					</div>
 				</div>
 				
 				<div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
@@ -382,15 +487,29 @@
 						
 						//print_r($contents); exit;
 						if(!empty($contents)){
-						foreach ($contents as $info) { ?>
+						foreach ($contents as $info) { 
+							$cur_prod_cat_id=$this->FunctionModel->Select_Field('cat_id','vidiem_products',array('id'=>$info['id']));
+							$cur_prod_cat_slug=$this->FunctionModel->Select_Field('slug','vidiem_category',array('id'=>$cur_prod_cat_id));
+			
+							if($data['id']==114) { 
+								$productNewurl = base_url('vidiem-adc'); 
+							} else if($data['id']==122) { 
+								$productNewurl = base_url('vidiem-iris'); 
+							} else if($data['id']==137) { 
+								$productNewurl = base_url('vidiem-tusker'); 	
+							} else { 
+								$productNewurl = base_url($cur_prod_cat_slug.'/'.$info['slug']);
+							 } 
+							?>
+							
 						<div class="row mb-4">
 							<div class="col-sm-12 col-md-6 col-lg-4 light-gray-bg">
-							<a href="<?= base_url('product/'.$info['slug']); ?>" >
+							<a href="<?= $productNewurl; ?>" >
 								<img src="<?= base_url('uploads/images/'.$info['image']); ?>" alt="" class="img-fluid" />
 							</a>	
 							</div>
 							<div class="col-sm-12 col-md-6 col-lg-8">
-							   <a href="<?= base_url('product/'.$info['slug']); ?>" >
+							   <a href="<?= $productNewurl; ?>" >
 								<h6>Vidiem <small><?= $info['name']; ?></small></h6>
 								</a>
 								<!--<p>Mixer Grinder - 3 Jars</p>-->
@@ -576,6 +695,263 @@
 </form>
 
 <script>
+$(document).ready(function() { // or when your form is populated after an ajax call
+
+  $('#billingaddressForm').find(':input').each(function(index, value) {
+
+    $(this).data('val', $(this).val());
+        get_billing_to_shipping();
+
+  });
+
+})
+
+$('#billingaddressForm').on('change paste', ':input', function(e) {
+
+  $('#change-monitor').html('Form has changed. Click to reset.');
+        get_billing_to_shipping();
+
+});
+
+$('#billingaddressForm').on('keyup', ':input', function(e) {
+  
+     if ($(this).val() != $(this).data('val')) {
+//     $('#change-monitor').html('Form has changed. Click to reset.');
+      get_billing_to_shipping();
+   
+   }
+
+});
+
+$(document).on('click', '#billingaddressForm', function() {
+        get_billing_to_shipping();
+ 
+})
+
+
+
+
+
+
+function get_billing_to_shipping(){
+    var datas = $('#billingaddressForm').serialize();
+
+    
+
+        //Billing Details
+        var billigname = $("#name").val();
+        var billigcompanyname = $("#company").val();
+        var billigaddress = $("#address").val();
+        var billigaddress2 = $("#address2").val();
+        var billigzip_code = $("#zip_code").val();
+        var billigcity = $("#city").val();
+        
+        var billigcountry = $("#country2").val();
+        var billigstate1 = $("#state1").val();
+        var billigadd_information = $("#add_information").val();
+        var billing_emailid_ship = $("#billing_emailid_ship").val();
+        var billing_mobile_no = $("#billing_mobile_no").val();
+        
+				    
+				    
+				    
+				    
+				    
+				    
+				    
+				    
+				    
+				    
+				    
+				    
+				        
+				        //Shipping details
+				        var shippingname = $('#name_ship').val();
+				        var company = $('#company_ship').val();
+				        var address = $('#address_ship').val();
+				        var address2 = $('#address2_ship').val();
+				        var zip_code = $('#zip_code_ship').val();
+				        var city = $('#city_ship').val();
+				        var country2 = $('#country2').val();
+				        var state1 = $('#state_ship').val();
+				        var add_information = $('#add_information').val();
+				        var shipping_mobile_no = $('#mobile_no_ship').val();
+				        var emailid_ship = $('#emailid_ship').val();
+
+
+
+				        if (billigname != shippingname) {
+				            $('#name_ship').val(billigname);
+				            $('.name_ship_label').css('transform', "translateY(-10px)");
+				            $('.name_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            
+				            
+				        }
+				        
+				        if (billigcompanyname != company) {
+				            $('.company_ship_label').css('transform', "translateY(-10px)");
+				            $('.company_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#company_ship').val(billigcompanyname);
+				        }
+				        
+				        if (address != billigaddress) {
+				            $('.address_ship_label').css('transform', "translateY(-10px)");
+				            $('.address_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#address_ship').val(billigaddress);
+				        }
+				        
+				        if (address2 != billigaddress2) {
+				            $('.address2_ship_label').css('transform', "translateY(-10px)");
+				            $('.address2_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#address2_ship').val(billigaddress2);
+				        }
+				        
+
+				        
+				        if (zip_code != billigzip_code) {
+				            $('.zip_code_ship_label').css('transform', "translateY(-10px)");
+				            $('.zip_code_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#zip_code_ship').val(billigzip_code);
+				        }
+				        
+				        
+				        
+				        if (city != billigcity) {
+				            $('.city_ship_label').css('transform', "translateY(-10px)");
+				            $('.city_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#city_ship').val(billigcity);
+				        }
+				        
+				        
+				        
+				    
+				        
+				        
+				        
+                        $(document.body).on("change","#country2",function(){
+                        //  alert(this.value);
+                         $('#country_ship').select2().val(this.value).trigger('change');
+                        });	
+                        
+				        
+                        $(document.body).on("change","#state1",function(){
+                        //  alert(this.value);
+                         $('#state_ship').select2().val(this.value).trigger('change');
+                        });		        				        
+
+
+				        
+				        
+				        
+				        if (add_information_ship != billigadd_information) {
+				            $('.add_information_ship_label').css('transform', "translateY(-10px)");
+				            $('.add_information_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#add_information_ship').val(billigadd_information);
+				        }
+				        
+				        if (mobile_no_ship != billing_mobile_no) {
+				            $('.mobile_no_ship_label').css('transform', "translateY(-10px)");
+				            $('.mobile_no_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#mobile_no_ship').val(billing_mobile_no);
+				        }
+				        
+				        if (billing_emailid_ship != emailid_ship) {
+				            $('.emailid_ship_label').css('transform', "translateY(-10px)");
+				            $('.emailid_ship_label').css('-webkit-transform', "translateY(-10px)");
+				            $('#emailid_ship').val(billing_emailid_ship);
+				        }
+				        
+				        
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function mobile_val_ajax(obj){
+
+	var dataid= obj.getAttribute("id");
+	var selectedId = "#"+dataid; 
+	var selectedIdOne = dataid; 
+	var inputValue = $(selectedId).val();
+
+	$.ajax({
+			url:'<?php echo base_url('home/mobilecheck'); ?>',
+			dataType: 'json',
+			type:'POST',
+			data:'mobile_no='+inputValue,
+			success:function(data){
+				if (data.status == "success") {
+					$(selectedId).removeClass("error");
+					$(selectedId).addClass("jsrequired valid");
+					// $html.on("hide", selectedId+'validatelabel', function(e){ 
+					// 	console.log('inside')
+					// });
+
+					$(selectedId+'validatelabel').css({
+						"display":"none"
+					});
+					// console.log(selectedId+'validatelabel');
+				} else {
+					$(selectedId).removeClass("valid");
+					$(selectedId).addClass("jsrequired error");
+					$(selectedId).after( '<label generated="true" id="'+selectedIdOne+'validatelabel" class="error">'+data.addresshtml+'</label>' );
+					$(selectedId+'validatelabel').show();
+					// console.log(selectedId+'validatelabel');
+				}
+				
+			}
+		});
+
+}
+
+function email_val_ajax(obj){
+	var $html = $('html');
+	var dataid= obj.getAttribute("id");
+	var selectedId = "#"+dataid; 
+	var selectedIdOne = dataid; 
+	var inputValue = $(selectedId).val();
+	$.ajax({
+			url:'<?php echo base_url('home/emailcheck'); ?>',
+			dataType: 'json',
+			type:'POST',
+			data:'email_id='+inputValue,
+			success:function(data){
+				if (data.status == "success") {
+					$(selectedId).removeClass("error");
+					$(selectedId).addClass("jsrequired valid");
+					// $html.on("hide", selectedId+'validatelabel', function(e){ 
+					// 	console.log('inside')
+					// });
+					$(selectedId+'validatelabel').hide();
+
+					$(selectedId+'validatelabel').css({
+						"display":"none"
+					});
+					// console.log(selectedId+'validatelabel');
+				} else {
+					$(selectedId).removeClass("valid");
+					$(selectedId).addClass("jsrequired error");
+					$(selectedId).after( '<label generated="true" id="'+selectedIdOne+'validatelabel" class="error">'+data.addresshtml+'</label>' );
+					$(selectedId+'validatelabel').show();
+					// console.log(selectedId+'validatelabel');
+				}
+			}
+	});
+}
+
 <?php if($client_id!=''){ ?>
 $(".shippingaddressdiv").hide();
 $(".billingaddressdiv").hide();
@@ -674,13 +1050,14 @@ $(".billingaddressdiv").hide();
 	function samebillingfunction(){
 		if ($('#same_billing').is(":checked"))
 		{
-		  $('.displaybillingaddressdiv').hide();
-		  $(".billingaddressdiv").hide();
+		  //$('.displaybillingaddressdiv').hide();
+		  $(".shippingaddressdiv").hide();
+
 		}else{
-			$('.displaybillingaddressdiv').show();
+			//$('.displaybillingaddressdiv').show();
 			
 			<?php if($client_id==''){ ?>
-			$(".billingaddressdiv").show();
+			$(".shippingaddressdiv").show();
 			<?php } ?>
 		}
 	}
@@ -863,6 +1240,9 @@ $("#state1, #country_ship, #country2").select2({
      allowClear: false
 });
 </script>
+
+
+
 
 <div id="ViewModal" class="modal fade" tabindex="-1" role="dialog">
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close">

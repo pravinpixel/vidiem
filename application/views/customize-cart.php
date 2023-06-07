@@ -1,6 +1,7 @@
 <?php include('container/header.php'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="bgPro proDetaPage clearfix light-gray-bg">
+<!-- div class="cart-coupon">Due to the year end process, all our shipments will be delivered within 8 to 10 business working days.</div -->
 	<form method="POST" action="<?= base_url('customize-checkout'); ?>">
 	<section class="checkOutDet clearfix ck_product_all pt-4">
 	<div class="container">
@@ -76,7 +77,8 @@ button.custom_order_coupon_code_cancel.ml-2 {
 			<li class="p-3">
 				<div class="row align-items-center">
 					<div class="col-sm-3 col-md-3">
-						<img src="<?= base_url('uploads/customizeimg/basecolor/'.$cartitems['bodyinfo'][0]['bodycolorimg']); ?>" alt="" class="img-fluid"/>
+						<img src="" id="CusImg" alt="" class="img-fluid"/>
+						<!-- img src="<?= base_url('uploads/customizeimg/basecolor/'.$cartitems['bodyinfo'][0]['bodycolorimg']); ?>" alt="" class="img-fluid"/ -->
 					</div>
 					<div class="col-sm-6 col-md-6">
 						<div class="table-responsive customization-table">
@@ -366,7 +368,7 @@ button.custom_order_coupon_code_cancel.ml-2 {
 					}
 					
 				}else{
-					swal("Information",'Coupon Code applied successfully..', "success");
+					swal("Information",'Coupen Code applied successfully..', "success");
 					$('.ck_product_pricing').html(data.msg);
 					$('.custom_coupon_code').prop('readonly', true);
 					$('.custom_order_coupon_code_trigger').addClass('hide');
@@ -390,4 +392,34 @@ button.custom_order_coupon_code_cancel.ml-2 {
 		$('.custom_order_coupon_code_trigger').removeClass('hide');
 		$('.custom_order_coupon_code_cancel').addClass('hide');
 	});
+</script>
+<script>
+//  $(document).on('ready', function(){
+// 	var imgageCustom = localStorage.getItem('customImage');
+// 	var imgCustom = imgageCustom.substring(0, imgageCustom.length-1);
+// 	$("#CusImg").attr("src",imgCustom);
+//     });					   
+</script>
+<script>
+function checkBase64(base64Img){
+    var base64Matcher = new RegExp("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$");
+
+    if (base64Matcher.test(base64Img)) {
+        return true;
+    } else {
+         return false;
+    }
+}
+ $(document).on('ready', function(){
+	var imgageCustom = localStorage.getItem('customImage');
+	var isValid = checkBase64(imgageCustom);
+	
+	if(isValid){
+	    $("#CusImg").attr("src", imgageCustom);
+	}
+	else{
+	    //var imgCustom = imgageCustom.substring(0, imgageCustom.length-1);
+	     $("#CusImg").attr("src", imgageCustom);
+	}
+ });					   
 </script>

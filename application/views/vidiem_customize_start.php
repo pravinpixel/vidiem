@@ -9,7 +9,7 @@
     <div class="by-you-cart"><img src="<?= base_url(); ?>assets/front-end/images/cart-icon.svg" atl="" /> <span class="count cart_total_product"><?= @$cart_count; ?></span></div>
     <a href="<?= base_url(); ?>" class="red-btn back-to-home"><i class="fa fa-home" aria-hidden="true"></i></a>
 </div>
-
+<div class="cart-coupon">Due to the year end process, all our shipments will be delivered within 8 to 10 business working days.</div>
 <section class="pt-0 pb-0 first-page">	
    <div class="container">
      	<div class="row align-items-center justify-content-between">

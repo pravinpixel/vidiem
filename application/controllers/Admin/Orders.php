@@ -369,7 +369,7 @@ class Orders extends CI_Controller {
    <div style="">
    <div class="container inCon">
         <div style="float:left;"><h1 style="color:#00BFFF;"><img src="'.base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto"/></h1></div>
-        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">Performa Invoice</h1></div>
+        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">Proforma Invoice</h1></div>
         <p style="clear:both;"></p>
     <div class="header_bottom" style="width:100%; padding:10px 0;">
         <div class="detail" style="float:left; width:35%; margin-top:-15px;">
@@ -663,7 +663,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
    <div style="border:1px solid black; padding:5px; 10px;">
    <div class="container inCon">
         <div style="float:left; width:50%;"><h1 style="color:#00BFFF;"><img src="'.base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto"/></h1></div>
-        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">Performa Invoice</h1></div>
+        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">Proforma Invoice</h1></div>
         <p style="clear:both;"></p>
     <div class="header_bottom" style="width:100%; padding:10px 0;">
         <div class="detail" style="float:left; width:35%; margin-top:-15px;">

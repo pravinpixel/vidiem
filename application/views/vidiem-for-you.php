@@ -24,6 +24,7 @@ if( isset( $dealer_session['user']) ) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"
     integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 <style type="text/css">
 
     .red-btn.init-button {
@@ -89,7 +90,7 @@ if( isset( $dealer_session['user']) ) {
                     <div class="product-image">
                         <button class="selected-items-mobile red-btn" type="button"><i class="fa fa-check"
                                 aria-hidden="true"></i> Selected Items</button>
-
+                            <div id="print-item">
                         <?php
 							$imprintCss="";
 							if($cartitems['bodyinfo'][0]['canvas_text']!="")
@@ -112,7 +113,7 @@ if( isset( $dealer_session['user']) ) {
 					   } else {
 						 ?>
                         <img id="fullbaseimg" src="<?= base_url(); ?>assets/front-end/images/vidiem-by-you/Full_bg1.jpg"
-                            id="product-image" alt="" class="img-fluid full-width" />
+                            id="product-image" alt="" class="img-fluid" />
                         <?php } ?>
                         <a href="#" class="red-btn view-selected-items" data-toggle="modal"
                             data-target="#SelectedItemsModal">Selected Items</a>
@@ -123,6 +124,7 @@ if( isset( $dealer_session['user']) ) {
 							$clsdisplablk=" style='display:block;' ";
 						}		
 						?>
+						</div>
                         <div class="product-selected-items" <?php echo $clsdisplablk; ?>>
 
                             <div class="product-selected-items2 show-mobile" <?php echo $clsdisplablk; ?>>
@@ -388,7 +390,8 @@ if( isset( $dealer_session['user']) ) {
                                                 
 					                            ?>
                                                 <p class="jar-options" <?php echo $j_opt_sel; ?>>Choose from our Jar, Handle &amp; Lid options
-                                                    <br /><a href="#" data-toggle="modal" data-target="#JarsModal"  >Click Here!</a></p>
+                                                    <br /><a href="#" data-toggle="modal" data-target="#JarsModal"  >Click
+                                                        Here!</a></p>
                                                 <p class="jar-options-selected" <?php echo $j_opt_sel; ?>>
                                                     <strong>
                                                         You have selected 
@@ -561,8 +564,7 @@ if( isset( $dealer_session['user']) ) {
                         <div id="accordion5" class="collapse" aria-labelledby="heading5"
                             data-parent="#by-you-accordion">
                             <div class="card-body">
-                                <div class="text-center position-relative"><span class="mobile-text">Message
-                                        Imprinted</span></div>
+                                <div class="text-center position-relative"><span class="mobile-text">Personalise with a Special Message</span></div>
                                 <div class="row justify-content-center">
                                     <div class="col-12 col-sm-12 col-md-8">
                                         <input type="text" maxlength="15" class="form-control"
@@ -679,6 +681,9 @@ if( isset( $dealer_session['user']) ) {
                                             <option
                                                 <?php echo $cartitems['bodyinfo'][0]['occasion_text']=="Wedding"?'Selected':''; ?>
                                                 value="Wedding">Wedding</option>
+											<option
+                                                <?php echo $cartitems['bodyinfo'][0]['occasion_text']=="Ramzan"?'Selected':''; ?>
+                                                value="Ramzan">Ramzan</option>
                                         </select>
                                     </div>
                                     <div class="col-7 col-sm-6 col-md-8">
@@ -692,7 +697,7 @@ if( isset( $dealer_session['user']) ) {
 
 
                                 <div class="next-btn">
-                                    <button type="button" class="black-btn" id="package-prev">Previous</button>
+                                    <a class="black-btn" id="package-prev">Previous</a>
                                     <button type="button" disabled class="red-btn" id="package-next">Confirm &amp;
                                         Proceed &nbsp; <i class="lni lni-arrow-right"></i></button>
                                 </div>
@@ -1219,8 +1224,6 @@ function fnbaseclick(ele, bid, baseimg, price) {
 $(".select-body").click(function() {
     $(".selected-items-mobile").addClass('show');
     $("li.step1").addClass('active');
-	$("#fullbaseimg").removeClass('full-width');
-	
 });
 
 $(".selected-items-mobile").click(function() {
@@ -2357,4 +2360,31 @@ function getJarView(id) {
 	
 	return false;
 }
+</script>
+
+<script>
+ var imgageData;
+$(document).ready(function(){
+
+	
+var element = $("#print-item"); // global variable
+var getCanvas; // global variable
+ 
+    $("#imprinted-next").on('click', function () {
+         html2canvas(element, {
+         onrendered: function (canvas) {
+                $("#previewImage").append(canvas);
+                getCanvas = canvas;
+                imgageData = getCanvas.toDataURL("image/png");
+                 // Now browser starts downloading it instead of just showing it
+                var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+                localStorage.setItem("customImage",newData);
+             }
+         });
+		 
+    });
+ 
+
+});
+
 </script>

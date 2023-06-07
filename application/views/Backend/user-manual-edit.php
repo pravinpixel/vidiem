@@ -61,7 +61,12 @@
                 <div class="form-group">
                   <label for="inputName" class="col-sm-2 control-label">Content</label>
                   <div class="col-md-6 col-sm-10">
-                    <input type="text" class="form-control" id="inputContent" name="content" value="<?= set_value('content',$Edit_Result['content']); ?>">
+                  <?php
+                      $data = str_replace( '&', '&amp;', $Edit_Result['content'] );
+                  ?>
+                  
+                  <textarea class="form-control" id="inputcontent" name="content"><?= set_value('content',$data); ?></textarea>
+                    <!-- <input type="text" class="form-control" id="inputContent" name="content" value="<?= set_value('content',$Edit_Result['content']); ?>"> -->
                     <?= form_error('content'); ?>
                   </div>
                 </div>
@@ -81,6 +86,13 @@
                     <input type="file" class="form-control" id="inputpdffile" name="file" value="<?= set_value('file',$Edit_Result['file']); ?>">
                   
                   </div>
+                  <?php 
+                  if( isset( $Edit_Result['file'] ) && !empty( $Edit_Result['file'] ) ) {
+                  ?>
+                  <div class="col-sm-4">
+                    <a target="_blank" href="<?= base_url('uploads/usermanualpdf/'.$Edit_Result['file'])?>">View File</a>
+                  </div>
+                  <?php } ?>
                 </div>
 
                 <div class="form-group">

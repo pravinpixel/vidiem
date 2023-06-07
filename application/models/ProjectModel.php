@@ -632,7 +632,7 @@ class ProjectModel extends CI_Model {
     <div class="fullIn">';
     $template.='<div class="container inCon">
         <div style="float:left;"><h1 style="color:#00BFFF;"><img src="'.base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto"/></h1></div>
-        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">PERFORMA INVOICE</h1></div>
+        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">PROFORMA INVOICE</h1></div>
         <p style="clear:both;"></p>
     <div class="header_bottom" style="width:100%; padding:10px 0;">
         <div class="detail" style="float:left; width:35%; margin-top:-15px;">
@@ -672,7 +672,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                 
                  <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">DATE</span> :&nbsp;
                 &nbsp;'.date("d-M-Y", strtotime(@$order_data['created'])).'</li>
-                 <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">PERFORMA INVOICE</span> :&nbsp;
+                 <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">PROFORMA INVOICE</span> :&nbsp;
                 &nbsp;'.@$order_data['inv_code'].'</li>
             </ul>
 
@@ -763,7 +763,7 @@ $invoice='
    <div style="border:1px solid black;">
    <div class="container inCon">
         <div style="float:left;"><h1 style="color:#00BFFF;"><img src="'.base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto"/></h1></div>
-        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">PERFORMA INVOICE</h1></div>
+        <div style="width:30%;float:right;"><h1 style="color:#00BFFF;">PROFORMA INVOICE</h1></div>
         <p style="clear:both;"></p>
     <div class="header_bottom" style="width:100%; padding:10px 0;">
         <div class="detail" style="float:left; width:35%; margin-top:-15px;">
@@ -803,7 +803,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                 
                  <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">DATE</span> :&nbsp;
                 &nbsp;'.date("d-M-Y", strtotime(@$order_data['created'])).'</li>
-                 <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">PERFORMA INVOICE</span> :&nbsp;
+                 <li style="font-size:14px;"><span style="width:40%;list-style:none;line-height:28px; display:inline-block;">PROFORMA INVOICE</span> :&nbsp;
                 &nbsp;'.@$order_data['inv_code'].'</li>
             </ul>
 

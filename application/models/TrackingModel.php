@@ -27,17 +27,15 @@ class TrackingModel extends CI_Model {
         } else {
             return null;
         }
-
-
     }
 
     public function getOrderTrackingData($order_no, $order_type )
     {
-        $details    = $this->db->select('vidiem_order_tracking.*')
+        $details    = $this->db->select('vidiem_order_tracking.*, vidiem_delivery_partners.name as courier_name')
+                    ->join('vidiem_delivery_partners', 'vidiem_delivery_partners.id = vidiem_order_tracking.couried', 'left')
                     ->where('vidiem_order_tracking.order_id', $order_no)
                     ->where('vidiem_order_tracking.order_type', $order_type)
                     ->get('vidiem_order_tracking');
-        
         
         if( isset( $details ) && $details->num_rows() > 0 ) {
             return $details->result();
@@ -45,7 +43,5 @@ class TrackingModel extends CI_Model {
             return null;
         }
     }
-
-
 
 }

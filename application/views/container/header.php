@@ -35,7 +35,7 @@ $dealer_session = $this->session->userdata('dealer_session');
                                 <a href="<?= base_url('product-registration'); ?>">Product Registration</a>
                             </li>
                             <li class="d-none d-xl-block d-lg-block">
-                                <a href="<?= base_url('track-order'); ?>">Track Order</a>
+                                <a href="<?= base_url('tracking'); ?>">Track Order</a>
                             </li>
                         </ul>
                     </div>
@@ -104,7 +104,7 @@ $dealer_session = $this->session->userdata('dealer_session');
                                           <li>
 											<?php if (!empty($cat_menu)) {
 											  foreach ($cat_menu as $info) { ?>
-												<a href="<?= base_url('category/' . $info['slug']); ?>" class="<?= (!empty($cat_slug) && $cat_slug == $info['slug']) ? 'active' : ''; ?> dropdown-item"><?= $info['name']; ?></a>
+												<a href="<?= base_url($info['slug']); ?>" class="<?= (!empty($cat_slug) && $cat_slug == $info['slug']) ? 'active' : ''; ?> dropdown-item"><?= $info['name']; ?></a>
 											<?php }
 											} ?>
                                           </li>
@@ -161,7 +161,7 @@ $dealer_session = $this->session->userdata('dealer_session');
 											  foreach ($cat_menu as $info) { ?>
                                             <ul class="col">
                                                 <li class="has-image"><a class="dropdown-item"
-                                                        href="<?= base_url('category/' . $info['slug']); ?>">
+                                                        href="<?= base_url($info['slug']); ?>">
                                                         <?= $info['name']; ?> <img
                                                             src="<?= base_url(); ?>uploads/images/<?= $info['image']; ?>"
                                                             alt="" /></a>

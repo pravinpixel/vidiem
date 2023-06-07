@@ -60,6 +60,7 @@
                 <div class="form-group">
                   <label for="inputName" class="col-sm-2 control-label">Content</label>
                   <div class="col-md-6 col-sm-10">
+                  
                   <textarea class="form-control" id="inputcontent" name="content"><?= set_value('content'); ?></textarea>
                     <?= form_error('content'); ?>
                   </div>

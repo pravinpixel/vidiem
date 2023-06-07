@@ -198,13 +198,14 @@ if ( ! function_exists('generateDealerOrderId')) {
                                         ->where('dealer_id is NOT NULL', NULL, FALSE)
                                         ->where('order_no is NOT NULL', NULL, FALSE)
                                         ->order_by('id', 'desc')
+                                        // ->group_by('order_no')
                                         ->get('vidiem_customorder')->row();
             if( isset( $data ) && !empty( $data ) ) {
                 $old_no         = $data->order_no;
                 $old_numbers    = explode('-', $old_no);
                 $old_no         = end($old_numbers);
                 
-
+                //0001 + 1 = 2
                 $old_no         = $old_no + 1;
         
                 if( ( 4 - strlen($old_no) ) > 0 ){

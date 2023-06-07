@@ -86,7 +86,7 @@ if( isset( $dealer_session['user']) ) {
 								<?php if (!empty($cat_menu)) {
 								  foreach ($cat_menu as $info) { ?>
 									<li>
-									<a href="<?= base_url('category/' . $info['slug']); ?>"><?= $info['name']; ?></a>
+									<a href="<?= base_url($info['slug']); ?>"><?= $info['name']; ?></a>
 									</li>
 								<?php }
 								} ?>

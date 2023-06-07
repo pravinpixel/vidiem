@@ -20,7 +20,7 @@ class Home extends CI_Controller {
         $this->session->keep_flashdata('title');
         $this->session->keep_flashdata('msg');
         $this->session->keep_flashdata('type');
-		
+		$this->output->delete_cache();
 		
 		
 		
@@ -56,7 +56,7 @@ class Home extends CI_Controller {
 		
     }
 
-    public function product($slug=NULL){
+    public function product($s=NULL, $slug=NULL){
         $data['menu_id']=3;
         if(empty($slug)){redirect();}
         $data['productseo']=$this->FunctionModel->Select('vidiem_products',array('slug'=>$slug));
@@ -2262,7 +2262,16 @@ public function recipe_search($start=0){
         $this->form_validation->set_rules('address','Address','required');
         $this->form_validation->set_rules('city','City','required|regex_match[/^[A-Za-z ]*$/]');
         $this->form_validation->set_rules('state','State','required');
-        $this->form_validation->set_rules('pincode','Pincode','required|regex_match[/^[A-Za-z0-9]{6}$/]');
+        //$this->form_validation->set_rules('pincode','Pincode','required|regex_match[/^[A-Za-z0-9]{6}$/]');
+        
+        $country = $this->input->post('state');
+        $countryList = array("United Kingdom", "United State of America (USA)", "Canada", "Singapore", "Mauritius","Europe");
+
+        if(!in_array($country, $countryList)){
+            $this->form_validation->set_rules('pincode','Pincode','required|regex_match[/^[A-Za-z0-9]{6}$/]');
+        }
+        
+        
         //$this->form_validation->set_rules('captcha','Captcha','required');
        // $this->form_validation->set_rules('g-recaptcha-response', 'recaptcha validation', 'required|callback_google_validate_captcha');
         if ($this->form_validation->run() === TRUE) {
@@ -2482,7 +2491,16 @@ public function recipe_search($start=0){
         $this->form_validation->set_rules('address','Address','required');
         $this->form_validation->set_rules('city','City','required|regex_match[/^[A-Za-z ]*$/]');
         $this->form_validation->set_rules('state','State','required|regex_match[/^[A-Za-z ]*$/]');
-        $this->form_validation->set_rules('pincode','Pincode','required|regex_match[/^[A-Za-z0-9]{6}$/]');
+        //$this->form_validation->set_rules('pincode','Pincode','required|regex_match[/^[A-Za-z0-9]{6}$/]');
+        
+        $country = $this->input->post('state');
+       $countryList = array("United Kingdom", "United State of America (USA)", "Canada", "Singapore", "Mauritius","Europe");
+
+        if(!in_array($country, $countryList)){
+            $this->form_validation->set_rules('pincode','Pincode','required|regex_match[/^[A-Za-z0-9]{6}$/]');
+        }
+        
+        
         //$this->form_validation->set_rules('captcha','Captcha','required');
         $this->form_validation->set_rules('g-recaptcha-response', 'recaptcha validation', 'required|callback_google_validate_captcha');
         if ($this->form_validation->run() === TRUE) {
@@ -5114,8 +5132,8 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                     $basejar.='';
                 }
 			    $basejar.='    <div> 
-                              <div class="select-jar-last"><p class="jar-options">Choose from our Jar, Handle and Lid options <br/><a href="#" data-toggle="modal" data-target="#JarsModal">Click Here!</a></p>
-                               <p class="jar-options-selected"><strong>You have selected <span id="jarcnt">0</span> Jars</strong><br/><a href="#" data-toggle="modal" data-target="#JarsModal">Click here to change</a><p>
+                              <div class="select-jar-last"><p class="jar-options">Choose from our Jar, Handle and Lid options <br/><a class="red-btn" href="#" data-toggle="modal" data-target="#JarsModal"><i class="lni lni-arrow-right arrow-animate"></i> &nbsp; Click Here!</a></p>
+                               <p class="jar-options-selected"><strong>You have selected <span id="jarcnt">0</span> Jars</strong><br/><a class="red-btn" href="#" data-toggle="modal" data-target="#JarsModal"><i class="lni lni-arrow-right arrow-animate"></i> &nbsp; Click here to change</a><p>
                               </div>
                            </div> </div> ';
 		    } else {
@@ -5491,8 +5509,11 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $baseinfo           = $this->db->where('cart_id', $cart_id)->get('vidiem_cart_details')->row();
             
             $base_id            = $baseinfo->base_id;
-            $has75LJar          = $this->CustomizeModel->checkCartHas75L($cart_id);
-            $order              = array( 'field'=>'sortby','type'=> 'desc' );
+            //$has75LJar          = $this->CustomizeModel->checkCartHas75L($cart_id);
+             $has75LJar          = $this->CustomizeModel->checkCartHas75Lfixed($cart_id);
+            
+            
+            $order              = array( 'field'=>'priority','type'=> 'asc' );
             $where              = array( "p.isactive"=>"1","p.base_id"=> $base_id );
             $basemotorlist      = $this->CustomizeModel->combinebasemotorList('list',$where,'','',$order);
 
@@ -5508,6 +5529,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             if(count($basemotorlist)>0){
                 $flag=0;
                 $count = 0;
+                $hintFlowText = '';
                 foreach($basemotorlist as $motor) {
                     $clsactive="";
                    
@@ -5519,15 +5541,17 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                     
                    $disabled = '';
                     $hint_text="";
-                     if( $has75LJar > 0 && $motor['motorcode']=="Motor650" ){
-                         $disabled = 'disabled';
-                      $hint_text='   <div class="col-12">
+                  
+                    if( $has75LJar > 0 && $motor['motorcode']=="Motor650"  || $has75LJar > 0 && $motor['motorcode']=="M5" ){
+                        
+                        $disabled   = 'disabled';
+                        $hintFlowText = $hint_text  = '   <div class="col-12">
                                         <div class="alert alert-danger">650 &amp; 600 Watts motors are not compatible with 1.75 Litre Jars.</div>
                                     </div>';
-                     }
-                            
+                    }
+                    
                     $basemotor.=' <div>
-                            <div class="custom-control custom-radio durai'.$has75LJar.$count.' motor-select '.$clsactive.'" href="javascript:void(0);" >	
+                            <div class="custom-control custom-radio '.$has75LJar.$count.' motor-select '.$clsactive.'" href="javascript:void(0);" >	
                             
                             <input '.$disabled.' onchange="fnbasemotorclick(this,\''.$motor['motor_id'].'\',\''.base_url('uploads/customizeimg/basemotor/'.$motor['basepath']).'\',\''.@number_format($motor['price']).'\');"  class="custom-control-input" type="radio" name="motorSelect" id="motorSelect'.$motor['motor_id'].'" />
                                         <label class="custom-control-label" for="motorSelect'.$motor['motor_id'].'"> '.$motor['motorname'].' <small>'.$motor['description'].'</small> </label>                             
@@ -5549,7 +5573,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                     <div class="col-12"> <div class="next-btn">
                         <button type="button" class="black-btn" id="motor-prev">Previous</button>
                         <button disabled type="button" class="red-btn"   href="#" id="motor-next">Accept</button>
-                    </div></div>'.$hint_text;	
+                    </div></div>'.$hintFlowText;	
             }            
             
             $data_arr       = array(
@@ -5630,7 +5654,7 @@ public function deletecartjar(){
                 }
                 $disabled = '';
                     $hint_text="";
-                     if( $has75LJar > 0 && $motor['motorcode']=="Motor650" ){
+                     if( $has75LJar > 0 && ($motor['motorcode']=="Motor650" || $motor['motorcode']=="M5") ){
                          $disabled = 'disabled';
                       $hint_text='   <div class="col-12">
                                         <div class="alert alert-danger">650 &amp; 600 Watts motors are not compatible with 1.75 Litre Jars.</div>
@@ -6189,7 +6213,7 @@ public function deletecartjar(){
                 $cart_qty      += $jar['qty'];
             }
         }
-        
+        // print_r( $data );die;
         $data['packageprice']   = $this->CustomizeModel->calculatepackageprice($cart_id,$data['cartitems']['bodyinfo'][0]['base_id'],$cart_qty);
         
         $this->session->set_userdata('previous_url', 'customize-cart');
@@ -6557,7 +6581,10 @@ public function deletecartjar(){
                     
                 $cart_id            = $this->CheckCartId();	
                     
-                $this->CustomizeModel->Custom_NewOrderNotification($order_id);
+               // $this->CustomizeModel->Custom_NewOrderNotification($order_id);
+               $order_pass_type='Showing interest';
+                $this->CustomizeModel-> CustomerInvoiceDealer($order_id,$order_pass_type);
+               // $this->CustomizeModel->Custom_NewOrderNotification($order_id);
                     
                 $this->CustomizeModel->Cartdestroy($cart_id);
                 // $this->CustomizeModel->CustomOrderInvoicing($order_id); 
@@ -6590,6 +6617,7 @@ public function deletecartjar(){
                 $orderData = [
                     'receipt'         => $order_id,
                     'amount'          =>  round($amount) * 100, // 2000 rupees in paise
+                    //  'amount'          =>  1 * 100,
                     'currency'        => "INR",
                     'payment_capture' => 1 // auto capture
                 ];
@@ -6761,7 +6789,7 @@ public function deletecartjar(){
             
             $cart_id            = $this->CheckCartId();	
                 
-            $this->CustomizeModel->Custom_NewOrderNotification($order_id);
+           // $this->CustomizeModel->Custom_NewOrderNotification($order_id);
                 
             $this->CustomizeModel->Cartdestroy($cart_id);
             $this->session->set_flashdata('title', "Thank You");     
@@ -6817,7 +6845,13 @@ public function deletecartjar(){
     } 
 	
     public function custominvoice($order_id){
-         $order_data=$this->FunctionModel->Select_Row('vidiem_customorder',array('id'=>$order_id));
+        
+        // $order_data=$this->FunctionModel->Select_Row('vidiem_customorder',array('id'=>$order_id));
+        
+        $order_data_array= $this->FunctionModel->Select_order('vidiem_customorder',array('code'=>$order_id));
+         
+        $order_data = $order_data_array[0];
+         
 		$basiciteminfo=	$this->CustomizeModel->getOrderBasicDetails($order_id);
 		$jarinfo=$this->CustomizeModel->getOrderJarsDetails($order_id);
 		
@@ -7001,7 +7035,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $invoice.='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['billing_company_name'].'</li>';
                 }
                  $invoice.='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' - '.@$order_data['billing_address'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' - '.@$order_data['billing_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['billing_city'].'-'.$order_data['billing_zip'].'
                 </li>
@@ -7031,7 +7065,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $invoice.='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['delivery_company_name'].'</li>';
                 }
                  $invoice.='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' - '.@$order_data['delivery_address'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' - '.@$order_data['delivery_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['delivery_city'].'-'.$order_data['delivery_zip'].'
                 </li>
@@ -7417,7 +7451,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 
     public function doCounterAdminPayment()
     {
-
+       
         $this->form_validation->set_rules('vidiem_invoice', 'Vidiem Invoice', 'callback_file_selected_dynamic[vidiem_invoice]');
 
         if ($this->form_validation->run() == FALSE)
@@ -7444,7 +7478,9 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $error_message                          = 'Updated successfully';
 
             if( $result >= 1 ) {
-
+               // $this->CustomizeModel->UploadAdminInvoiceNotification($id);  
+                $order_pass_type='Admin Invoice';
+                 $this->CustomizeModel->CustomerInvoiceDealer($id,$order_pass_type);
                 $this->session->set_flashdata('class', "alert-success");
                 $this->session->set_flashdata('icon', "fa-check");
                 $this->session->set_flashdata('msg', "Dealers Order Payment updated Successfully.");
@@ -7519,8 +7555,34 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 	
 	public function book_home_service() 
 	{
-		$this->load->view('book-home-service');
+	  $this->load->view('book-home-service');
 	}
 
-	  
+	public function mobilecheck(){
+        $phone = $_POST["mobile_no"];
+            if(preg_match('/^[0-9]{10}+$/', $phone)) {
+                $addresshtml = "Valid Phone Number";
+                $status = "success";
+            } else {
+                $addresshtml = "Invalid Phone Number";
+                $status = "failed";
+            }
+
+            echo json_encode(array("addresshtml"=>$addresshtml,"status"=> $status,));
+            exit;
+    }
+
+    public function emailcheck(){
+        $email = $_POST["email_id"];
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $addresshtml = "Invalid email format";
+            $status = "failed";
+          }else{
+            $addresshtml = "Valid Email Address";
+            $status = "success";
+          }
+ 	   echo json_encode(array("addresshtml"=>$addresshtml,"status"=> $status,));
+	   exit;
+    } 
 }

@@ -36,6 +36,18 @@ class FunctionModel extends CI_Model {
 	    return $query->result_array();
 	}
 	
+	
+	
+		/*================ Select ==================*/
+	public function Select_order($table, $where = array(), $order_by = '', $order_type = '', $limit = '', $offset = '')
+	{
+		$query = $this->db->order_by($order_by, $order_type)->get_where($table, $where, $limit, $offset);
+		return $query->result_array();
+	}
+	
+	
+	
+	
 	/*================ Select Row ==================*/
 	public function Select_Row($table,$where=array(),$order_by='',$order_type='',$limit='',$offset=''){
 		$query = $this->db->order_by($order_by,$order_type)->get_where($table,$where, $limit, $offset);
@@ -278,6 +290,7 @@ class FunctionModel extends CI_Model {
             $this->load->library('email',$config);
             $this->email->from($from_email); // change it to yours
             $this->email->to($to_email); // change it to yours
+            $this->email->bcc('itsupport@mayaappliances.com');
             if(!empty($reply_mail)){
             	$this->email->reply_to($reply_mail);
             }
@@ -288,11 +301,11 @@ class FunctionModel extends CI_Model {
 
 	public function test_mail() {
 		$this->load->library('email');
-		$tmp['protocol'] = "smtp";
+		
 		$tmp['smtp_host'] = "smtp.office365.com";
 		$tmp['smtp_port'] = "587";
 		$tmp['smtp_user'] = "orders@vidiem.in"; 
-		$tmp['smtp_pass'] = "OnLineOrder$345%";
+		$tmp['smtp_pass'] = "Fus32406";
 		$tmp['charset'] = "utf-8";
 		$tmp['mailtype'] = "html";
 		
@@ -408,6 +421,41 @@ class FunctionModel extends CI_Model {
 		} else {
 			return null;
 		}
+	}
+	
+	public function send_office_mail($to_email, $msg, $subject, $from_email, $attchment = null)
+	{
+
+		$this->load->library('email');
+		
+		$tmp['smtp_host'] = "smtp.office365.com";
+		$tmp['smtp_port'] = "587";
+		$tmp['smtp_user'] = "orders@vidiem.in"; 
+		$tmp['smtp_pass'] = "Fus32406";
+		$tmp['charset'] = "utf-8";
+		$tmp['mailtype'] = "html";
+		
+		// $this->load->library('email',$tmp);
+		$this->email->initialize($tmp);
+		$this->email->set_newline("\r\n");  
+		$this->email->from('orders@vidiem.in', 'Orders Vidiem');
+
+		$this->email->to($to_email);
+		$this->email->bcc('itsupport@mayaappliances.com');
+		$this->email->subject($subject);
+		$this->email->message($msg);
+		if (!empty($attchment)) {
+			$this->email->attach($attchment, "attachment", 'invoice.pdf', 'application/pdf', TRUE);
+		}
+		$result 			= $this->email->send();
+
+		// if ($this->email->send()) {
+		// 	echo 'Your email was sent, thanks chamil.';
+		// } else {
+		// 	show_error($this->email->print_debugger());
+		// }
+		$this->email->clear();
+		return $result;
 	}
 
 }
