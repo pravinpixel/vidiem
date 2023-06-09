@@ -25,9 +25,16 @@ class Dealer_management extends CI_Controller {
 			$this->session->set_flashdata('msg', "Access denied.");
 			redirect('Admin/dashboard', 'refresh');
 		} 
-		$data['details']             = $this->FunctionModel->Select('vidiem_dealers');
+        $data['dealer_type']='dealers'; 
+		$data['details']             = $this->FunctionModel->Select('vidiem_dealers',array('dealer_type'=>'dealer'));
 		$this->load->view('Backend/dealer_management/list',$data);
 
+    }
+    public function ard()
+    {
+        $data['details']             = $this->FunctionModel->Select('vidiem_dealers',array('dealer_type'=>'ard'));
+        $data['dealer_type']='ard'; 
+        $this->load->view('Backend/dealer_management/list',$data);
     }
 
 	public function add($id = null)
@@ -38,6 +45,7 @@ class Dealer_management extends CI_Controller {
 			$this->session->set_flashdata('msg', "Access denied.");
 			redirect('Admin/dashboard', 'refresh');
 		} 
+
 		$action_btn         = 'Save';
         $action             = 'Add';
         $info               = '';
@@ -46,11 +54,12 @@ class Dealer_management extends CI_Controller {
             $action_btn     = 'Save';
             $action         = 'Update';
         }
-        
+        $ard_charge=$this->FunctionModel->Select_Fields('id,service_charge','vidiem_ard_service_charge',array('dealer_type'=>'ard'));
         $params             = array(
 								'action_btn' => $action_btn,
 								'action' => $action,
-                                'info' => $info ?? ''
+                                'info' => $info ?? '',
+                                'ard_charge' => $ard_charge
                             );
 		
 	   	$this->load->view('Backend/dealer_management/add_edit',@$params);
@@ -59,6 +68,7 @@ class Dealer_management extends CI_Controller {
 	public function save()
 	{
 		$id = $this->input->post('id');
+        $this->form_validation->set_rules('dealer_type', 'Dealer Type', 'required');
         $this->form_validation->set_rules('dealer_erp_code', 'Dealer ERP Code', 'required|edit_unique[vidiem_dealers.dealer_erp_code.id.'.$id.']');
         $this->form_validation->set_rules('vidiem_erp_code', 'Vidiem ERP Code', 'required');
         $this->form_validation->set_rules('location_code', 'Location Code', 'required');
@@ -93,6 +103,7 @@ class Dealer_management extends CI_Controller {
             $InsertData     = array(
 
                                 'dealer_erp_code'   => $this->input->post('dealer_erp_code'),
+                                'dealer_type'       => $this->input->post('dealer_type'),                              
                                 'vidiem_erp_code'   => $this->input->post('vidiem_erp_code'),
                                 'location_code'     => $this->input->post('location_code'),
                                 'display_name'      => $this->input->post('display_name'),
@@ -114,7 +125,18 @@ class Dealer_management extends CI_Controller {
                                 'status'            => '1',
                                 
                             );
-          
+                            $service_charge_id='';
+                            $ard_cin_no='';
+                            $ard_pan_no='';
+                            if($this->input->post('dealer_type')=='ard')
+                            {
+                                $service_charge_id=$this->input->post('ard_charge_id');
+                                $ard_cin_no=$this->input->post('cin_no');
+                                $ard_pan_no=$this->input->post('pan_no');
+                            }
+                            $InsertData['ard_service_charge_id']   =  $service_charge_id;
+                            $InsertData['ard_cin']   =  $ard_cin_no;
+                            $InsertData['ard_pan']   =  $ard_pan_no;
             
             if( isset( $this->upload_data['logo']['file_name'] ) && !empty( $this->upload_data['logo']['file_name'] ) ) {
                 $InsertData['image']        = $this->upload_data['logo']['file_name'];
@@ -235,6 +257,60 @@ class Dealer_management extends CI_Controller {
         endif;
 
     }
+    
+    	public function file_selected_test_subdealer(){
+
+        $id         = $this->input->post('id');
+        $info       = $this->DealersModel->getInfoById('vidiem_dealers', $id);
+
+        if( isset( $info->image ) && !empty( $info->image ) && isset($_FILES['logo']['name']) && $_FILES['logo']['name'] =="" ) {
+            return true;
+        }
+        $allowed_mime_type_arr = array('image/gif','image/jpeg','image/pjpeg','image/png','image/x-png');
+        $mime = get_mime_by_extension($_FILES['logo']['name']);
+        
+        if(isset($_FILES['logo']['name']) && $_FILES['logo']['name']!=""){
+            if(in_array($mime, $allowed_mime_type_arr)){
+
+                if($_FILES['logo']['size'] != 0){
+                    $upload_dir = './uploads/dealer';
+                    if (!is_dir($upload_dir)) {
+                         mkdir($upload_dir);
+                    }
+                    if(file_exists($upload_dir.'/'.$_FILES['logo']['name'])){
+                            list($file_name)=explode('.',$_FILES['logo']['name']);
+                            $file_name=$file_name.'_'.substr(md5(rand()),0,5);
+                        }else{
+                            list($file_name)=explode('.',$_FILES['logo']['name']);
+                        }
+                    $config['upload_path']   = $upload_dir;
+                    $config['allowed_types'] = 'jpg|png|jpeg';
+                    $config['file_name']     = $file_name;
+                    $config['overwrite']     = false;
+                    $config['max_size']	     = '5120';
+            
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('logo')){
+                        $this->form_validation->set_message('file_selected_test', $this->upload->display_errors('<p class=error>','</p>'));
+                        return false;
+                    }
+                    else{
+                        $this->upload_data['logo'] =  $this->upload->data();
+                        return true;
+                    }
+                }
+
+                return true;
+            }else{
+                $this->form_validation->set_message('file_selected_test', 'Please select only gif/jpg/png file.');
+                return false;
+            }
+        }else{
+            $this->form_validation->set_message('file_selected_test', 'Please choose a file to upload.');
+            return true;
+        }
+    }
+
 
 	public function file_selected_test(){
 
@@ -344,6 +420,11 @@ class Dealer_management extends CI_Controller {
 	{
 		$data['details']    = $this->LocationsModel->getLocation($dealer_id);
         $data['dealer_id']  = $dealer_id;
+        $this->db->select('dealer_type')->from('vidiem_dealers');
+        $query = $this->db->where('id',$dealer_id);
+        $query = $this->db->get();
+        $row = $query->row();
+        $data['dealer_type']=$row->dealer_type;
         $this->load->view('Backend/dealer_management/location_list', $data);
 	}
 
@@ -356,16 +437,94 @@ class Dealer_management extends CI_Controller {
             $info           = $this->LocationsModel->getInfoByRandomColumn('vidiem_dealer_locations', $id, 'id');
             $action_btn     = 'Update';
             $action         = 'Update';
-        }        
+        } 
+        $this->db->select('dealer_type')->from('vidiem_dealers');
+        $query = $this->db->where('id',$dealer_id);
+        $query = $this->db->get();
+        $row = $query->row();     
+        $ard_charge=$this->FunctionModel->Select_Fields('id,service_charge','vidiem_ard_service_charge',array('dealer_type'=>'sub_dealer'));
         $params             = array(
                                 'action_btn' => $action_btn,
                                 'action' => $action,
                                 'info' => $info,
                                 'dealer_id' => $dealer_id,
-                                'id' => $id
+                                'id' => $id,
+                                'dealer_type' => $row->dealer_type,
+                                'ard_charge' => $ard_charge
                             );
+                            
         $this->load->view('Backend/dealer_management/location_add_edit', $params);
 	}
+    public function ard_service_charge()
+    {
+        $data['details_ard'] = $this->FunctionModel->Select_Fields('dealer_type,service_charge,id','vidiem_ard_service_charge');
+        $this->load->view('Backend/dealer_management/ard_service_list',$data);
+    }
+    public function edit_ard($id =null)
+    {
+        $action_btn         = 'Save';
+        $action             = 'Add';
+        $info               = '';
+        if( !empty( $id ) ) {
+            $info           = $this->DealersModel->ard_service_percentage($id);
+            $action_btn     = 'Update';
+            $action         = 'Update';
+        } 
+        $this->db->select('dealer_type')->from('vidiem_dealers');
+        $query = $this->db->where('id',$dealer_id);
+        $query = $this->db->get();
+        $row = $query->row();     
+        $params             = array(
+                                'action_btn' => $action_btn,
+                                'action' => $action,
+                                'info' => $info,
+                                'dealer_id' => $dealer_id,
+                                'id' => $id,
+                                'dealer_type' => $row->dealer_type
+                            );
+        $this->load->view('Backend/dealer_management/ard_sc_edit',$params);
+       // $info           = $this->LocationsModel->getInfoByRandomColumn('vidiem_ard_service_charge', $id, 'id');
+        /*$action_btn     = 'Update';
+        $action         = 'Update';
+      //
+        $info           = $this->DealersModel->ard_service_percentage($id);
+        $ard_charge=$info->ard_service_charge;
+        //print_r($ard_charge); die;
+        $params             = array(
+            'action_btn' => $action_btn,
+            'action' => $action,
+            'info' => $info,           
+            'id' => $id            
+        );
+        $this->load->view('Backend/dealer_management/ard_sc_edit',$params);*/
+    }
+    public function save_ard()
+    {
+        $id=$this->input->post('id');
+        $UpdaterData     = array(
+            'dealer_type'   => $this->input->post('dealer_type'),
+            'service_charge'   => $this->input->post('service_charge'),
+            'modified'        => date('Y-m-d H:i:s')
+        );
+
+        $InsertData     = array(
+            'dealer_type'            => $this->input->post('dealer_type'),
+            'service_charge'     => $this->input->post('service_charge'),
+            'created'                       => date('Y-m-d H:i:s')                           
+        );
+        if( isset( $id ) && !empty( $id ) ) {
+            $result  = $this->FunctionModel->Update($UpdaterData,'vidiem_ard_service_charge', ['id' => $id]);
+        }
+        else
+        {
+            $result  = $this->FunctionModel->Insert($InsertData,'vidiem_ard_service_charge');
+        }
+        $result =1;
+        $this->session->set_flashdata('class', "alert-success");
+        $this->session->set_flashdata('icon', "fa-check");
+        $this->session->set_flashdata('msg', "Service Charge Percentage Updated Successfully.");               
+        redirect('Admin/dealer_management/ard_service_list','refresh');
+    }
 
 	public function location_save()
 	{
@@ -377,6 +536,7 @@ class Dealer_management extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email id', 'required');
         $this->form_validation->set_rules('mobile_no', 'Mobile No', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
+         $this->form_validation->set_rules('logo', 'Logo', 'callback_file_selected_test_subdealer');
         
         if ($this->form_validation->run() == FALSE)
         {
@@ -411,6 +571,19 @@ class Dealer_management extends CI_Controller {
 								'post_code'         => $this->input->post('post_code'),
 								'status'            => '1',                            
 							);
+							 if( isset( $this->upload_data['logo']['file_name'] ) && !empty( $this->upload_data['logo']['file_name'] ) ) {
+                $InsertData['sub_dealer_logo']        = $this->upload_data['logo']['file_name'];
+            }
+							
+							
+                           // $sd_service_charge_id='';
+                            if($this->input->post('sub_dealer')=='ard')
+                            {
+                                $InsertData['sub_dealer_service_charge_id']=$this->input->post('service_charge_id');
+                                $InsertData['sub_dealer_gst_no']=$this->input->post('gst_no');
+                                $InsertData['sub_dealer_cin_no']=$this->input->post('cin_no');
+                                $InsertData['sub_dealer_pan_no']=$this->input->post('pan_no');
+                            }
 
             if( isset( $id ) && !empty( $id ) ) {
                 $InsertData['updated_at' ]      = date('Y-m-d H:i:s');

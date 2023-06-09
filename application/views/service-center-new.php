@@ -130,26 +130,11 @@
 			
 		
 		</div>
-		
-		<div class="row">
-			<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pb-3">
-				<div class="divider"></div>
-			</div>
-		</div>
-		
-		<div class="row align-items-center">
-			<div class="col">
-				<h3>Not able to Find Your Location?</h3>
-				<h5 class="mb-4" style="font-weight: 400;">Don't worry you can still book a home service.</h5>
-				<a href="<?= base_url(); ?>book-home-service" class="red-btn w-auto d-inline-block"><img style="max-width:30px; margin-right: 10px; filter:brightness(0) invert(1);" src="<?= base_url(); ?>assets/front-end/images/register.png" alt="" class="img-fluid"/> Book Home Service</a>
-			</div>
-		</div>
-		
 	</div>
 </div>
 
 </section>
-<?php require_once('container/footer.php')?>
+<?php require_once('container/footer1.php')?>
 <script>
 function fnloadstateaddress(sid)
 {

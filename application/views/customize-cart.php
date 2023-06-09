@@ -1,8 +1,7 @@
 <?php include('container/header.php'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <div class="bgPro proDetaPage clearfix light-gray-bg">
-<!-- div class="cart-coupon">Due to the year end process, all our shipments will be delivered within 8 to 10 business working days.</div -->
-	<form method="POST" action="<?= base_url('customize-checkout'); ?>">
+	<form method="POST" id="custom_order_form" action="<?= base_url('customize-checkout'); ?>">
 	<section class="checkOutDet clearfix ck_product_all pt-4">
 	<div class="container">
 			<div class="row">
@@ -11,17 +10,17 @@
 					<ul class="cart-tab my-4">
 						<li>
 							<a class="active" href="<?= base_url('customize-cart'); ?>">
-								<span>01</span> Shopping Cart
+								<span>01</span> Shopping <small>Cart</small>
 							</a>
 						</li>
 						<li>
 							<a href="<?= base_url('customize-checkout'); ?>">
-								<span>02</span> Account &amp; Shipping
+								<span>02</span> Account &amp; <small>Shipping</small>
 							</a>
 						</li>
 						<li>
-							<a href="order-confirm.php">
-								<span>03</span> Order Confirmation
+							<a href="order-confirm.php" style="pointer-events: none;">
+								<span>03</span> Order <small>Confirmation</small>
 							</a>
 						</li>
 					</ul>
@@ -145,7 +144,7 @@ button.custom_order_coupon_code_cancel.ml-2 {
 									// show( $cartitems['bodyinfo'][0] );
 									if($cartitems['bodyinfo'][0]['package_id']!='') { ?>	
 									<tr>
-										<td>Gift Wrapping Preference</td>
+										<td>Packaging</td>
 										<td><?= $cartitems['bodyinfo'][0]['packagename'] ?></td>
 										<td style="text-align: right;"><i class="fa fa-inr"></i> <?= $cartitems['bodyinfo'][0]['package_price'] ?></td>
 									</tr>
@@ -250,6 +249,15 @@ button.custom_order_coupon_code_cancel.ml-2 {
 		        
 		    </li>
 		</ul>
+		
+		
+			<div class="bg-white shadow1 mb-4 p-4">
+				<div class="row">
+					<div class="col-sm-12 col-md-6 col-lg-8">	
+						<h6 class="highlighted-text-red mb-0">Non Returnable / No Cancellation in all Vidiem by you orders</h6>
+					</div>
+				</div>
+			</div>
 	<?php } ?>	
 		</div>
 		</div>
@@ -345,6 +353,22 @@ button.custom_order_coupon_code_cancel.ml-2 {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <script>
+
+ /*document.querySelector('#custom_order_form').addEventListener('submit', function(e) {
+      var form = this;
+      
+      e.preventDefault();
+      swal({
+          
+                text: "Please note that due to the Year End Process our shipments will be delayed by a few days. Normal delivery will resume from April 8th Onwards.",
+                type: "info",
+                confirmButtonText: "Ok"
+        }).then(function() {
+           form.submit();
+        });
+      
+      
+    });*/
 	// Checkout Coupen Code
 	$(document).on('click','.custom_order_coupon_code_trigger',function(e){
 		e.preventDefault();
@@ -400,6 +424,7 @@ button.custom_order_coupon_code_cancel.ml-2 {
 // 	$("#CusImg").attr("src",imgCustom);
 //     });					   
 </script>
+
 <script>
 function checkBase64(base64Img){
     var base64Matcher = new RegExp("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$");

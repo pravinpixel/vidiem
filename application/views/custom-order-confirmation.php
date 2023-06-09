@@ -3,12 +3,24 @@
 //echo "<pre>"; print_r($orderproduct); exit; 
 
 ?>
-	<section class="light-gray-bg pt-4">
+    <style type="text/css">
+          img.success-particles{
+              position: absolute;
+              width: 100%;
+              left: 0;
+              top: 0;
+              z-index: 9999;
+              mix-blend-mode: multiply;
+          }
+      </style>
+	
+	<section class="light-gray-bg pt-4 overflow-hidden">
+	    <img src="../assets/front-end/images/particles.gif" alt="" class="success-particles"/>
 		<div class="container">
 			<div class="row">
 				<div class="col">
-					<h2 data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">Your Cart</h2>
-					<ul class="cart-tab my-4" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">
+					<h2>Your Cart</h2>
+					<ul class="cart-tab my-4">
 						<li>
 							<a href="<?= base_url('cart'); ?>">
 								01 Shopping Cart
@@ -29,9 +41,10 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
-					<h4 class="text-dark mb-3" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">Order Confirmation</h4>
-					<div class="bg-white mb-5 p-5" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">
-						<h3 class="mb-4"><i class="lni lni-checkmark-circle text-success"></i> &nbsp; <?= $order_title ?? '' ?></h3>
+					<h4 class="text-dark mb-3">Order Confirmation</h4>
+					<img src="<?= base_url('assets/front-end/images/vidiem-by-you/cart-banner.jpg'); ?>" alt="" class="img-fluid w-100 mb-5"/>
+					<div class="bg-white mb-5 p-5">
+					    <!-- h3 class="mb-4"><i class="lni lni-checkmark-circle text-success"></i> &nbsp; Your Customized Vidiem By You Order is on the way!</h3 -->
 						<p><strong class="text-dark">Dear</strong> <?= $orderdetails['delivery_name']; ?></p>
 								
 
@@ -43,14 +56,14 @@
 					<?php 
 						if( !$is_dealer_payment ){ ?>
 
-					<a href="<?= base_url('custominvoice/'.$orderdetails['id']); ?>" class="black-btn small"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">
+					<a href="<?= base_url('custominvoice/'.$orderdetails['id']); ?>" class="black-btn small">
 						<i class="lni lni-download"></i> &nbsp; Download Invoice
 					</a>
 					<?php } ?>
 				</div>
 				<div class="col-sm-12 col-md-12 col-lg-12 col-xl-4">
-					<h4 class="text-dark mb-3" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">Cart Summary</h4>
-					<div class="bg-white mb-5 p-4" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">
+					<h4 class="text-dark mb-3">Cart Summary</h4>
+					<div class="bg-white mb-5 p-4">
 						<div class="mh-200">
 						<div class="checkout-scroll">
 						
@@ -93,7 +106,7 @@
 								<?php } ?>	
 								<?php if ($basiciteminfo['package_id'] != '') { ?>
 									<tr>
-										<td>Gift Wrapping Preference</td>
+										<td>Packaging</td>
 										<td><?= $basiciteminfo['packagename'] ?></td>
 									</tr>
 								<?php } ?>
@@ -248,3 +261,11 @@
 	</section>
 	  
 <?php include 'container/footer.php';?>
+<!-- script>
+        $(window).ready(function(){
+          setInterval(function(){ 
+            $('.success-particles').hide()
+          }, 2000);
+        
+        });
+    </script -->

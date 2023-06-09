@@ -57,6 +57,10 @@ class Home extends CI_Controller {
     }
 
     public function product($s=NULL, $slug=NULL){
+       // print_r( $slug); die;
+       $product_de=$this->FunctionModel->Select_Field('id','vidiem_products',array('slug'=>$slug,'status'=>'1'));
+        if(empty($product_de)){redirect();}
+      // print_r($product_de); die;
         $data['menu_id']=3;
         if(empty($slug)){redirect();}
         $data['productseo']=$this->FunctionModel->Select('vidiem_products',array('slug'=>$slug));
@@ -4917,7 +4921,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 				}
 				$basecolor.='</div>  <div class="next-btn">
                            <button type="button" class="black-btn" id="body-color-prev">Previous</button>
-                           <button disabled type="button" class="red-btn" id="body-color-next">Accept</button>
+                           <button disabled type="button" class="red-btn" id="body-color-next">Next</button>
                         </div>
 				
 				';	   
@@ -4961,7 +4965,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 				    $basemotor.='</div> </div> 
                         <div class="col-12"> <div class="next-btn">
                             <button type="button" class="black-btn" id="motor-prev">Previous</button>
-                           <button disabled type="button" class="red-btn"   href="#" id="motor-next">Accept</button>
+                           <button disabled type="button" class="red-btn"   href="#" id="motor-next">Next</button>
                         </div></div>';		
 			
 			        $cart_id = $this->getCartId();
@@ -5509,8 +5513,8 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $baseinfo           = $this->db->where('cart_id', $cart_id)->get('vidiem_cart_details')->row();
             
             $base_id            = $baseinfo->base_id;
-            //$has75LJar          = $this->CustomizeModel->checkCartHas75L($cart_id);
-             $has75LJar          = $this->CustomizeModel->checkCartHas75Lfixed($cart_id);
+            $has75LJar          = $this->CustomizeModel->checkCartHas75L($cart_id);
+            // $has75LJar          = $this->CustomizeModel->checkCartHas75Lfixed($cart_id);
             
             
             $order              = array( 'field'=>'priority','type'=> 'asc' );
@@ -5572,7 +5576,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                 $basemotor.='</div> </div> 
                     <div class="col-12"> <div class="next-btn">
                         <button type="button" class="black-btn" id="motor-prev">Previous</button>
-                        <button disabled type="button" class="red-btn"   href="#" id="motor-next">Accept</button>
+                        <button disabled type="button" class="red-btn"   href="#" id="motor-next">Next</button>
                     </div></div>'.$hintFlowText;	
             }            
             
@@ -5683,7 +5687,7 @@ public function deletecartjar(){
             $basemotor.='</div> </div> 
                 <div class="col-12"> <div class="next-btn">
                     <button type="button" class="black-btn" id="motor-prev">Previous</button>
-                    <button disabled type="button" class="red-btn"   href="#" id="motor-next">Accept</button>
+                    <button disabled type="button" class="red-btn"   href="#" id="motor-next">Next</button>
                 </div></div>'.$hint_text;	
         }
 			

@@ -1,19 +1,7 @@
 <?php $this->load->view('Backend/container/header'); ?>
 <?php $this->load->view('Backend/container/sidebar'); ?>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        View Orders
-        <!-- <small>new</small> -->
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="<?= base_url('Admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">View Orders</li>
-      </ol>
-    </section>
-<style>
+  <style>
   .light-gray-bg {
     background: #f8f8f8;
     padding-left: 57px;
@@ -97,6 +85,19 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
     width: 50%;
 }
   </style>
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        View Orders
+        <!-- <small>new</small> -->
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="<?= base_url('Admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">View Orders</li>
+      </ol>
+    </section>
+
     <!-- Main content -->
     <section class="content">
        <?php if(!empty($this->session->flashdata('msg'))){ ?>
@@ -105,7 +106,7 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
       <h4><i class="icon fa <?= $this->session->flashdata('icon'); ?>"></i> Alert!</h4>
       <?= $this->session->flashdata('msg'); ?>
     </div>
-    <?php } ?>
+    <?php }  ?>
       <div class="row">
         <div class="col-md-12">
           <!-- Horizontal Form -->
@@ -134,6 +135,9 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
                   <th>Clinet Name</th>
                   <th>Mobile No</th>
                   <th>Email</th>
+                  <th>Counter Name</th>
+                  <th>Code</th>
+                  
                   <th>Payment Source</th>
                   <th>Payment Method</th>
                   <th>Payment Type</th>
@@ -154,6 +158,7 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
                 </thead>
                 <tbody>
                 <?php if(!empty($DataResult)){
+                   
                   $x=1;
                   foreach ($DataResult as $info) { ?>
                 <tr>
@@ -162,7 +167,9 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
                   <td><?= $info['name']; ?></td>
                   <td><?= $info['mobile_no']; ?></td>
                   <td><?= $info['email']; ?></td>
-                  <td><?= $info['display_name'] ?? 'Vidiem'; ?></td>
+                  <td><?= $info['dealer_erp_code']?? 'Website'; ?></td>
+                  <td><?= $info['location_code']?? '';?></td>
+                  <td><?= $info['display_name']  ?? 'Vidiem';  ?>  <?= $info['location_name'];?></td>
                   <td><?= $info['payment_source']; ?></td>
                   <td><?= $info['pg_type']; ?></td>
                   <td><?= $info['bank_ref_num']; ?></td>
@@ -171,16 +178,15 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
                   <td><?= $info['tax']; ?></td>
                   <td><?= $info['discount']; ?></td>
                   <td><?= $info['amount']; ?></td>
-                  <td><?= $order_status[$info['status']]; ?>
-                  <a href="#" class="btn bg-green customize_track_order" data-toggle="modal" data-target="#customize-track-order" ><span class="fa fa-ship"></span></a>
-                </td>
+                  <td><?= $order_status[$info['status']]; ?> 
+                   <a href="javascript:track_order_status_view('<?= $info['inv_code']; ?>','<?= $info['email']; ?>')" class="btn bg-green"  ><span class="fa fa-ship"></span></a>
+                   </td>
                   <td><?= ($info['status']==3)?$info['delivered_at']:''; ?></td>
                   <td><?= $info['notes']; ?></td>
                   <td><?= $info['created']; ?></td>
                   <td><a href="<?= base_url('Admin/customizeorders/invoice/'.$info['id']); ?>" class="btn bg-aqua" data-toggle="tooltip" data-placement="top"  data-original-title="Invoice"><span class="fa fa-download"></span></a></td>
                   <td>
-                     <a href="javascript:void(0);" class="btn bg-navy custom_order_view_trigger" data-id="<?= $info['id']; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view"><span class="fa fa-eye"></span></a> 
-                       <!-- <a href="javascript:void(0);" class="btn bg-navy custom_order_pdf"  data-original-title="view"  data-id="<?= $info['id']?>"><span class="fa fa-eye"></span></a>-->
+                      <a href="javascript:void(0);" class="btn bg-navy custom_order_view_trigger" data-id="<?= $info['id']; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view"><span class="fa fa-eye"></span></a>
                       <a href="javascript:void(0);" class="btn bg-green custom_trigger_order_status" data-toggle="modal" data-target="#feature" data-id="<?= $info['id']?>"><span class="fa fa-cogs"></span></a></td>
                     <td>
                       <a href="javascript:void(0);" class="btn btn-danger order_cacel_trigger" data-toggle="tooltip" data-placement="top" data-original-title="Delete" data-url="<?= base_url('Admin/customizeorders/orderCancel/'.$info['id']);?>">
@@ -210,12 +216,9 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
     </div>
     </section>
     <!-- /.content -->
-    
   </div>
   <!-- /.content-wrapper -->
-  <div class="modal" id="customOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  
-</div>
+
   <!-- Client Status Update Modal -->
     <div class="modal fade" id="feature">
           <div class="modal-dialog">
@@ -275,64 +278,22 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
                       <textarea name="" id="inputRemarks" cols="30" rows="4" class="form-control order_notes"></textarea>
                     </div>
                   </div>
-                  
-                  <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary custom-update-order-status">Submit</button>
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                  <div class="form-group"> 
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-primary custom-update-order-status">Submit</button>
+                    </div>
                   </div>
                 </form>
               </div>
-              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              </div>
             </div>
             <!-- /.modal-content -->
           </div>
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-        
-        
-         <!-- modal  -->
-     <div class="modal fade" id="customize-track-order">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Track Order</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" id="track-form" action="">
-                      <div class="form-group">
-                        <label class="control-label col-sm-3" for="inputClientStatus">Invoice No</label>
-                       
-                        <div class="col-sm-9">
-                            <input type="text"  name="code" id="code"  class="form-control invoice_no" required>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-sm-3" for="inputClientStatus">Mail Address</label>
-                       
-                        <div class="col-sm-9">
-                        <input type="text"  name="email" id="email" class="form-control order_no" required>
-                        </div>
-                      </div>
-                     
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="pull-right"> 
-                      <button type="button" class="btn btn-default " data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary track_order_status">Submit</button>
-                    </div>
-                </div>
-                <div id="tracking-pane">
-                        
-                        </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal  end -->
-        
         <!-- Client Status Update Modal -->
         <div class="modal fade" id="clientStatus">
           <div class="modal-dialog">
@@ -430,6 +391,26 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+        
+        
+         <div class="modal fade" id="customize-track-order">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Track Order</h4>
+                </div>
+                <div class="modal-body">
+                     <div id="tracking-pane">
+                </div>
+               
+            
+                        
+                        </div>
+            </div>
+        </div>
+    </div>
 
 <?php $this->load->view('Backend/container/right-sidebar'); ?>
 <?php $this->load->view('Backend/container/footer'); ?>
@@ -443,49 +424,9 @@ ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
       $('#dealer_pane').hide();
     }
   })
-
-$(function(){
-		$(document).on('click','.custom_order_pdf', function(){
-		  
-
-			let id = $(this).data('id');
-
-    $.ajax({
-      url: '<?= base_url()?>Admin/customizeorders/AjaxSingleView',
-      type: 'POST',
-      data:{id:id},
-      success: function(res) {
-        $('#customOrderModal').modal('show');
-        $('#customOrderModal').html(res);
-      }
-    })
-		});
-  });
-
-  $(function(){
-		$(document).on('click','.customize_track_order', function(){
-			$("#code").val('');
-			$("#email").val('');
-      $(document).on('click','.track_order_status', function(e){
-		e.preventDefault();
-
-		let code = $("#code").val();
-		let email = $("#email").val();
-
-		if(code == '') {
-			swal("invoice no field required", {
-				title: "Information",
-				icon: "error",
-			});
-			return false;
-		}
-		if(email == '') {
-			swal("Email field required", {
-				title: "Information",
-				icon: "error",
-			});
-			return false;
-		}
+  
+function track_order_status_view(code,email)
+{
 		
     $.ajax({
                 type: "POST",
@@ -494,13 +435,12 @@ $(function(){
                 dataType: 'json',
                 success: function (res) {
                     if( res.view ) {
+                         $('#customize-track-order').modal('show');
+                      
                         $('#tracking-pane').html(res.view);
                     }
                 }
             });
-  });
-  });
-  });
+}
 
- 
 </script>

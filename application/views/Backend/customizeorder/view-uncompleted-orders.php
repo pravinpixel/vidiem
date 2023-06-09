@@ -60,7 +60,7 @@
                   <td><?= $info['created']; ?></td>
                   <td>
                   <a href="#" class="btn bg-green customize_uncompleted_order" data-toggle="modal" data-target="#customizeuncompleted-order" data-id="<?= $info['id']; ?>" ><span class="fa fa-cogs"></span></a>
-                      <a href="javascript:void(0);" class="btn bg-navy booking_view_trigger" data-id="<?= $info['id']; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view"><span class="fa fa-eye"></span></a>
+                      <a href="javascript:void(0);" class="btn bg-navy custom_order_view_trigger" data-id="<?= $info['id']; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view"><span class="fa fa-eye"></span></a>
                   </td>
                 </tr>
                 <?php  $x++; }

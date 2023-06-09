@@ -33,14 +33,14 @@ class Coupen extends CI_Controller {
     		$this->session->set_flashdata('msg', "Access denied.");
     		redirect('Admin/dashboard', 'refresh');
 		} 
-		$this->form_validation->set_rules('name','Coupon Name','required');
-		$this->form_validation->set_rules('code','Coupon Code','required|min_length[5]|max_length[8]|is_unique[vidiem_coupon.code]');
+		$this->form_validation->set_rules('name','Coupen Name','required');
+		$this->form_validation->set_rules('code','Coupen Code','required|min_length[5]|max_length[8]|is_unique[vidiem_coupon.code]');
 		$this->form_validation->set_rules('type','Discount Type','required');
 		$this->form_validation->set_rules('discount_value','Discount Value','required');
 		$this->form_validation->set_rules('min_order','Min. Order Value','required');
 		$this->form_validation->set_rules('max_discount','Max. Discount Amount','required');
-		$this->form_validation->set_rules('max_usage','Max. Time Coupon Usage','required');
-		$this->form_validation->set_rules('max_per_user','Max. Time Coupon Usage Per User','required');
+		$this->form_validation->set_rules('max_usage','Max. Time Coupen Usage','required');
+		$this->form_validation->set_rules('max_per_user','Max. Time Coupen Usage Per User','required');
 		$this->form_validation->set_rules('start_date','Start Date','required');
 		$this->form_validation->set_rules('end_date','End Date','required');
 		$this->form_validation->set_message('is_unique','%s already have the same value');
@@ -64,7 +64,7 @@ class Coupen extends CI_Controller {
 			if($result >= 1){
 				$this->session->set_flashdata('class', "alert-success");
 				$this->session->set_flashdata('icon', "fa-check");
-				$this->session->set_flashdata('msg', "Product Coupon Added Successfully.");
+				$this->session->set_flashdata('msg', "Product Coupen Added Successfully.");
 				redirect('Admin/coupen','refresh');
 			}
 			else{
@@ -91,14 +91,14 @@ class Coupen extends CI_Controller {
 			$this->session->set_flashdata('msg', "Something Went Wrong.");
 			redirect('Admin/coupen', 'refresh');
 		}
-		$this->form_validation->set_rules('name','Coupon Name','required');
-		$this->form_validation->set_rules('code','Coupon Code','required|min_length[5]|max_length[8]|callback_edit_unique');
+		$this->form_validation->set_rules('name','Coupen Name','required');
+		$this->form_validation->set_rules('code','Coupen Code','required|min_length[5]|max_length[8]|callback_edit_unique');
 		$this->form_validation->set_rules('type','Discount Type','required');
 		$this->form_validation->set_rules('discount_value','Discount Value','required');
 		$this->form_validation->set_rules('min_order','Min. Order Value','required');
 		$this->form_validation->set_rules('max_discount','Max. Discount Amount','required');
-		$this->form_validation->set_rules('max_usage','Max. Time Coupon Usage','required');
-		$this->form_validation->set_rules('max_per_user','Max. Time Coupon Usage Per User','required');
+		$this->form_validation->set_rules('max_usage','Max. Time Coupen Usage','required');
+		$this->form_validation->set_rules('max_per_user','Max. Time Coupen Usage Per User','required');
 		$this->form_validation->set_rules('start_date','Start Date','required');
 		$this->form_validation->set_rules('end_date','End Date','required');
 		$this->form_validation->set_message('is_unique','%s already have the same value');
@@ -207,7 +207,7 @@ class Coupen extends CI_Controller {
     		redirect('Admin/coupen');
     	}
     	$info=$this->FunctionModel->Select_Row('vidiem_coupon',array('id'=>$id));
-    	$return['modal_title']='View Coupon';
+    	$return['modal_title']='View Coupen';
     	$return['modal_content']='';
     	$return['modal_content'].='
 			<div class="row">
@@ -220,7 +220,7 @@ class Coupen extends CI_Controller {
 			</div>
              <div class="row">
 				<div class="form-group">
-					<label class="col-sm-3 control-label">Coupon Code</label>
+					<label class="col-sm-3 control-label">Coupen Code</label>
 				<div class="col-sm-8">
 					<label class="control-label">'.@$info['code'].'</label>
 				</div>
@@ -262,7 +262,7 @@ class Coupen extends CI_Controller {
 				$return['modal_content'].='<h4 class="box-title">Seo Information</h4>
 				<div class="row">
 				<div class="form-group">
-					<label class="col-sm-3 control-label">Max. Time Coupon Usage</label>
+					<label class="col-sm-3 control-label">Max. Time Coupen Usage</label>
 				<div class="col-sm-8">
 					<label class="control-label">'.@$info['max_usage'].'</label>
 				</div>
@@ -270,7 +270,7 @@ class Coupen extends CI_Controller {
 			</div>
              <div class="row">    
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Max. Time Coupon Usage Per User</label>
+                  <label class="col-sm-3 control-label">Max. Time Coupen Usage Per User</label>
                   <div class="col-sm-8">
                     <label class="control-label">'.@$info['max_per_user'].'</label>
                   </div>

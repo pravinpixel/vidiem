@@ -25,23 +25,35 @@
                 </div>
                 <div class="form-group">
                     <label for="order_id" class="col-sm-4 control-label">
-                        Order No
+                        Reference  No
                         <span class="red">*</span>
                     </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="order_no" required="" name="order_no"
+                        <input type="text" class="form-control" id="order_no"  name="order_no"
                             value="<?= $order_data->order_no ?? '' ?>" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="order_id" class="col-sm-4 control-label">
-                        Order ID
+                        Order No
                         <span class="red">*</span>
                     </label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="order_id" required="" name="order_id"
-                            value="<?= $order_data->code ?? '' ?>" readonly>
-                    </div>
+                    <!--<div class="col-sm-8">
+                        <input type="text" class="form-control" id="order_id"  name="order_id"
+                            value="<?= @$order_data->inv_code ?? $order_data->order_no  ?>" readonly>
+                    </div>-->
+                     <div class="col-sm-8">
+                            <?php
+                              if (isset($order_data->inv_code) && !empty($order_data->inv_code)) {
+                                  $order_ch_code= $order_data->inv_code;
+                              }
+                              else
+                              {
+                                   $order_ch_code= $order_data->order_no;
+                              }
+                            ?>
+                            <input type="text" class="form-control" id="order_id" required="" name="order_id"   value="<?= $order_ch_code  ?>" readonly >
+                        </div>
                 </div>
 
                 <div class="form-group">
@@ -117,6 +129,23 @@
                         ?>
                     </div>
                 </div>
+                
+                 <?php 
+                        if( isset( $order_data->receipt_file ) && !empty( $order_data->receipt_file) ) { ?>
+                <div class="form-group">
+                    <label for="receipt" class="col-sm-4 control-label">
+                         Receipt Uploaded Date
+                    </label>
+                    <div class="col-sm-8">
+                     <input type="text" class="form-control" id="receipt_date_time" readonly name="receipt_date_time" 
+                            value="<?= $order_data->receipt_date_time ?? '' ?>">
+                    </div>
+                </div>
+                 <?php    
+                        }
+                        ?>
+                
+                
                 <div class="form-group">
                     <label for="promoter_code" class="col-sm-4 control-label">
                         Enter Promoter Code
@@ -145,6 +174,21 @@
                         ?>
                     </div>
                 </div>
+                  <?php 
+                        if( isset( $order_data->dealer_invoice ) && !empty( $order_data->dealer_invoice) ) { ?>
+                <div class="form-group">
+                    <label for="receipt" class="col-sm-4 control-label">
+                         Dealer Uploaded Date
+                    </label>
+                    <div class="col-sm-8">
+                     <input type="text" class="form-control" id="receipt_date_time" readonly name="receipt_date_time" 
+                            value="<?= $order_data->dealer_invoice_date_time ?? '' ?>">
+                    </div>
+                </div>
+                 <?php    
+                        }
+                        ?>
+                        
                 <div class="form-group">
                     <label for="vidiem_invoice" class="col-sm-4 control-label">
                         Upload Vidiem Invoice
@@ -161,6 +205,21 @@
                         <input type="file" name="vidiem_invoice" id="vidiem_invoice" class="form-control" >
                     </div>
                 </div>
+                
+                 <?php 
+                        if( isset( $order_data->vidiem_invoice ) && !empty( $order_data->vidiem_invoice) ) { ?>
+                <div class="form-group">
+                    <label for="receipt" class="col-sm-4 control-label">
+                         Vidiem Uploaded Date
+                    </label>
+                    <div class="col-sm-8">
+                     <input type="text" class="form-control" id="receipt_date_time" readonly name="receipt_date_time" 
+                            value="<?= $order_data->vidiem_invoice_date_time ?? '' ?>">
+                    </div>
+                </div>
+                 <?php    
+                        }
+                        ?>
                 
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label"></label>

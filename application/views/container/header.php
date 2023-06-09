@@ -103,7 +103,9 @@ $dealer_session = $this->session->userdata('dealer_session');
 										  <li class="heading1">Shop by Products</li>
                                           <li>
 											<?php if (!empty($cat_menu)) {
-											  foreach ($cat_menu as $info) { ?>
+											  foreach ($cat_menu as $info) { 
+											  //'category/' . 
+											  ?>
 												<a href="<?= base_url($info['slug']); ?>" class="<?= (!empty($cat_slug) && $cat_slug == $info['slug']) ? 'active' : ''; ?> dropdown-item"><?= $info['name']; ?></a>
 											<?php }
 											} ?>
@@ -400,3 +402,11 @@ $dealer_session = $this->session->userdata('dealer_session');
     </div>
     <!-- header close -->
 </header>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-55669788-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-55669788-1');
+</script>

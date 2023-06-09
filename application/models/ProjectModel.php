@@ -16,25 +16,27 @@ class ProjectModel extends CI_Model {
         echo 'Mobile No.'.$mobile_no.'<br>'.$sms_content; exit;
         return true;
     }
-     public function SMSContent($mobile_no,$sms_content,$tempid=false){
-            $apikey = "A695c2a00fff3a78ef70843f97b2bfa61"; 
-            $senderid="VIDIEM"; 
-            $templateid=$tempid;
-            $mobile  =  $mobile_no; 
-            $message = strip_tags($sms_content);
-            $message = urlencode($message);
-            $type   =  "txt";
-             $url="https://api-alerts.kaleyra.com/v4/?api_key=".$apikey."&method=sms&message=".$message."&to=".$mobile."&sender=".$senderid;
-          //  echo "<pre>";echo($mobile);exit;
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $output = curl_exec($ch);  
-            // ss( $output  );
-            curl_close($ch);  
-        
-        
-            return true; 
+     
+    public function SMSContent($mobile_no,$sms_content,$tempid=false){
+
+        $apikey = "A695c2a00fff3a78ef70843f97b2bfa61"; 
+        $senderid="VIDIEM"; 
+        $templateid=$tempid;
+        $mobile  =  $mobile_no; 
+        $message = strip_tags($sms_content);
+        $message = urlencode($message);
+        $type   =  "txt";
+            $url="https://api-alerts.kaleyra.com/v4/?api_key=".$apikey."&method=sms&message=".$message."&to=".$mobile."&sender=".$senderid;
+        //  echo "<pre>";echo($mobile);exit;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $output = curl_exec($ch);  
+        // ss( $output  );
+        curl_close($ch);         
+    
+        return true; 
+
     }
 
     public function SMSContentDealer($mobile_no,$sms_content,$tempid=false){
@@ -124,7 +126,9 @@ class ProjectModel extends CI_Model {
     public function valid_coupon($code){
         $this->db->where('DATE(c.start_date) <=',date('Y-m-d'));
         $this->db->where('DATE(c.end_date) >=',date('Y-m-d'));
+        //  $this->db->where('status','=','1');
         $query=$this->db->get_where('vidiem_coupon c',array('code'=>$code,'status'=>1));
+       // echo $this->db->last_query(); die;
         return $query->row_array();
     }
 
@@ -654,7 +658,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $template.='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['billing_company_name'].'</li>';
                 }
                  $template.='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' - '.@$order_data['billing_address2'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' <br/> '.@$order_data['billing_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['billing_city'].'-'.$order_data['billing_zip'].'
                 </li>
@@ -684,7 +688,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $template.='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['delivery_company_name'].'</li>';
                 }
                  $template.='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' - '.@$order_data['delivery_address2'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' <br/> '.@$order_data['delivery_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['delivery_city'].'-'.$order_data['delivery_zip'].'
                 </li>
@@ -785,7 +789,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $invoice.='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['billing_company_name'].'</li>';
                 }
                  $invoice.='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' - '.@$order_data['billing_address'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' <br/> '.@$order_data['billing_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['billing_city'].'-'.$order_data['billing_zip'].'
                 </li>
@@ -815,7 +819,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $invoice.='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['delivery_company_name'].'</li>';
                 }
                  $invoice.='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' - '.@$order_data['delivery_address'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' <br/> '.@$order_data['delivery_address'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['delivery_city'].'-'.$order_data['delivery_zip'].'
                 </li>
@@ -895,7 +899,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
       $file_name='uploads/invoice/vidiem_billing_Invoice.pdf';
       $this->m_pdf->pdf->WriteHTML($invoice);
       $attachdata=$this->m_pdf->pdf->Output($file_name, 'S'); 
-      $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,onlinesales@mayaappliances.com,ramakrishnan.n@mayaappliances.com,mktg1@mayaappliances.com',$template,'New Order Invoice','care@vidiem.in',$attachdata);
+      $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com',$template,'New Order Invoice','care@vidiem.in',$attachdata);
       $this->FunctionModel->sendmail($client['email'],$template,'Product Order Invoice','care@vidiem.in',$attachdata);
       $this->FunctionModel->sendmail('itsupport@mayaappliances.com',$template,'New Order Invoice','care@vidiem.in',$attachdata);
         return true;    
@@ -1052,7 +1056,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
 
     // Search
     public function ProductSearch($search_term){
-        $this->db->select('s.id,s.image,s.price,s.old_price,p.id,p.name,p.slug,p.image,p.price,p.old_price,p.modal_no,p.list_description,p.outofstock,c.name as category,sub.name as sub_category,p.status');
+        $this->db->select('s.id,s.image,s.price,s.old_price,p.id,p.name,p.slug,p.image,p.price,p.old_price,p.modal_no,p.list_description,p.outofstock,c.name as category, c.slug as category_slug, sub.name as sub_category,p.status');
                 $this->db->join('vidiem_category c','c.id=p.cat_id');
         $this->db->join('vidiem_category sub','sub.id=p.sub_cat_id');
         $this->db->join('vidiem_products s','p.product_id=s.id','left');
@@ -1125,7 +1129,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         $subject='Vidiem Order Successful';
             $msg='<p>Sir,<br> &nbsp;&nbsp; your order on vidiem successfully completed. Invoice Code '.$order_info['inv_code'];
     $this->FunctionModel->sendmail1($clt_info['email'],$msg,$subject,InfoMail);
-    $this->FunctionModel->sendmail1("ramakrishnan.n@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,saravanan.p@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,qasrk@mayaappliances.com",$msg,$subject,InfoMail);
+    $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,mktg1@mayaappliances.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,saravanan.p@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,qasrk@mayaappliances.com",$msg,$subject,InfoMail);
 
 
     $subject='New Order on Vidiem Site';

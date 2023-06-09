@@ -15,13 +15,21 @@ class Registration extends CI_Controller {
 
 
     public function product_registration(){
+         $where=array();
+            $custom='';
+            $searchQuery='';
+            $order='';
+        
+        $DataResult=$this->ProjectModel->productRegistrationList('list',$where,$custom,$searchQuery,$order);
         if(hasPermission('site_registration_index') != true){
 			$this->session->set_flashdata('class', "alert-danger");
 			$this->session->set_flashdata('icon', "fa-warning");
 			$this->session->set_flashdata('msg', "Access denied.");
 			redirect('Admin/dashboard', 'refresh');
 	    }
-        $this->load->view('Backend/registration-product-view');
+       // $this->load->view('Backend/registration-product-view');
+     $this->load->view('Backend/registration-product-view',['data' => $DataResult]);
+        
     }
 
      public function product_registration_list(){

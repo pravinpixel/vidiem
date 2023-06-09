@@ -139,7 +139,7 @@
                                             if ($basiciteminfo['package_id'] != '' && !empty($basiciteminfo['package_id'])) {
                                             ?>
                                                 <tr>
-                                                    <td> Gift Wrapping Preference </td>
+                                                    <td> Packaging </td>
                                                     <td><?= $basiciteminfo['packagename'] ?></td>
                                                     <td><?= $basiciteminfo['packageprice'] ?></td>
                                                 </tr>

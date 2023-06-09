@@ -22,7 +22,7 @@ class Tracking extends CI_Controller {
         
     }
 
-    public function get_tracking_info()
+ public function get_tracking_info()
     {
 
         $this->form_validation->set_rules('code','Invoice Number','required');
@@ -32,20 +32,51 @@ class Tracking extends CI_Controller {
 
             $invoice_code               = $this->input->post( 'code', true );
             $email                      = $this->input->post( 'email', true );
+            $order_type                 = $this->input->post( 'order_type');
+            if($order_type=='normal_order')
+            {
+                 $orderInfo                  = $this->TrackingModel->getNormalOrder($invoice_code, $email);
+            }
+            else
+            {
+                 $orderInfo                  = $this->TrackingModel->getCustomerOrder($invoice_code, $email);
+            }
 
-            $orderInfo                  = $this->TrackingModel->getCustomerOrder($invoice_code, $email);
+           
             
             if( isset( $orderInfo ) && !empty( $orderInfo ) ) {
-                $gerCustomOrderInfos    = $this->TrackingModel->getOrderTrackingData($orderInfo->id, 'custom_order');
+                
+                if($order_type=='normal_order')
+                {
+                       $gerCustomOrderInfos    = $this->TrackingModel->getOrderTrackingData($orderInfo->id, 'normal_order');
+                }
+                else
+                {
+                      $gerCustomOrderInfos    = $this->TrackingModel->getOrderTrackingData($orderInfo->id, 'custom_order');
+                }
                 $trackItems             = [];
                 if( isset($gerCustomOrderInfos ) && !empty( $gerCustomOrderInfos ) ) {
                     foreach ($gerCustomOrderInfos as $items ) {
                         $trackItems[$items->order_status]  = $items;
                     }
                 }
+              
+                if($order_type=='normal_order')
+                {
+                    if(empty($trackItems))
+                    {
+                          
+                        $trackItems2=$orderInfo ;
+                    }
+                }
+                else
+                {
+                     $trackItems2='';
+                }
+                
             }
             
-            $params         = array( 'orderInfo' => $orderInfo, 'trackingDetails' => $trackItems );
+            $params         = array( 'orderInfo' => $orderInfo, 'trackingDetails' => $trackItems,'trackItems2' =>  $trackItems2);
 
             $view           = $this->load->view('tracking/tracking_url', $params, true );
 
@@ -71,7 +102,7 @@ class Tracking extends CI_Controller {
 
     public function test_sms()
     {
-        $sms_content    = "Dear Dealer Vasanth & Co, Our Customer showing interest on Vidiem By You. To confirm order 123132132, please collect the amount in bill counter. -VIDIEM";
+        $sms_content    = "Thank you for shopping with Vidiem through our Dealer Durai raj. Your order number 200222 is under production. We'll share the tracking details once the shipment is ready. -VIDIEM";
         $this->ProjectModel->SMSContentDealer('9551706025',$sms_content);
     }
     

@@ -562,6 +562,17 @@ class CustomizeModel extends CI_Model
         //die();
 
     }
+    public function checkProductMapping($id, $table_name, $field_name)
+    {
+        
+      return $this->db->select('*')
+            ->where($field_name, $id)
+            ->where('isactive', 1)
+            ->get($table_name)
+            ->row();
+            
+            
+    }
 
     public function getDataActiveById($id, $table_name, $field_name, $is_null_dealer_id = '')
     {
@@ -680,7 +691,7 @@ class CustomizeModel extends CI_Model
             
             }
            
-             $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Vidiem Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+             $client_mail_subject                = 'Vidiem By You - Order Reference No :'.$order_info['code'] .'   Vidiem Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
             $mail_content                       .= $mail_header;
             $mail_content                       .= ' <div style="width:100%;text-align:center;">
                                                         <h2> Hello '. $dealer_info['display_name'].'<br> We appreciate you joining our team! </h2>,
@@ -688,7 +699,7 @@ class CustomizeModel extends CI_Model
                                                     </div>
                                                     <br><br>
                                                     <div>
-                                                    Please see the Vidiem invoice attached. By You place the order for the item with the   '.$order_info['order_no'] .' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . '.
+                                                    Please see the Vidiem invoice attached. By You place the Order No : '.$order_info['code'] .'  for the item with the Reference No   '.$order_info['order_no'] .' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . '.
                                                    
                                                     </div>
                                                     
@@ -701,7 +712,7 @@ class CustomizeModel extends CI_Model
             $attachdata = 'uploads/dealer/orders/'.$order_info['vidiem_invoice'];
             $to_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
           // $to_mail ='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com';
-            $cc_mail='orders@vidiem.in,itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,saranmini.85@gmail.com,prodmgsrk@mayaappliances.com,john@pixel-studios.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+            $cc_mail='orders@vidiem.in,itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,saranmini.85@gmail.com,prodmgsrk@mayaappliances.com,john@pixel-studios.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
            
         
          
@@ -732,7 +743,7 @@ class CustomizeModel extends CI_Model
             }
      
            
-             $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Confirmed | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+             $client_mail_subject                = 'Vidiem By You - Order Reference No:'.$order_info['order_no'] .'   Confirmed | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
             $mail_content                       .= $mail_header;
             
             $mail_content                       .= ' <div style="width:100%;text-align:center;">
@@ -741,7 +752,7 @@ class CustomizeModel extends CI_Model
                                                 </div>
                                                 <br><br>
                                                 <div>
-                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['inv_code'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' . As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
+                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['order_no'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' . As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
                                                 </div>
                                                 <div style="text-align:center">Happy Cooking, Love Team Vidiem </div>
                                                 <br><br>
@@ -769,12 +780,230 @@ class CustomizeModel extends CI_Model
               
 
     }
+    public function ARDSuDealerInvoice($order_id,$commission_id)
+    {
+        //ARD Service Bill Mail Start
+        //$to_mail='naveenkumar.pixel@gmail.com';
+
+        $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
+                        <span>
+                            <h1 style="color:#00BFFF;">
+                                <img src="'. base_url('assets/front-end/images/logo.png').'" style="display:block; margin:4px auto 0 auto" />
+                            </h1>
+                        </span>';
+        $mail_content = '';
+        $order_info                 = $this->FunctionModel->Select_Fields_Row('dealer_user_id,client_id,inv_code,created,dealer_location_id,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, billing_city,billing_zip,billing_state,dealer_id, pg_type,code', 'vidiem_customorder', array('id' => $order_id));
+        $dealer_info                = $this->FunctionModel->getARDLocationInfo($order_info['dealer_user_id']);
+        $ard_info                   = $this->FunctionModel->getARDInfo($order_info['dealer_user_id']);
+        $sub_dealer_info            = $this->FunctionModel->Select_Row('vidiem_dealer_locations', array('id' => $order_info['dealer_location_id']));
+        $ard_commission_details     = $this->FunctionModel->getARDCommissionDetails($commission_id);
+        $ard_gst=$ard_commission_details['sub_dealer_gst']/2;
+        $amount_words     = $this->FunctionModel->AmountInWords($ard_commission_details['sub_dealer_service_bill']);
+        $amount_words = str_replace(array("\r", "\n"), '', $amount_words);
+        $amount_words = preg_replace('/\s+/', ' ', $amount_words);      
+        
+        $mail_content               .= $mail_header;
+        $mail_content               .= $mail_header;
+        $mail_content               .= '    <div style="width:100%;text-align:center;">
+                                                <h2>     Greetings, Vidiem. We appreciate your partnership.</h2>,
+                                                <h2> You may access the ARD Service Bill here. Vidiem By You order for the order no ' . $order_info['code'].'  against the receipt. </h2>
+                                            </div>';
+        $mail_content               .= '<p>Regards</p>
+                                                    <p>Vidiem Team</p>
+                                                    <p>' . $dealer_info['display_name'] . ' - ' . $dealer_info['location_name'] . '</p>';
+        $mail_content               .= '</div>';
+        $current_date=date('Y-m-d H:i:s');
+          $mail_content               .= '
+       
+        <div style="border:1px solid black;">
+        <div class="container inCon">
+             <div style="float:left;"><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></div>
+             <div style="float:left;"><ul style="width:100%; display:inline-block; margin:0; padding:0;list-style:none;">
+                     <li style="font-size:12px; text-transform:uppercase;">Maya Appliances Pvt Ltd,<br>No. 3/140, Old Mahabalipuram Road, Oggiam Thoraipakkam, Chennai - 600097, Tamilnadu, INDIA. 
+                    |   <span style="list-style:none;line-height:28px; display:inline-block;">Phone</span> : &nbsp; 044-6635 6635 / 77110 06635  | Website</span> : &nbsp; http://vidiem.in/
+                      | GST NO</span> : &nbsp; 33AAACM6280D1ZT </li>
+                 </ul></div><br>
+            
+            
+        
+              <div style="width:100%;"><h2 style="color:#000000;" style="text-align:center;">Sub Dealer to ARD(Proforma Invoice)</h2>  </div> ';
+     
+             $mail_content               .= '
+                   
+             <div class="form" style="width:100%;"> ';
+     
+              $mail_content               .= '<table class="" style="width: 4.8e+2pt;margin-left:5.4pt;border-collapse:collapse;">
+             <tbody>
+                 <tr>
+                     <td rowspan="2" style="width: 7cm;border: 1pt solid black;padding: 0cm 5.4pt;height: 46.5pt;vertical-align: top;">
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">From.</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">' . $sub_dealer_info['location_name'] . '</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">' . $sub_dealer_info['location_address'] . '</p>
+                 
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">GSTIN : ' . $sub_dealer_info['sub_dealer_cin_no'] . '</p>
+                     </td>
+                     
+                     <td rowspan="2" style="width: 7cm;border: 1pt solid black;padding: 0cm 5.4pt;height: 46.5pt;vertical-align: top;">
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">To.</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">' . $ard_info['display_name'] . '</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">' . $ard_info['address'] . '</p>
+                 
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">GSTIN : ' .$ard_info['gstin_no'] . '</p>
+                     </td>
+                     
+                     <td colspan="2" style="width: 278.05pt;border: 1pt solid black;padding: 0cm 5.4pt;height: 46.5pt;vertical-align: top;">
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">Order No. : <strong>' . $order_info['code'].'</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">Order Date &nbsp; &nbsp; &nbsp; &nbsp; : '. $order_info['created'].' </p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">Under Reverse Charge:&nbsp;<s>Yes</s> / No</p>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td colspan="2" style="width: 278.05pt;border: 1pt solid black;padding: 0cm 5.4pt;vertical-align: top;">
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">Income Tax PAN No.: ' . $sub_dealer_info['sub_dealer_pan_no'] . '</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">GSTIN &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; :  ' . $sub_dealer_info['sub_dealer_gst_no'] . '</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">CIN. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : ' . $sub_dealer_info['sub_dealer_cin_no'] . '  </p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">HSN/SAC Code &nbsp; &nbsp; &nbsp; &nbsp; : 996211</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">Type of Service &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: Referral Commission on Sales</p>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td colspan="2" style="width:342.75pt;border:1pt solid black;padding:0cm 5.4pt 0cm 5.4pt;height:20.25pt;">
+                         <h3 style="margin:0cm;margin-bottom:.0001pt;text-align:center;text-indent:-36.0pt;font-size:17px;margin-left:36.0pt;"><span style="font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size:16px;">Particulars</span></h3>
+                     </td>
+                     <td style="width:133.75pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:20.25pt;" >
+                         <h3 style="margin:0cm;margin-bottom:.0001pt;text-align:center;text-indent:0cm;font-size:17px;"><span style="font-size:16px;">Amount</span></h3>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td colspan="2" rowspan="2" style="width: 342.75pt;border: 1pt solid black;padding: 0cm 5.4pt;height: 110.8pt;vertical-align: top;">
+                        
+                         
+                        <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp;</p>
+                                 <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;margin-left:54.0pt;">&nbsp;</p>
+                                 <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;margin-left:54.0pt;">&nbsp;</p>
+                   
+                         
+                         
+                         
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;margin-left:54.0pt;">Referral Commission&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;margin-left:36.0pt;">&nbsp; &nbsp; &nbsp;&nbsp;</p>
+                      
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;' . $order_info['billing_name'].',&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' . $order_info['billing_city'].',</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' . $order_info['billing_state'].',</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ' . $order_info['billing_zip'].'.</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>
+                           <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Order No: <strong>' . $order_info['code'].'</strong> |  Order Amount: <strong>' . $order_info['amount'].'</strong> </p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;"><strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TOTAL</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;color:black;"><span style="font-size:17px;">&nbsp;</span></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;color:black;"><span style="font-size:17px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CGST @ 9%</span></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;color:black;"><span style="font-size:17px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SGST @ 9%</span></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;color:black;"><span style="font-size:17px;">&nbsp;</span></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">&nbsp;</p>
+                         <h3 style="margin:0cm;margin-bottom:.0001pt;text-align:center;text-indent:-36.0pt;font-size:17px;margin-left:36.0pt;"><span style="font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size:16px;">GRAND TOTAL</span></h3>
+                         <h3 style="margin:0cm;margin-bottom:.0001pt;text-align:left;text-indent:-36.0pt;font-size:17px;margin-left:36.0pt;"><span style="font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size:16px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></h3>
+                     </td>
+                     <td style="width: 133.75pt;border: 1pt solid black;padding: 0cm 5.4pt;height: 110.8pt;vertical-align: top;">
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;">&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;">&nbsp;</p>-
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;">&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;">'.number_format($ard_commission_details['sub_dealer_commission'],2).'</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;">&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;">&nbsp;</p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;">&nbsp;</p>
+                     </td>
+                 </tr>
+                 <tr style="border-right:solid black 1.0pt !important;">
+                     <td style="width:133.75pt;border:solid black 1.0pt;border-right:solid black 1.0pt !important;border-bottom:solid black 1.0pt !important;padding:0cm 5.4pt 0cm 5.4pt;height:125.45pt;">
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>&nbsp;</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;"><strong>&nbsp;</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>'.number_format($ard_commission_details['sub_dealer_commission'],2).'</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>&nbsp;</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>'.number_format($ard_gst,2).'</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>'.number_format($ard_gst,2).'</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>&nbsp;</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>&nbsp;</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>---------------------------</strong></p>
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;text-align:right;"><strong>'.round($ard_commission_details['sub_dealer_service_bill']).'</strong></p>
+                     </td>
+                 </tr>
+                 <tr>
+                     <td colspan="3" style="width:476.5pt;border:solid black 1.0pt;padding:0cm 5.4pt 0cm 5.4pt;height:40.0pt;">
+                         <p style="margin:0cm;margin-bottom:.0001pt;font-size:16px;">Rupees : '.$amount_words.' Only</p>
+                     </td>
+                 </tr>
+               
+             </tbody>
+         </table>
+         <div style="float:left;">
+         <p>E. & O.E</p>
+         </div>
+         <div style="float:right;">
+         <p>For</p><br><br><br>
+            <p style="margin-left:50%;"><strong>Authorised Signatory<strong></p>
+         </div>
+         </div></div></div>';    
+        // print_r($invoice); die;
+             $this->load->library('m_pdf');
+             $pdfObject = '';
+             $pdfObject = $this->m_pdf;
+             $pdfObject->pdf->AddPage(
+                 'P', // L - landscape, P - portrait
+                 '',
+                 '',
+                 '',
+                 '',
+                 7, // margin_left
+                 3, // margin right
+                 5, // margin top
+                 5, // margin bottom
+                 5, // margin header
+                 5
+             ); // margin footer
+             //generate the PDF from the given html
+           
+             $file_name = 'uploads/dealer/orders/invoice_ard/vidiem_ard_Invoice.pdf';
+             $pdfObject->pdf->WriteHTML($invoice);
+             $attachdata = $pdfObject->pdf->Output($file_name, 'S');
+               $attachdata1='';
+            
+             $cc_mail='naveenkumar.pixel@gmail.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,satheyaraaj.t@mayaappliances.com,umashankar.k@mayaappliances.com,taxation@mayaappliances.com,receivables@mayaappliances.com';
+            $to_mail=$dealer_info['email']; 
+            //$cc_mail='';
+             $client_mail_subject='VBY - Dealer To ARD Service Bill | Order No :'.$order_info['code'];
+             $this->FunctionModel->send_office_dealer_ard($to_mail,$cc_mail, $mail_content, $client_mail_subject,  'orders@vidiem.in',$attachdata1);
+            //  $pdfObject_admin->pdf->WriteHTML(false);
+        //ARD Service Bill Mail End
+        //VBY - Dealer To ARD Service Bill | Order No : <order no>
+        
+        
+        
+        
+        
+        
+        
+        
+        //////////////////
+
+       
+    }
+
+
+    public function ARDAdminInvoice($order_id,$commission_id)
+    {
+
+       
+    }
 
      public function CustomerInvoiceDealer($order_id,$order_pass_type)
     {
         $order_info             = $this->FunctionModel->Select_Fields_Row('dealer_user_id,billing_address2,delivery_address2,client_id,inv_code,billing_name,amount,billing_emailid,billing_mobile_no, order_no, payment_source, dealer_id, pg_type,receipt_file,vidiem_invoice,dealer_invoice', 'vidiem_customorder', array('id' => $order_id));
-        $admin_to_mail_list='john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
-        $admin_mail_ids='orders@vidiem.in,itsupport@mayaappliances.com,saravannan.p@mayaappliances.com';
+        $admin_to_mail_list='john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+        $admin_mail_ids='orders@vidiem.in,itsupport@mayaappliances.com,saravanan.p@mayaappliances.com';
+       //$admin_mail_ids='';
         $dealer_info        = $this->FunctionModel->getDealerLocationInfo($order_info['dealer_user_id']);
         $clt_info               = $this->FunctionModel->Select_Fields_Row('mobile_no,email', 'vidiem_clients', array('id' => $order_info['client_id']));
         $clt_info['mobile_no'] = $order_info['billing_mobile_no'];
@@ -841,7 +1070,7 @@ class CustomizeModel extends CI_Model
                 $template2 = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;" >
                 <span ><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></span>
                 <div style="width:100%;text-align:center" ><h2> Hi ' . ($client['name'] ?? @$order_data['billing_name']) . ', <br>Thanks for choosing to shop with us!</h2></div>
-                <hr><div style="text-align:center">We’re happy to confirm your order on ' . date('d/m/Y') . '! Your order number is ' . @$order_data['order_no'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_code'] . ' As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!<br></div>
+                <hr><div style="text-align:center">We’re happy to confirm your order on ' . date('d/m/Y') . '! Your order number is ' . @$order_data['code'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_code'] . ' As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!<br></div>
                 
                 <div style="width:100%;text-align:center">Happy Cooking, Love Team Vidiem </div><hr><br><br> Regards<br>Vidiem Team </div>';
 
@@ -985,7 +1214,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         }
         if ($basiciteminfo['package_id'] != '' && !empty($basiciteminfo['package_id'])) {
             $invoice .= '		<tr>
-										<td>Gift Wrapping Preference</td>
+										<td>Packaging</td>
 										<td>' . $basiciteminfo['packagename'] . '</td>
 										<td>' . $basiciteminfo['packageprice'] . '</td>
 									</tr> ';
@@ -1089,7 +1318,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
          <div style="width:100%;float:right;"><h1 style="color:#000000;">PROFORMA INVOICE</h1> 
 
               <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;">Order Date:&nbsp; ' . date("d-M-Y", strtotime(@$order_data['created'])) . ' 
-                 | Order No. :&nbsp;' . @$order_data['inv_code'] . ' </h3> 
+                 | Order No. :&nbsp;' . @$order_data['inv_code'] . ' | Order From :  ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' </h3> 
 
 <div class="detail" style="float:left; width:50%;">
             
@@ -1101,7 +1330,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['billing_company_name'] . '</li>';
         }
         $invoice .= '</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address'] . '
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address'] . '-' . $order_data['billing_address2'] . '
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['billing_city'] . '-' . $order_data['billing_zip'] . '
                 </li>
@@ -1125,7 +1354,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['delivery_company_name'] . '</li>';
         }
         $invoice .= '</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . '
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . '-' . $order_data['delivery_address2'] . '
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['delivery_city'] . '-' . $order_data['delivery_zip'] . '
                 </li>
@@ -1193,7 +1422,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         }
         if ($basiciteminfo['package_id'] != '' && !empty($basiciteminfo['package_id'])) {
             $invoice .= '		<tr>
-										<td> Gift Wrapping Preference </td>
+										<td> Packaging </td>
 										<td>' . $basiciteminfo['packagename'] . '</td>
                                         <td>' . $basiciteminfo['packageprice'] . '</td>
 									</tr> ';
@@ -1358,7 +1587,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                         </span>';
 
                 $mail_content = '';
-                $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Vidiem Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+                $client_mail_subject                = 'Vidiem By You - Order Reference No :'.$order_info['inv_code'] .'   Vidiem Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
                 $mail_content                       .= $mail_header;
                 $mail_content                       .= ' <div style="width:100%;text-align:center;">
                                                             <h2> Hello '. $dealer_info['display_name'].'<br> We appreciate you joining our team! </h2>,
@@ -1366,7 +1595,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                                                         </div>
                                                         <br><br>
                                                         <div>
-                                                        Please see the Vidiem invoice attached. By You place the order for the item with the   '.$order_info['order_no'] .' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . '.
+                                                        Please see the Vidiem invoice attached. By You place the Order No '.$order_info['inv_code'] .' for the item with the Reference No   '.$order_info['order_no'] .' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . '.
                                                        
                                                         </div>
                                                         
@@ -1394,7 +1623,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                         </span>';
 
                 $mail_content = '';
-                $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Dealer Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+                $client_mail_subject                = 'Vidiem By You - Order Reference No :'.$order_info['inv_code'] .'   Dealer Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
                 $mail_content                       .= $mail_header;
                 $mail_content                       .= ' <div style="width:100%;text-align:center;">
                                                         <h2> Greetings, Vidiem. <br> We appreciate your partnership. </h2>,
@@ -1402,7 +1631,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                                                     </div>
                                                     <br><br>
                                                     <div>
-                                                    You may access the Dealer Invoice here. By You order for the order with the  '.$order_info['order_no'] .' at the ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' against your shared vidiem invoice.
+                                                    You may access the Dealer Invoice here. By You Order No : '.$order_info['inv_code'] .' for the order with the Reference No  '.$order_info['order_no'] .' at the ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' against your shared vidiem invoice.
                                                    
                                                     </div>
                                                     
@@ -1415,7 +1644,8 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                 
                 
                 $attachdata = 'uploads/dealer/orders/'.$order_info['receipt_file'];
-                $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'].',whchennai@mayaappliances.com';
+               // $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'].',whchennai@mayaappliances.com';
+               $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
                 $to_mail=$admin_mail_ids;
                 $this->FunctionModel->send_dealer_attach_mail($to_mail,$cc_mail, $mail_content, $client_mail_subject,  'orders@vidiem.in',$attachdata);
 
@@ -1448,7 +1678,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
            
           
            
-             $client_mail_subject                = 'Vidiem By You - Order No :'.$order_info['order_no'] .'   Dealer Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
+             $client_mail_subject                = 'Vidiem By You - Order Reference No :'.$order_info['code'] .'   Dealer Invoice Generated | '. $dealer_info['display_name'] . '-' . $dealer_info['location_name'] ;
             $mail_content                       .= $mail_header;
             $mail_content                       .= ' <div style="width:100%;text-align:center;">
                                                         <h2> Greetings, Vidiem. <br> We appreciate your partnership. </h2>,
@@ -1456,7 +1686,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                                                     </div>
                                                     <br><br>
                                                     <div>
-                                                    You may access the Dealer Invoice here. By You order for the order with the  '.$order_info['order_no'] .' at the ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' against your shared vidiem invoice.
+                                                    You may access the Dealer Invoice here. By You order for the Order No: '.$order_info['code'] .'   with the Reference No:   '.$order_info['order_no'] .' at the ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' against your shared vidiem invoice.
                                                    
                                                     </div>
                                                     
@@ -1471,7 +1701,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
           
             $cc_mail=$dealer_info['admin_email'].','.$dealer_info['email'];
             //$to_mail ='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com';
-            $to_mail='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,saranmini.85@gmail.com,prodmgsrk@mayaappliances.com,john@pixel-studios.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+            $to_mail='orders@vidiem.in, itsupport@mayaappliances.com,saravanan.p@mayaappliances.com,saranmini.85@gmail.com,prodmgsrk@mayaappliances.com,john@pixel-studios.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
            
         
          
@@ -1487,7 +1717,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
     public function Custom_NewOrderNotification($order_id)
     {
 
-        $admin_to_mail_list='saravanan.p@mayaappliances.com,naveenkumar.pixel@gmail.com,john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+        $admin_to_mail_list='saravanan.p@mayaappliances.com,naveenkumar.pixel@gmail.com,john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
 
         $mail_header = '<div style="border:1px solid black;margin:30px;padding:30px;font-family:arial;">
                         <span>
@@ -1581,7 +1811,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                                                 </div>
                                                 <br><br>
                                                 <div>
-                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['inv_code'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' . As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
+                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['order_no'] . ' at ' . $dealer_info['display_name'] . '-' . $dealer_info['location_name'] . ' . As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
                                                 </div>
                                                 <div style="text-align:center">Happy Cooking, Love Team Vidiem </div>
                                                 <br><br>
@@ -1604,7 +1834,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                                                 </div>
                                                 <br><br>
                                                 <div>
-                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['inv_code'] . '. As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
+                                                We’re happy to confirm your order on ' . date('d/m/Y') . ' Your order number is ' . $order_info['order_no'] . '. As you can see, we’re getting it ready under strict supervision. We’ll send you a shipping confirmation soon! Stay tuned!
                                                 </div>
                                                 <div style="text-align:center">Happy Cooking, Love Team Vidiem </div>
                                                 <br><br>
@@ -1639,7 +1869,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         // $this->FunctionModel->sendmail1(AdminMail,$msg,$subject,InfoMail);
          if($order_info['payment_source'] != 'counter')
          {
-             $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,naveenkumar.pixel@gmail.com,john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$msg,$subject,InfoMail);
+             $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,naveenkumar.pixel@gmail.com,john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$msg,$subject,InfoMail);
          }
          
         // $this->FunctionModel->sendmail('',$msg,$subject,InfoMail);
@@ -1748,7 +1978,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                 <span ><h1 style="color:#00BFFF;"><img src="' . base_url('assets/front-end/images/logo.png') . '" style="display:block; margin:4px auto 0 auto"/></h1></span>
                 <span > Dear Customer, <br>Thank you for your order at Vidiem Online Store. Please find the attached proforma invoice for your order reference. 
                 Once your package ships we will send an email with a link to track your order. <br><br>If you have questions about your order, you can email us at orders@vidiem.in. </span>
-                <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;">Order Date:&nbsp; ' . date("d-M-Y", strtotime(@$order_data['created'])) . '  | Order No. :&nbsp;' . @$order_data['inv_code'] . ' </h3>  
+                <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;">Order Date:&nbsp; ' . date("d-M-Y", strtotime(@$order_data['created'])) . '  | Order No. :&nbsp;' . @$order_data['inv_code'] . '| Order From : www.vidiem.in  </h3>  
                 <hr> Thank you for shopping with us!<br>Team Vidiem  <br><br>  <span style="font-size:12px; text-transform:uppercase;">Maya Appliances Pvt Ltd,<br>No. 3/140, Old Mahabalipuram Road,<br> Oggiam Thoraipakkam, 
                 <br>Chennai - 600097, Tamilnadu, INDIA.  <br> Phone : &nbsp; 044-6635 6635 / 77110 06635  | Website  : &nbsp;  <a href="https://www.vidiem.in">vidiem.in</a>             | GST NO  : &nbsp; 33AAACM6280D1ZT </span></div>';
             }
@@ -1895,7 +2125,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         }
         if ($basiciteminfo['package_id'] != '' && !empty($basiciteminfo['package_id'])) {
             $invoice .= '		<tr>
-										<td>Gift Wrapping Preference</td>
+										<td>Packaging</td>
 										<td>' . $basiciteminfo['packagename'] . '</td>
 										<td>' . $basiciteminfo['packageprice'] . '</td>
 									</tr> ';
@@ -1999,7 +2229,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
          <div style="width:100%;float:right;"><h1 style="color:#000000;">PROFORMA INVOICE</h1> 
 
               <h3 style="color:#fff;padding:10px 5px;font-size:14px; background:#F7000A;">Order Date:&nbsp; ' . date("d-M-Y", strtotime(@$order_data['created'])) . ' 
-                 | Order No. :&nbsp;' . @$order_data['inv_code'] . ' </h3> 
+                 | Order No. :&nbsp;' . @$order_data['inv_code'] . ' | Order From : www.vidiem.in </h3> 
 
 <div class="detail" style="float:left; width:50%;">
             
@@ -2011,7 +2241,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['billing_company_name'] . '</li>';
         }
         $invoice .= '</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address'] . '
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['billing_address']. ' - ' . @$order_data['billing_address2'] . '
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['billing_city'] . '-' . $order_data['billing_zip'] . '
                 </li>
@@ -2035,7 +2265,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $invoice .= '<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Company</span> : &nbsp; ' . @$order_data['delivery_company_name'] . '</li>';
         }
         $invoice .= '</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . '
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; ' . @$order_data['delivery_address'] . '  - ' . @$order_data['delivery_address2'] . '
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City</span> : &nbsp; ' . @$order_data['delivery_city'] . '-' . $order_data['delivery_zip'] . '
                 </li>
@@ -2103,7 +2333,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
         }
         if ($basiciteminfo['package_id'] != '' && !empty($basiciteminfo['package_id'])) {
             $invoice .= '		<tr>
-										<td> Gift Wrapping Preference </td>
+										<td> Packaging </td>
 										<td>' . $basiciteminfo['packagename'] . '</td>
                                         <td>' . $basiciteminfo['packageprice'] . '</td>
 									</tr> ';
@@ -2237,7 +2467,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             $attachdata = '';
         }
         $this->FunctionModel->send_office_mail($client['email'], $template2, $client_mail_subject, 'orders@vidiem.in', $attachdata);
-         $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,ramakrishnan.n@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,rnd@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$template,'New Order - Vidiem By You','orders@vidiem.in',$attachdata);
+         $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,itsupport@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com',$template,'New Order - Vidiem By You','orders@vidiem.in',$attachdata);
            $this->FunctionModel->sendmail('saravanan.p@mayaappliances.com,john@pixel-studios.com,naveenkumar.pixel@gmail.com',$template2,'New Order - Vidiem By You','orders@vidiem.in',$attachdata);
         //$this->FunctionModel->send_office_mail('durairaj.pixel@gmail.com, john@pixel-studios.com', $template2, $client_mail_subject, 'care@vidiem.in', $attachdata);
         /*  $this->FunctionModel->sendmail('prodmgsrk@mayaappliances.com',$template,'New Order - Vidiem By You','care@vidiem.in',$attachdata);
@@ -2323,7 +2553,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
     {
        // print_r('GG'); die;
 
-        $this->db->select('vidiem_dealers.dealer_erp_code, vidiem_dealers.display_name, vidiem_dealer_locations.location_name,o.*,if(o.client_id=0,o.delivery_name,c.name) as name ,if(o.client_id=0,o.delivery_emailid,c.email) as email,if(o.client_id=0,o.delivery_mobile_no,c.mobile_no) as mobile_no');
+        $this->db->select('vidiem_dealers.dealer_erp_code, vidiem_dealers.display_name,vidiem_dealer_locations.location_code, vidiem_dealer_locations.location_name,o.*,if(o.client_id=0,o.delivery_name,c.name) as name ,if(o.client_id=0,o.delivery_emailid,c.email) as email,if(o.client_id=0,o.delivery_mobile_no,c.mobile_no) as mobile_no');
         $this->db->join('vidiem_clients c', 'c.id=o.client_id', 'left');
         $this->db->join('vidiem_dealers', 'vidiem_dealers.id = o.dealer_id', 'left');
          $this->db->join('vidiem_dealer_locations', 'vidiem_dealer_locations.id = o.dealer_location_id', 'left');

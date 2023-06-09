@@ -2,8 +2,8 @@
 
  //echo $client_id; exit;
 ?>
+	<div class="cart-coupon">Please note that due to the Year End Process our shipments will be delayed by a few days. Normal delivery will resume from April 8th Onwards.</div>
 	<section class="light-gray-bg">
-	
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -11,17 +11,17 @@
 					<ul class="cart-tab" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">
 						<li>
 							<a href="<?= base_url('cart'); ?>">
-								<span>01</span> Shopping Cart
+								<span>01</span> Shopping <small>Cart</small>
 							</a>
 						</li>
 						<li>
 							<a class="active" href="<?= base_url('checkout'); ?>">
-								<span>02</span> Account Shipping
+								<span>02</span> Account <small>Shipping</small>
 							</a>
 						</li>
 						<li>
 							<a href="javascript:void(0);">
-								<span>03</span> Order Confirmation
+								<span>03</span> Order <small>Confirmation</small>
 							</a>
 						</li>
 					</ul>

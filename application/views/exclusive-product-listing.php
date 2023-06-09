@@ -28,9 +28,7 @@
 			<?php 
 				if(count($product_list) > 0) {
 			   		foreach($product_list as $data){ 
-
-						$product_cat_slug = (!empty($cat_slug)) ? $cat_slug : 'product';
-
+			   		     $product_cat_slug = (!empty($cat_slug)) ? $cat_slug : 'product';
 			?>
 				<div class="col-sm-12 col-md-6 col-lg-4 mb-5">
 					

@@ -1,5 +1,4 @@
   <!-- Left side column. contains the logo and sidebar -->
-  <?php $uri2 = $this->uri->segment(2); ?>
   <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
@@ -28,10 +27,8 @@
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu" data-widget="tree">
-              <li class="header">MAIN NAVIGATION</li>
-              <li><a href="<?= base_url('Admin/dashboard');?>"><i class="fa fa-dashboard"></i> Dashboard</a>
+              <li><a href="<?= base_url('Admin/dashboard');?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
               </li>
-              <li class="header">Category & Product</li>
               <?php if(hasPermission('category_index') || hasPermission('category_add') ) {?>
               <li class="treeview">
                   <a href="#">
@@ -244,7 +241,7 @@
               </li>
               <?php } ?>
               <?php if(hasPermission('review_index')) {?>
-              <li><a href="<?= base_url('Admin/reviews');?>"><i class="fa fa-dashboard"></i> Reviews</a></li>
+              <li><a href="<?= base_url('Admin/reviews');?>"><i class="fa fa-dashboard"></i> <span>Reviews</span></a></li>
               <?php } ?>
               <?php if(hasPermission('order_index')) {?>
               <li class="treeview">
@@ -269,13 +266,8 @@
               </li>
               <?php } ?>
 
-              <?php 
-                
-                
-              if(hasPermission('customize_order_index')) {
-                
-                ?>
-              <li class="treeview <?= isset($uri2) && $uri2 == 'Customizeorders' ? 'menu-open' : '' ?>">
+              <?php if(hasPermission('customize_order_index')) {?>
+              <li class="treeview">
                   <a href="#">
                       <i class="fa fa-files-o"></i>
                       <span>Customize Orders</span>
@@ -283,8 +275,8 @@
                           <i class="fa fa-angle-left pull-right"></i>
                       </span>
                   </a>
-                  <ul class="treeview-menu" style="display: <?= isset($uri2) && $uri2 == 'Customizeorders' ? 'block' : '' ?>;">
-                      <li class="<?= isset($uri2) && $uri2 == 'Customizeorders' ? 'active' : '' ?>"><a href="<?= base_url('Admin/Customizeorders'); ?>"><i class="fa fa-list-alt"></i> View
+                  <ul class="treeview-menu">
+                      <li><a href="<?= base_url('Admin/Customizeorders'); ?>"><i class="fa fa-list-alt"></i> View
                               Orders</a></li>
                       <li><a href="<?= base_url('Admin/Customizeorders/uncompleted'); ?>"><i class="fa fa-list-alt"></i>
                               Un Completed Orders</a></li>
@@ -320,7 +312,7 @@
               <?php } ?>
 
               <?php if(hasPermission('client_index')) {?>
-              <li><a href="<?= base_url('Admin/clients');?>"><i class="fa fa-users"></i> Clients</a></li>
+              <li><a href="<?= base_url('Admin/clients');?>"><i class="fa fa-users"></i> <span>Clients</span></a></li>
               <?php } ?>
 
               <?php if(hasPermission('dealer_management_index') || hasPermission('dealer_management_add')) {?>
@@ -341,6 +333,12 @@
                       <li><a href="<?= base_url('Admin/dealer_management'); ?>"><i class="fa fa-list-alt"></i> View Dealers</a>
                       </li>
                       <?php } ?>
+                     
+                      <li><a href="<?= base_url('Admin/ard_management'); ?>"><i class="fa fa-list-alt"></i> View ARD</a>
+                      </li>
+                      <li><a href="<?= base_url('Admin/dealer_management/ard_service_list'); ?>"><i class="fa fa-list-alt"></i> View ARD Service Charge</a>
+                      </li>
+                     
                   </ul>
               </li>
 
@@ -384,7 +382,7 @@
                       <li><a href="<?= base_url('Admin/coupen/add'); ?>"><i class="fa fa-plus"></i> Add Coupon</a></li>
                       <?php } ?>
                       <?php if(hasPermission('coupen_index')) {?>
-                      <li><a href="<?= base_url('Admin/coupen'); ?>"><i class="fa fa-list-alt"></i> View Coupon</a>
+                      <li><a href="<?= base_url('Admin/coupen'); ?>"><i class="fa fa-list-alt"></i> View Coupons</a>
                       </li>
                       <?php } ?>
                   </ul>
@@ -414,11 +412,11 @@
               <?php } ?>
 
               <?php if(hasPermission('enquiry_index')) {?>
-              <li><a href="<?= base_url('Admin/enquiry'); ?>"><i class="fa fa-envelope"></i> Enquiry</a></li>
+              <li><a href="<?= base_url('Admin/enquiry'); ?>"><i class="fa fa-envelope"></i> <span>Enquiry</span></a></li>
               <?php } ?>
 
               <?php if(hasPermission('combo_enquiry_index')) {?>
-              <li><a href="<?= base_url('Admin/comboenquiry'); ?>"><i class="fa fa-envelope"></i> Combo Enquiry</a></li>
+              <li><a href="<?= base_url('Admin/comboenquiry'); ?>"><i class="fa fa-envelope"></i> <span>Combo Enquiry</span></a></li>
               <?php } ?>
 
               <?php if(hasPermission('banner_index') || hasPermission('banner_add')) {?>

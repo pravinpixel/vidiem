@@ -49,6 +49,18 @@ if( isset( $dealer_session['user']) ) {
     .disclaimer strong {
         color: #666;
     }
+        .clear_check{
+        color: #f00;
+    margin-top: 31px;
+    cursor: pointer;
+    font-weight: 700;
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+    align-items: baseline;
+    flex-direction: row;
+    }
+
 
     @media (max-width: 767px) {
         #customize-button {display:none;}
@@ -234,7 +246,7 @@ if( isset( $dealer_session['user']) ) {
 									?>
 
                                     <button type="button" <?php echo $butdisabled; ?> class="red-btn"
-                                        id="body-design-next">Accept</button>
+                                        id="body-design-next">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -259,6 +271,9 @@ if( isset( $dealer_session['user']) ) {
                             data-parent="#by-you-accordion">
                             <div class="card-body">
                                 <div class="text-center position-relative"><span class="mobile-text">Choose Color</span>
+                                </div>
+                                <div id="divbasecolor-loading" style="display:none;width: 100%;text-align: center;height: 100px;position: relative;top: 31px;">
+                                    <p> Please wait while fetching body colors...</p>
                                 </div>
                                 <div id="divbasecolor">
 
@@ -313,7 +328,7 @@ if( isset( $dealer_session['user']) ) {
 
                                         <button type="button" class="black-btn" id="body-color-prev">Previous</button>
                                         <button <?php echo $butdisabled; ?> type="button" class="red-btn"
-                                            id="body-color-next">Accept</button>
+                                            id="body-color-next">Next</button>
                                     </div>
 
 
@@ -423,7 +438,7 @@ if( isset( $dealer_session['user']) ) {
                                 <div class="next-btn">
                                     <button type="button" class="black-btn" id="jar-prev">Previous</button>
                                     <button type="button" <?php echo $butdisabled; ?> class="red-btn"
-                                        id="jar-next">Accept</button>
+                                        id="jar-next">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -535,7 +550,7 @@ if( isset( $dealer_session['user']) ) {
 
                                             <button type="button" class="black-btn" id="motor-prev">Previous</button>
                                             <button <?php echo $butdisabled; ?> type="button" class="red-btn" href="#"
-                                                id="motor-next">Accept</button>
+                                                id="motor-next">Next</button>
                                         </div>
                                     </div>
 <div class="col-12" style="display:none;">
@@ -581,7 +596,7 @@ if( isset( $dealer_session['user']) ) {
                                 </div>
                                 <div class="next-btn">
                                     <button type="button" class="black-btn" id="imprinted-prev">Previous</button>
-                                    <button type="button" class="red-btn" href="#" id="imprinted-next">Accept</button>
+                                    <button type="button" class="red-btn" href="#" id="imprinted-next">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -600,14 +615,12 @@ if( isset( $dealer_session['user']) ) {
                         <div class="card-header <?php echo $clsgreenck; ?>" id="heading6">
                             <a href="#" class="btn btn-header-link collapsed" id="pack-pref" data-toggle="collapse"
                                 data-target="#accordion6" aria-expanded="true" aria-controls="accordion6"><i
-                                    class="fa fa-check-circle" aria-hidden="true"></i> <span class="pc-text">Gift
-                                    Wrapping preference</span></a>
+                                    class="fa fa-check-circle" aria-hidden="true"></i> <span class="pc-text">Packaging</span></a>
                         </div>
                         <div id="accordion6" class="collapse" aria-labelledby="heading6"
                             data-parent="#by-you-accordion">
                             <div class="card-body">
-                                <div class="text-center position-relative"><span class="mobile-text">Gift Wrapping
-                                        preference</span></div>
+                                <div class="text-center position-relative"><span class="mobile-text">Packaging</span></div>
                                 <div class="package-list">
                                     <?php 
 						 if(count($customizepackage)>0){ 
@@ -681,7 +694,7 @@ if( isset( $dealer_session['user']) ) {
                                             <option
                                                 <?php echo $cartitems['bodyinfo'][0]['occasion_text']=="Wedding"?'Selected':''; ?>
                                                 value="Wedding">Wedding</option>
-											<option
+                                                 <option
                                                 <?php echo $cartitems['bodyinfo'][0]['occasion_text']=="Ramzan"?'Selected':''; ?>
                                                 value="Ramzan">Ramzan</option>
                                         </select>
@@ -698,8 +711,7 @@ if( isset( $dealer_session['user']) ) {
 
                                 <div class="next-btn">
                                     <a class="black-btn" id="package-prev">Previous</a>
-                                    <button type="button" disabled class="red-btn" id="package-next">Confirm &amp;
-                                        Proceed &nbsp; <i class="lni lni-arrow-right"></i></button>
+                                    <button type="button" disabled class="red-btn" id="package-next">Confirm &amp; Add to Cart &nbsp; <i class="lni lni-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -823,6 +835,7 @@ if( isset( $dealer_session['user']) ) {
                                             <?php  
 			   }
 			?>
+					<div class="clear_check" onclick="uncheck_checkbox();"> Clear all</div>
                                         </div>
                                     </div>
                                     <?php
@@ -835,6 +848,14 @@ if( isset( $dealer_session['user']) ) {
 
                         </div>
                     </div>
+                    <div id="jar-loader" style="display: none;
+                                                height: 250px;
+                                                text-align: center;
+                                                width: 100%;
+                                                vertical-align: initial;
+                                                position: relative;
+                                                top: 100px;">
+                        <p> Please wait while fetching jars...</p></div>
                     <div id="divotherjar" class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="model-jars">
                             <?php  
@@ -919,7 +940,7 @@ if( isset( $dealer_session['user']) ) {
                         </div>
                         <div class="col-sm-6">
                             <a class="red-btn" href="javascript:void(0);"
-                                onclick="funmodalclose('<?= $active_bm_color_id;?>');">Accept</a>
+                                onclick="funmodalclose('<?= $active_bm_color_id;?>');">Next</a>
                         </div>
                     </div>
                     <?php } ?>
@@ -1041,6 +1062,12 @@ function funmodalclose(bid) {
     $('.modal-backdrop').remove();
 
 }
+function uncheck_checkbox()
+{
+    $('input:checkbox').removeAttr('checked');
+    fnjarfilter();
+}
+
 
 function funremoveotherjars(bid) {
 
@@ -1143,6 +1170,10 @@ function fnbaseclick(ele, bid, baseimg, price) {
         dataType: 'json',
         type: 'POST',
         data: 'bid=' + bid,
+        beforeSend: function(){
+          $("#divbasecolor").html(''); 
+          $("#divbasecolor-loading").show(); 
+        },
         success: function(data) {
             //$("#shippingaddressupdatediv").html(data.addressformhtml);	
             if (data.status == 200) {
@@ -1160,6 +1191,7 @@ function fnbaseclick(ele, bid, baseimg, price) {
 
                 /* Base Color Script */
                 $("#divbasecolor").html(data.color_html);
+                $("#divbasecolor-loading").hide(); 
                 $('.body-color').slick({
                     slidesToShow: 2,
                     dots: false,
@@ -1279,6 +1311,10 @@ function fnbasecolorclick(ele, bcid, baseimg, price) {
         dataType: 'json',
         type: 'POST',
         data: 'bcid=' + bcid,
+        beforeSend: function() {
+            $("#divotherjar").html('');
+            $('#jar-loader').show();
+        },
         success: function(data) {
             //$("#shippingaddressupdatediv").html(data.addressformhtml);	
             if (data.status == 200) {
@@ -1304,6 +1340,7 @@ function fnbasecolorclick(ele, bcid, baseimg, price) {
 
                 $("#divbasejar").html(data.jar_html);
                 $("#divotherjar").html(data.other_jar_html);
+                $('#jar-loader').hide();
                 $("#divotherjarbutton").html(data.otherjar_button);
                 $(".model-jars").mCustomScrollbar({
                     theme: "dark-thin",

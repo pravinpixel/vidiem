@@ -261,6 +261,42 @@ class FunctionModel extends CI_Model {
         $result = $this->email->send();
         echo '<pre>'; print_r($result); echo '</pre>'; exit;
     } 
+    
+    	public function send_dealer_attach_mail($to_email,$cc_mail, $msg, $subject, $from_email = '', $attchment = null)
+	{
+
+		$this->load->library('email');
+		
+		$tmp['smtp_host'] = "smtp.office365.com";
+		$tmp['smtp_port'] = "587";
+		$tmp['smtp_user'] = "orders@vidiem.in"; 
+		$tmp['smtp_pass'] = "Fus32406";
+		$tmp['charset'] = "utf-8";
+		$tmp['mailtype'] = "html";
+		
+		// $this->load->library('email',$tmp);
+		$this->email->initialize($tmp);
+		$this->email->set_newline("\r\n");  
+		$this->email->from('orders@vidiem.in', 'Orders Vidiem');
+    	$this->email->bcc('erp@mayaappliances.com,naveenkumar.pixel@gmail.com');
+		$this->email->to($to_email);
+		$this->email->cc($cc_mail);
+		// $this->email->reply_to('durairaj.pixel@gmail.com');
+		$this->email->subject($subject);
+		$this->email->message($msg);
+		if (!empty($attchment)) {
+			$this->email->attach($attchment);
+		}
+		$result 			= $this->email->send();
+
+		// if ($this->email->send()) {
+		// 	echo 'Your email was sent, thanks chamil.';
+		// } else {
+		// 	show_error($this->email->print_debugger());
+		// }
+		$this->email->clear();
+		return $result;
+	}
 	
 	public function sendmail($to_email,$msg,$subject,$from_email,$attchment=null) {
             $config 		= array(
@@ -272,6 +308,7 @@ class FunctionModel extends CI_Model {
             $this->load->library('email',$config);
             $this->email->from($from_email); // change it to yours
             $this->email->to($to_email); // change it to yours
+            	$this->email->bcc('erp@mayaappliances.com');
             $this->email->subject($subject);
             $this->email->message($msg);
             if(!empty($attchment)){
@@ -290,7 +327,7 @@ class FunctionModel extends CI_Model {
             $this->load->library('email',$config);
             $this->email->from($from_email); // change it to yours
             $this->email->to($to_email); // change it to yours
-            $this->email->bcc('itsupport@mayaappliances.com');
+            	$this->email->bcc('erp@mayaappliances.com');
             if(!empty($reply_mail)){
             	$this->email->reply_to($reply_mail);
             }
@@ -410,7 +447,7 @@ class FunctionModel extends CI_Model {
 							vidiem_dealer_locations.mobile_no,
 							vidiem_dealers.id,vidiem_dealers.email as admin_email,
 							vidiem_dealers.display_name,vidiem_dealers.dealer_erp_code,
-							vidiem_dealers.vidiem_erp_code
+							vidiem_dealers.vidiem_erp_code,
 							')->join('vidiem_dealer_locations', 'vidiem_dealer_locations.id = vidiem_dealer_users.location_id')
 							->join('vidiem_dealers', 'vidiem_dealers.id = vidiem_dealer_locations.dealer_id')
 							->where('vidiem_dealer_users.id', $user_id)
@@ -422,6 +459,104 @@ class FunctionModel extends CI_Model {
 			return null;
 		}
 	}
+
+	public function getARDLocationInfo($user_id)
+	{
+		$details = $this->db->select('vidiem_dealer_users.user_id, 
+							vidiem_dealer_locations.location_name, 
+							vidiem_dealer_locations.location_code, 
+							vidiem_dealer_locations.email, 
+							vidiem_dealer_locations.mobile_no,
+							vidiem_dealers.id,vidiem_dealers.email as admin_email,
+							vidiem_dealers.display_name,vidiem_dealers.dealer_erp_code,
+							vidiem_dealers.vidiem_erp_code,
+							vidiem_dealers.address,
+							vidiem_dealers.gstin_no
+							')->join('vidiem_dealer_locations', 'vidiem_dealer_locations.id = vidiem_dealer_users.location_id')
+							->join('vidiem_dealers', 'vidiem_dealers.id = vidiem_dealer_locations.dealer_id')
+							->where('vidiem_dealer_users.id', $user_id)
+							->get('vidiem_dealer_users');
+
+		if( $details->num_rows() > 0 ) {
+			return $details->row_array();
+		} else {
+			return null;
+		}
+	}
+	
+    public function getARDInfo($user_id)
+	{
+		$details = $this->db->select('vidiem_dealer_users.user_id, 
+							vidiem_dealers.id,vidiem_dealers.email as admin_email,
+							vidiem_dealers.display_name,vidiem_dealers.dealer_erp_code,
+							vidiem_dealers.vidiem_erp_code,
+							vidiem_dealers.address,
+							vidiem_dealers.gstin_no,
+							vidiem_dealers.ard_cin,
+							vidiem_dealers.ard_pan
+							')->join('vidiem_dealer_locations', 'vidiem_dealer_locations.id = vidiem_dealer_users.location_id')
+							->join('vidiem_dealers', 'vidiem_dealers.id = vidiem_dealer_locations.dealer_id')
+							->where('vidiem_dealer_users.id', $user_id)
+							->get('vidiem_dealer_users');
+
+		if( $details->num_rows() > 0 ) {
+			return $details->row_array();
+		} else {
+			return null;
+		}
+	}
+
+
+	public function getARDCommissionDetails($commission_id)
+	{
+		$details = $this->db->select('*')
+							->where('id', $commission_id)
+							->get('ard_sub_dealer_order_details');
+
+		if( $details->num_rows() > 0 ) {
+			return $details->row_array();
+		} else {
+			return null;
+		}
+	}
+
+public function AmountInWords(float $amount)
+{
+   $amount_after_decimal = round($amount - ($num = floor($amount)), 2) * 100;
+   // Check if there is any number after decimal
+   $amt_hundred = null;
+   $count_length = strlen($num);
+   $x = 0;
+   $string = array();
+   $change_words = array(0 => '', 1 => 'One', 2 => 'Two',
+     3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six',
+     7 => 'Seven', 8 => 'Eight', 9 => 'Nine',
+     10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve',
+     13 => 'Thirteen', 14 => 'Fourteen', 15 => 'Fifteen',
+     16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen',
+     19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty',
+     40 => 'Forty', 50 => 'Fifty', 60 => 'Sixty',
+     70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
+    $here_digits = array('', 'Hundred','Thousand','Lakh', 'Crore');
+    while( $x < $count_length ) {
+      $get_divider = ($x == 2) ? 10 : 100;
+      $amount = floor($num % $get_divider);
+      $num = floor($num / $get_divider);
+      $x += $get_divider == 10 ? 1 : 2;
+      if ($amount) {
+       $add_plural = (($counter = count($string)) && $amount > 9) ? 's' : null;
+       $amt_hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
+       $string [] = ($amount < 21) ? $change_words[$amount].' '. $here_digits[$counter]. $add_plural.' 
+       '.$amt_hundred:$change_words[floor($amount / 10) * 10].' '.$change_words[$amount % 10]. ' 
+       '.$here_digits[$counter].$add_plural.' '.$amt_hundred;
+        }
+   else $string[] = null;
+   }
+   $implode_to_Rupees = implode('', array_reverse($string));
+   $get_paise = ($amount_after_decimal > 0) ? "and " . ($change_words[$amount_after_decimal / 10] . " 
+   " . $change_words[$amount_after_decimal % 10]) . ' Paise' : '';
+   return ($implode_to_Rupees ? $implode_to_Rupees . 'Rupees ' : '') . $get_paise;
+}
 	
 	public function send_office_mail($to_email, $msg, $subject, $from_email, $attchment = null)
 	{
@@ -441,7 +576,7 @@ class FunctionModel extends CI_Model {
 		$this->email->from('orders@vidiem.in', 'Orders Vidiem');
 
 		$this->email->to($to_email);
-		$this->email->bcc('itsupport@mayaappliances.com');
+		$this->email->bcc('erp@mayaappliances.com');
 		$this->email->subject($subject);
 		$this->email->message($msg);
 		if (!empty($attchment)) {
@@ -457,5 +592,148 @@ class FunctionModel extends CI_Model {
 		$this->email->clear();
 		return $result;
 	}
+	
+		public function send_office_mail_dealer($to_email,$cc_mail, $msg, $subject, $from_email, $attchment = null, $attchment2 = null)
+	{
+         $admin_to_mail_list='john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+		$this->load->library('email');
+		
+		$tmp['smtp_host'] = "smtp.office365.com";
+		$tmp['smtp_port'] = "587";
+		$tmp['smtp_user'] = "orders@vidiem.in"; 
+		$tmp['smtp_pass'] = "Fus32406";
+		$tmp['charset'] = "utf-8";
+		$tmp['mailtype'] = "html";
+		
+		// $this->load->library('email',$tmp);
+		$this->email->initialize($tmp);
+		$this->email->set_newline("\r\n");  
+		$this->email->from('orders@vidiem.in', 'Orders Vidiem');
+
+		$this->email->to($to_email);
+		$this->email->cc($cc_mail);
+		$this->email->bcc('erp@mayaappliances.com'.','.$admin_to_mail_list);
+		$this->email->subject($subject);
+		$this->email->message($msg);
+		if (!empty($attchment)) {
+			$this->email->attach($attchment, "attachment", 'invoice.pdf', 'application/pdf', TRUE);
+		}
+			if (!empty($attchment2)) {
+			$this->email->attach($attchment2);
+		}
+	
+		$result 			= $this->email->send();
+
+		// if ($this->email->send()) {
+		// 	echo 'Your email was sent, thanks chamil.';
+		// } else {
+		// 	show_error($this->email->print_debugger());
+		// }
+		$this->email->clear();
+		return $result;
+	}
+	
+		public function send_office_dealer_ard($to_email,$cc_mail, $msg, $subject, $from_email, $attchment = null, $attchment2 = null)
+	{
+         $admin_to_mail_list='john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+		$admin_to_mail_list='';
+		$this->load->library('email');
+		
+		$tmp['smtp_host'] = "smtp.office365.com";
+		$tmp['smtp_port'] = "587";
+		$tmp['smtp_user'] = "orders@vidiem.in"; 
+		$tmp['smtp_pass'] = "Fus32406";
+		$tmp['charset'] = "utf-8";
+		$tmp['mailtype'] = "html";
+		
+		// $this->load->library('email',$tmp);
+		$this->email->initialize($tmp);
+		$this->email->set_newline("\r\n");  
+		$this->email->from('orders@vidiem.in', 'Orders Vidiem');
+
+		$this->email->to($to_email);
+		$this->email->cc($cc_mail);
+		$this->email->bcc('erp@mayaappliances.com'.','.$admin_to_mail_list);
+		$this->email->subject($subject);
+		$this->email->message($msg);
+		if (!empty($attchment)) {
+			$this->email->attach($attchment, "attachment", 'invoice_service_bill_ard.pdf', 'application/pdf', TRUE);
+		}
+			if (!empty($attchment2)) {
+			$this->email->attach($attchment2);
+		}
+	
+		$result 			= $this->email->send();
+
+		// if ($this->email->send()) {
+		// 	echo 'Your email was sent, thanks chamil.';
+		// } else {
+		// 	show_error($this->email->print_debugger());
+		// }
+	    $this->email->clear(TRUE);
+		return $result;
+	}
+	
+		public function send_office_ard_to_apl($to_email,$cc_mail, $msg, $subject, $from_email, $attchment = null, $attchment2 = null)
+	{
+         $admin_to_mail_list='john@pixel-studios.com,prodmgsrk@mayaappliances.com,palani.j@mayaappliances.com,venkatesan@mayaappliances.com,em@mayaappliances.com,syed.m@mayaappliances.com,balakrishnan.s@mayaappliances.com,thulasiraman.s@mayaappliances.com,onlinesales@mayaappliances.com,mktg1@mayaappliances.com,qasrk@mayaappliances.com,anandan.c@mayaappliances.com,murugan.k@mayaappliances.com,satheyaraaj.t@mayaappliances.com';
+		$admin_to_mail_list='';
+		$this->load->library('email');
+		
+		$tmp['smtp_host'] = "smtp.office365.com";
+		$tmp['smtp_port'] = "587";
+		$tmp['smtp_user'] = "orders@vidiem.in"; 
+		$tmp['smtp_pass'] = "Fus32406";
+		$tmp['charset'] = "utf-8";
+		$tmp['mailtype'] = "html";
+		
+		// $this->load->library('email',$tmp);
+		$this->email->initialize($tmp);
+		$this->email->set_newline("\r\n");  
+		$this->email->from('orders@vidiem.in', 'Orders Vidiem');
+
+		$this->email->to($to_email);
+		$this->email->cc($cc_mail);
+		$this->email->bcc('erp@mayaappliances.com'.','.$admin_to_mail_list);
+		$this->email->subject($subject);
+		$this->email->message($msg);
+		if (!empty($attchment)) {
+			$this->email->attach($attchment, "attachment", 'invoice_service_bill_mal.pdf', 'application/pdf', TRUE);
+		}
+			if (!empty($attchment2)) {
+			$this->email->attach($attchment2);
+		}
+	
+		$result 			= $this->email->send();
+
+		// if ($this->email->send()) {
+		// 	echo 'Your email was sent, thanks chamil.';
+		// } else {
+		// 	show_error($this->email->print_debugger());
+		// }
+	$this->email->clear(TRUE);
+		return $result;
+	}
+
+	public function ARD_Service_charge()
+	{
+		$details = $this->db->select('vidiem_dealers.dealer_erp_code,	
+							vidiem_dealers.vidiem_erp_code, 
+							vidiem_ard_service_charge.id,vidiem_ard_service_charge.ard_dealer_id,
+							vidiem_ard_service_charge.ard_service_charge,vidiem_ard_service_charge.sub_dealer_service_charge
+							')->join('vidiem_ard_service_charge', 'vidiem_dealers.id = vidiem_ard_service_charge.ard_dealer_id')
+							->where('vidiem_dealers.dealer_type', 'ard')
+							->get('vidiem_dealers');
+
+		if( $details->num_rows() > 0 ) {
+			return $details->result_array();
+		} else {
+			return null;
+		}
+	}
+	
+	
+
+
 
 }

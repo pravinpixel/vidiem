@@ -1,6 +1,90 @@
 <?php $this->load->view('Backend/dealers/layouts/header') ?>
 <?php $this->load->view('Backend/dealers/layouts/sidebar') ?>
 <!-- Content Wrapper. Contains page content -->
+  <style>
+  .light-gray-bg {
+    background: #f8f8f8;
+    padding-left: 57px;
+    padding-right: 35px;
+    padding-top:8px;
+}
+ul.track-order{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 50px 0px 0px 0px;
+    padding: 0px;
+    position: relative;
+}
+
+
+ul.track-order li{
+    width: 25%;
+    list-style: none;
+    position: relative;
+    color: #CCC;
+    text-align: center;
+    padding: 60px 0px 0px 0px;
+}
+ul.track-order li h5{
+    color: #CCC;
+    font-weight: 500;
+}
+ul.track-order li.active, ul.track-order li.active h5{
+    color: #000;
+}
+ul.track-order li span{
+    position: absolute;
+    left: calc(50% - 15px);
+    top: 0;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c6c6c6;
+    color:#666;
+    z-index: 99;
+}
+ul.track-order li.active span{
+    background: #f70009;
+    color: #FFF;
+}
+ul.track-order li:before{
+    background: #CCC;
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    left: 0;
+    top: 13px;
+    content: "";
+    z-index: 10;
+}
+ul.track-order li.active:after{
+    background: #f70009;
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    left: 0;
+    top: 13px;
+    content: "";
+    z-index: 15;
+}
+
+ul.track-order li.active:first-child:after{
+    width: 50%;
+    left: 50%;
+}
+
+ul.track-order li:first-child:before, ul.track-order li.active.full:first-child:after{
+    width: 50%;
+    left: 50%;
+}
+ul.track-order li:last-child:before, ul.track-order li.active:last-child:after{
+    width: 50%;
+}
+  </style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -116,9 +200,11 @@
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div style="margin:10px;">
-                                            <a href="javascript:void(0);" class="btn bg-navy dealer_custom_order_view_trigger col-sm-12" data-id="<?= $items->id; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view" style="margin: 3px">
-                                                View Orders
+                                            <a href="javascript:void(0);" class="btn bg-navy dealer_custom_order_view_trigger col-sm-4" data-id="<?= $items->id; ?>" data-toggle="tooltip" data-placement="top"  data-original-title="view" style="margin: 3px">
+                                                <span class="fa fa-eye"></span>
                                             </a>
+                                             <a href="javascript:track_order_status_view('<?= $items->inv_code ?? $items->order_no; ?>','<?= $items->billing_emailid ?? $items->delivery_emailid ?>')" class="btn bg-green"  ><span class="fa fa-ship"></span></a>
+                                            
                                         <?php 
                                             if( isset( $items->status ) && $items->status != 4 ) {
 
@@ -169,6 +255,26 @@
 </div>
 <!-- /.content-wrapper -->
 <!-- ./wrapper -->
+
+  <div class="modal fade" id="customize-track-order">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Track Order</h4>
+                </div>
+                <div class="modal-body">
+                     <div id="tracking-pane">
+                </div>
+               
+            
+                        
+                        </div>
+            </div>
+        </div>
+    </div>
+    
 <?php $this->load->view('Backend/dealers/layouts/footer') ?>
 <script>
   $('#manageDealer').dataTable({
@@ -218,4 +324,23 @@
       })
 
   });
+  
+  function track_order_status_view(code,email)
+{
+    var order_type='custom_order';
+		
+    $.ajax({
+                type: "POST",
+                url: "<?= base_url() ?>tracking/get_tracking_info",
+                data: {code:code,email:email,order_type:order_type},
+                dataType: 'json',
+                success: function (res) {
+                    if( res.view ) {
+                         $('#customize-track-order').modal('show');
+                      
+                        $('#tracking-pane').html(res.view);
+                    }
+                }
+            });
+}
 </script>

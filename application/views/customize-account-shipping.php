@@ -72,7 +72,7 @@ if (isset($dealer_session['user'])) {
 	<div class="loader"></div>
 </div>
 
-
+<!--<div class="cart-coupon">Please note that due to the Year End Process our shipments will be delayed by a few days. Normal delivery will resume from April 8th Onwards..</div>-->
 <section class="light-gray-bg pt-4">
 
 	<div class="container">
@@ -82,17 +82,17 @@ if (isset($dealer_session['user'])) {
 				<ul class="cart-tab my-4" data-aos="fade-up" data-aos-delay="50" data-aos-duration="1000">
 					<li>
 						<a href="<?= base_url('customize-cart'); ?>">
-							<span>01</span> Shopping Cart
+							<span>01</span> Shopping <small>Cart</small>
 						</a>
 					</li>
 					<li>
 						<a class="active" href="<?= base_url('customize-checkout'); ?>">
-							<span>02</span> Account &amp; Shipping
+							<span>02</span> Account &amp; <small>Shipping</small>
 						</a>
 					</li>
 					<li>
 						<a href="javascript:void(0);">
-							<span>03</span> Order Confirmation
+							<span>03</span> Order <small>Confirmation</small>
 						</a>
 					</li>
 				</ul>
@@ -536,7 +536,7 @@ if (isset($dealer_session['user'])) {
 													<?php } ?>
 													<?php if ($cartitems['bodyinfo'][0]['package_id'] != '') { ?>
 														<tr>
-															<td>Gift Wrapping Preference</td>
+															<td>Packaging</td>
 															<td><?= $cartitems['bodyinfo'][0]['packagename'] ?></td>
 														</tr>
 													<?php } ?>

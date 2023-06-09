@@ -1,0 +1,235 @@
+<?php $this->load->view('Backend/dealers/layouts/header') ?>
+<?php $this->load->view('Backend/dealers/layouts/sidebar') ?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <?= $action ?> Dealers
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="<?= base_url('dealer-admin'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="<?= base_url('dealer-admin/dealers'); ?>"> Manage Dealers</a></li>
+            <li class="active"> <?php echo $action; ?></li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+   
+        <?php if(!empty($this->session->flashdata('msg'))){ ?>
+        <div class="alert <?= $this->session->flashdata('class'); ?> alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa <?= $this->session->flashdata('icon'); ?>"></i> Alert!</h4>
+            <?= $this->session->flashdata('msg'); ?>
+        </div>
+        <?php } ?>
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Horizontal Form -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><?php echo $action; ?> Dealers</h3>
+                    </div>
+                    <div class="text-center">
+                        <?php echo validation_errors(); ?>
+                    </div>
+
+                    <form class="form-horizontal" enctype="multipart/form-data" id="dealer_form" action="<?= base_url(); ?>dealers/dealers/save" name="dealer_form" method="post">
+                        <div class="box-body">
+                            <input type="hidden" name="id" value="<?= $info->id ?? '' ?>">
+                            <div class="form-group">
+                                <label for="dealer_erp_code" class="col-sm-2 control-label">
+                                    Dealer ERP Code
+                                    <span class="red">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" id="dealer_erp_code" required name="dealer_erp_code"
+                                        value="<?= set_value('dealer_erp_code',@$info->dealer_erp_code); ?>">
+                                    <?= form_error('dealer_erp_code'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="vidiem_erp_code" class="col-sm-2 control-label">
+                                    Vidiem ERP Code
+                                    <span class="red">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" required id="vidiem_erp_code" name="vidiem_erp_code"
+                                        value="<?= set_value('vidiem_erp_code',@$info->vidiem_erp_code); ?>">
+                                    <?= form_error('vidiem_erp_code'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="location_code" class="col-sm-2 control-label">
+                                    Location Code
+                                    <span class="red">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" required id="location_code" name="location_code"
+                                        value="<?= set_value('location_code',@$info->location_code); ?>">
+                                    <?= form_error('location_code'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="display_name" class="col-sm-2 control-label">
+                                    Display Name
+                                    <span class="red">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" required id="display_name" name="display_name"
+                                        value="<?= set_value('display_name',@$info->display_name); ?>">
+                                    <?= form_error('display_name'); ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="logo" class="col-sm-2 control-label">
+                                    Dealers Logo
+                                    <span class="red">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-10">
+                                    <?php 
+                                    $required = 'required';
+                                    if( isset( $info->image ) && !empty( $info->image ) ) {
+                                        $required = '';
+                                    }
+                                    ?>
+                                    <input type="file" name="logo" id="logo" class="form-control" <?= $required ?>>
+                                    <?php 
+                                    if( isset( $info->image ) && !empty( $info->image ) ) {
+                                    ?>
+                                    <div style="float:right">
+                                        <img src="<?= base_url()?>uploads/dealer/<?= $info->image ?>" alt="dealer image" width="200">
+                                    </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <?php 
+                                $selectedPay = [];
+                                if( isset( $info->payment_option ) && !empty( $info->payment_option ) ) {
+                                    $selectedPay = explode(',', $info->payment_option);
+                                }
+                                
+                            ?>
+                            <div class="form-group">
+                                <label for="payment_options" class="col-sm-2 control-label">
+                                    Payment Options
+                                    <span class="red">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="checkbox" name="payment_option[]" id="payment_option_online" value="online" <?php if(in_array('online', $selectedPay) ){echo 'checked';} ?>>
+                                    <label for="payment_option_online" role="button" class="" style="padding-right: 5px;"> Online </label>
+                                    
+                                    <input type="checkbox" name="payment_option[]" class="mx-3" id="payment_option_counter" value="counter_pay" <?php if(in_array('counter_pay', $selectedPay) ){echo 'checked';} ?>>
+                                    <label for="payment_option_counter" role="button"> Counter Pay </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address" class="col-sm-2 control-label">Address<span
+                                        class="red">*</span></label>
+                                <div class="col-md-6 col-sm-10">
+                                    <textarea id="address" name="address" required class="form-control" row="5"
+                                        col="17"><?= set_value('address',@$info->address); ?></textarea>
+                                    <?= form_error('address'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="area" class="col-sm-2 control-label"> Area </label>
+                                <div class="col-md-6 col-sm-10">
+                                    <textarea id="area" name="area" class="form-control" row="5"
+                                        col="17"><?= set_value('area',@$info->area); ?></textarea>
+                                    <?= form_error('area'); ?>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="state" class="col-sm-2 control-label" >State *</label>
+                                <div class="col-md-6 col-sm-10">
+                                    <input type="text" class="form-control" required id="state" name="state"
+                                        value="<?= set_value('state',@$info->state); ?>">
+                                    <?= form_error('state'); ?>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputCategory" class="col-sm-2 control-label">City *</label>
+                                <div class="col-md-6 col-sm-10" id="divcity">
+                                    <input type="text" class="form-control" required id="city" name="city"
+                                        value="<?= set_value('city',@$info->city); ?>">
+                                    <?= form_error('city'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="district" class="col-sm-2 control-label">District *</label>
+                                <div class="col-md-6 col-sm-10" id="divcity">
+                                    <input type="text" class="form-control" required id="district" name="district"
+                                        value="<?= set_value('district',@$info->district); ?>">
+                                    <?= form_error('district'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="post_code" class="col-sm-2 control-label">Post Code</label>
+                                <div class="col-md-6 col-sm-10" id="divcity">
+                                    <input type="text" class="form-control" required id="post_code" name="post_code"
+                                        value="<?= set_value('post_code',@$info->post_code); ?>">
+                                    <?= form_error('post_code'); ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                                <div class="col-md-6 col-sm-10">
+                                    <button type="submit" id="dealer-submit" class="btn btn-success col-sm-3" style="margin-right:10px;">
+                                        <?php echo $action_btn; ?>
+                                    </button>
+
+                                    <input type="reset" class="btn  col-sm-3 reset" id="reset" value="Reset" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.box-body -->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<?php $this->load->view('Backend/dealers/layouts/footer') ?>
+<script>
+
+$(document).ready(function() {
+    $('#dealer_form').validate({
+        submitHandler: function (form) {
+            var formData = new FormData(this);
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url(); ?>dealers/dealers/save",
+                data:formData,
+                cache:false,
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#dealer-submit').attr('disabled', true);
+                },
+                success: function (res) {
+                    $('#dealer-submit').attr('disabled', false);
+                    
+                    if( res.status == 1 ) {
+                       
+                    } else {
+                        toastr.error('Error', res.message);
+                    }
+                }
+            });
+            return false; // required to block normal submit since you used ajax
+        }
+    });
+});
+
+</script>

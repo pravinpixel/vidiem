@@ -3,6 +3,9 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+    <?php if($dealer_type=='dealer')
+            { ?>
+   
     <section class="content-header">
         <h1>
             Locations
@@ -12,6 +15,20 @@
             <li class="active">Manage Locations</li>
         </ol>
     </section>
+    <?php } else 
+    {?>
+     <section class="content-header">
+        <h1>
+            ARD
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="<?= base_url('vidiem-dealer'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">ARD Locations</li>
+        </ol>
+    </section>
+    <?php 
+    }
+    ?>
     <!-- Main content -->
     <section class="content">
         <?php if(!empty($this->session->flashdata('msg'))){ ?>
@@ -26,10 +43,25 @@
                 <!-- Horizontal Form -->
                 <div class="box box-info">
                     <div class="box-header with-border">
+                    <?php if($dealer_type=='dealer')
+            { ?>
                         <h3 class="box-title">Locations List</h3>
+                        <?php } else {
+                            ?>
+                             <h3 class="box-title">ARD List</h3>
+                        <?php } ?>
                         <div class="pull-right">
                             <a href="<?php echo base_url('dealer-admin/'.$dealer_id.'/location/add');?>"
-                                class="btn btn-success">Add Dealer Location <span class=""></span></a>
+                                class="btn btn-success">
+                                <?php if($dealer_type=='dealer')
+            { ?>
+                                Add Dealer Location
+                                <?php } else {
+                            ?> 
+                             Add Sub Dealer
+                              <?php } ?><span class="">
+                                    
+                                </span></a>
                         </div>
                     </div>
                     <!-- /.box-header -->
@@ -41,7 +73,7 @@
                                     <th>S.No</th>
                                     <th>Location Name</th>
                                     <th>Location Code</th>
-                                    <th>Address</th>
+                                 
                                     <th>Address</th>
                                     <th>Action</th>
                                 </tr>

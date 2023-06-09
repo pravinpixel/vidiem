@@ -181,7 +181,7 @@ h1 {
                                 if($basicItemInfo['package_id']!='' && !empty($basicItemInfo['package_id'])) {
                                 ?>
                                 <tr>
-                                    <td> Gift Wrapping Preference </td>
+                                    <td> Packaging </td>
                                     <td><?= $basicItemInfo['packagename'] ?></td>
                                     <td><?= $basicItemInfo['packageprice'] ?></td>
                                 </tr>

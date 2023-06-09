@@ -69,16 +69,16 @@
       <!-- Logo -->
       <a href="<?= base_url('Admin/dashboard'); ?>" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini">Vidiem</span>
+        <span class="logo-mini"><img src="<?= base_url(); ?>assets/back-end/img/favicon.png" alt="" /></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Vidiem</b></span>
+        <span class="logo-lg"><img src="<?= base_url(); ?>assets/back-end/img/logo.png" alt="" /></span>
       </a>
           <!-- Header Navbar: style can be found in header.less -->
       <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle sidebar-toggler" data-toggle="push-menu" role="button">
+        <!-- a href="#" class="sidebar-toggle sidebar-toggler" data-toggle="push-menu" role="button">
           <span class="sr-only">Toggle navigation</span>
-        </a>
+        </a -->
 
           <div class="navbar-custom-menu">
               <ul class="nav navbar-nav">

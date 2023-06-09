@@ -67,6 +67,19 @@ class DealersModel extends CI_Model {
     function getInfoById( $table, $id ) {
         return $this->db->where('id', $id)->get($table)->row();
     }
+     public function ard_service_percentage($id)
+    {
+        $details = $this->db->select('*')
+                  
+                    ->where('id', $id)
+                    ->get('vidiem_ard_service_charge');
+
+        if( isset( $details ) && $details->num_rows() > 0 ) {
+            return $details->row();
+        } else {
+            return null;
+        }
+    }
 
     function getDealerInfo($id) {
         
@@ -236,6 +249,7 @@ class DealersModel extends CI_Model {
         $info                           = $this->db->get( 'vidiem_dealer_users');
         
         
+        
         if( isset( $info ) && $info->num_rows() > 0 ) {
             $info                       = $info->row();
             
@@ -273,20 +287,6 @@ class DealersModel extends CI_Model {
            return false;
         }
 
-    }
-
-    public function getAllDealerUser() {
-        $data = $this->db->select('vidiem_dealer_users.*, vidiem_dealers.vidiem_erp_code, vidiem_dealers.display_name, vidiem_dealer_locations.location_name, vidiem_dealer_locations.location_code')
-                    ->join('vidiem_dealers', 'vidiem_dealers.id = vidiem_dealer_users.dealer_id' )
-                    ->join('vidiem_dealer_locations', 'vidiem_dealer_locations.id = vidiem_dealer_users.location_id' )
-                    ->where('vidiem_dealer_users.is_active', 1)
-                    ->where('vidiem_dealer_users.open_password is NOT NULL', NULL, FALSE)
-                    ->get('vidiem_dealer_users');
-        
-        if( isset( $data ) && !empty( $data ) && count($data) > 0 ) {
-
-        }   
-        
     }
 
 }

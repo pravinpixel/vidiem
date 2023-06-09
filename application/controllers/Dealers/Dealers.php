@@ -9,6 +9,7 @@ class Dealers extends CI_Controller {
         $this->load->helper(array('form', 'url'));
         $this->load->library('form_validation', 'upload');
         $this->load->model('DealersModel');
+         $this->load->model('ARDAdminMailModel');
         if( $this->session->userdata('dealer_session')['user']['user_type'] == 'sale_person' ) {
             redirect('vidiem-dealer');
         }
@@ -18,10 +19,11 @@ class Dealers extends CI_Controller {
     public function index()
     {
         
+        
        
         $data['details']    = $this->FunctionModel->Select('vidiem_dealers');
         
-        
+      
         $this->load->view('Backend/dealers/dealer/index', $data);
 
     }
@@ -292,11 +294,14 @@ class Dealers extends CI_Controller {
 
     public function doCounterPayment()
     {
-
+        //print_r('dddd'); die;
+        //print_r($this->upload_data['receipt']['file_name'] ); die;
         $this->form_validation->set_rules('receipt_no', 'Display Name', 'required');
         $this->form_validation->set_rules('receipt', 'Receipt', 'callback_file_selected_dynamic[receipt]');
         $this->form_validation->set_rules('dealer_invoice', 'Dealer Invoice', 'callback_file_selected_dynamic[dealer_invoice]');
         $this->form_validation->set_rules('vidiem_invoice', 'Vidiem Invoice', 'callback_file_selected_dynamic[vidiem_invoice]');
+        $this->form_validation->set_rules('ard_service_bill', 'ARD Service Bill', 'callback_file_selected_dynamic[ard_service_bill]');
+        $this->form_validation->set_rules('sub_dealer_service_bill', 'Sub Dealer Service Bill', 'callback_file_selected_dynamic[sub_dealer_service_bill]');
 
         if ($this->form_validation->run() == FALSE)
         {
@@ -319,7 +324,9 @@ class Dealers extends CI_Controller {
                                                     );
                                                     
             $code                                   = $this->FunctionModel->Select_Row('vidiem_customorder',array('id'=>$id));
-            
+         //04-05-2023  start
+         
+            //04-05-2023 End
             if( isset( $code['inv_code'] ) && empty( $code['inv_code'] ) ) {
                 $InsertData['inv_code']             = $this->CustomizeModel->CustomInvoiceCode();
             }
@@ -327,19 +334,122 @@ class Dealers extends CI_Controller {
 
             if( isset( $this->upload_data['receipt']['file_name'] ) && !empty( $this->upload_data['receipt']['file_name'] ) ) {
                 $InsertData['receipt_file']         = $this->upload_data['receipt']['file_name'];
+                $InsertData['receipt_date_time'] = date('Y-m-d H:i:s');
+                
             }
             if( isset( $this->upload_data['dealer_invoice']['file_name'] ) && !empty( $this->upload_data['dealer_invoice']['file_name'] ) ) {
                 $InsertData['dealer_invoice']       = $this->upload_data['dealer_invoice']['file_name'];
+                 $InsertData['dealer_invoice_date_time'] = date('Y-m-d H:i:s');
+                 //$this->CustomizeModel->UploadDealerInvoiceNotification($id); 
             }
             if( isset( $this->upload_data['vidiem_invoice']['file_name'] ) && !empty( $this->upload_data['vidiem_invoice']['file_name'] ) ) {
                 $InsertData['vidiem_invoice']       = $this->upload_data['vidiem_invoice']['file_name'];
+                 $InsertData['vidiem_invoice_date_time'] = date('Y-m-d H:i:s');
+            }
+              if( isset( $this->upload_data['ard_service_bill']['file_name'] ) && !empty( $this->upload_data['ard_service_bill']['file_name'] ) ) {
+                $InsertData['ard_service_bill']       = $this->upload_data['ard_service_bill']['file_name'];
+                 $InsertData['ard_service_bill_date_time'] = date('Y-m-d H:i:s');
+            }
+              if( isset( $this->upload_data['sub_dealer_service_bill']['file_name'] ) && !empty( $this->upload_data['sub_dealer_service_bill']['file_name'] ) ) {
+                $InsertData['sub_dealer_service_bill']       = $this->upload_data['sub_dealer_service_bill']['file_name'];
+                 $InsertData['sub_dealer_service_bill_date_time'] = date('Y-m-d H:i:s');
             }
             
             $result                                 = $this->FunctionModel->Update($InsertData,'vidiem_customorder', ['id' => $id]);
+           
+            $receipt= $this->upload_data['receipt']['file_name'];
+            if( isset( $receipt ) && !empty($receipt) ) {
+                //$this->CustomizeModel->CustomOrderInvoicing($id); 
+                 //$this->CustomizeModel->UploadDealerRecipetNotification($id); 
+                  $order_pass_type='Counter Pay';
+                 $this->CustomizeModel->CustomerInvoiceDealer($id,$order_pass_type);
+                
+                     
+            if(isset($code['dealer_id']) && !empty($code['dealer_location_id']))
+            {
+                $ard_user_id=$code['dealer_id'];
+                $ard_details=$this->FunctionModel->Select_Row('vidiem_dealers',array('id'=>$ard_user_id));
+                if($ard_details['dealer_type']=='ard')
+                {
+                    $sub_dealer_user_id=$code['dealer_location_id'];
+                    $total_amount=$code['amount'];
+                    $sub_dealer_details=$this->FunctionModel->Select_Row('vidiem_dealer_locations',array('id'=>$sub_dealer_user_id));
+                    $sub_dealer_percentage_id=$sub_dealer_details['sub_dealer_service_charge_id'];
+                    $ard_dealer_percentage_id=$ard_details['ard_service_charge_id'];
+                    $sub_dealer_percentage_det=$this->FunctionModel->Select_Row('vidiem_ard_service_charge',array('id'=>$sub_dealer_percentage_id));
+                    $sub_dealer_perc=$sub_dealer_percentage_det['service_charge'];
+                    $ard_percentage_det=$this->FunctionModel->Select_Row('vidiem_ard_service_charge',array('id'=>$ard_dealer_percentage_id));
+                    $ard_perc=$ard_percentage_det['service_charge']; 
+                    $original_gst=$total_amount/118*18;
+                    $original_basic=$total_amount-$original_gst;
+                    //Sub Dealer Percentage Calculation 
+                    $sub_dealer_commission=($original_basic/100)*$sub_dealer_perc;
+                    $sub_dealer_gst=($sub_dealer_commission/100)*18;
+                    $sub_dealer_service_bill=$sub_dealer_commission+$sub_dealer_gst;
+                    $sub_dealer_service_tds=($sub_dealer_commission/100)*5;
+                    $admin_sub_dealer_payable=$sub_dealer_service_bill-$sub_dealer_service_tds;
+                    $sub_dealer_payable=$total_amount-$admin_sub_dealer_payable;
+                    //ARD Percentage Calculation
+                    $ard_commission=($original_basic/100)*$ard_perc;
+                    $ard_gst=($ard_commission/100)*18;
+                    $ard_service_bill=$ard_commission+$ard_gst;
+                    $ard_service_tds=($ard_commission/100)*5;
+                    $admin_ard_payable=$ard_service_bill-$ard_service_tds;                   
+                    $ard_payable=$total_amount-$admin_ard_payable;
 
-            if( isset( $receipt_no ) && !empty($receipt_no) ) {
-                $this->CustomizeModel->Custom_NewOrderNotification($id);  
-                $this->CustomizeModel->CustomOrderInvoicing($id); 
+                    //ard_sub_dealer_order_details
+
+
+                    $InsertARDSubData     = array(
+                        'order_id'                      => $id,
+                        'ard_dealer_id'                 => $ard_user_id,
+                        'sub_dealer_id'                 => $sub_dealer_user_id,
+                        'total_amount'                  => $total_amount,
+                        'original_amount_gst'           => $original_gst,
+                        'original_amount_basic'         => $original_basic,
+                        'ard_commission'                => $ard_commission,
+                        'ard_gst'                       => $ard_gst,
+                        'ard_service_bill'              => $ard_service_bill,
+                        'ard_service_tds'               => $ard_service_tds,
+                        'admin_ard_payable'             => $admin_ard_payable,
+                        'ard_payable'                   => $ard_payable,
+                        'sub_dealer_commission'         => $sub_dealer_commission,
+                        'sub_dealer_gst'                => $sub_dealer_gst,
+                        'sub_dealer_service_bill'       => $sub_dealer_service_bill,
+                        'sub_dealer_service_tds'        => $sub_dealer_service_tds,
+                        'admin_sub_dealer_payable'      => $admin_sub_dealer_payable,
+                        'sub_dealer_payable'            => $sub_dealer_payable,
+                        'ard_percentage'                => $ard_perc,
+                        'sub_dealer_percentage'         => $sub_dealer_perc,                            
+                    );
+                    $InsertARDSubData['created_date' ]      = date('Y-m-d H:i:s');
+                    $result                         = $this->FunctionModel->Insert($InsertARDSubData,'ard_sub_dealer_order_details');
+                    $commission_id = $this->db->insert_id();
+                    $this->CustomizeModel->ARDSuDealerInvoice($id,$commission_id);
+                     if($ard_details['dealer_type']=='ard')
+                    {
+                   // sleep(60);
+                        $this->ARDAdminMailModel->ARDAdminInvoice($id,$commission_id);
+                    }
+                 
+                }   
+           
+         
+          
+            }
+                
+            }
+           $dealer_invoice= $this->upload_data['dealer_invoice']['file_name'];
+
+           if( isset( $dealer_invoice ) && !empty($dealer_invoice) ) {
+
+                //$this->CustomizeModel->Custom_NewOrderNotification($id);  
+                //$this->CustomizeModel->CustomOrderInvoicing($id);
+           
+                 
+                
+                 $order_pass_type='Dealer Invoice';
+                 $this->CustomizeModel->CustomerInvoiceDealer($id,$order_pass_type);
             } 
             
             $this->session->set_flashdata('title', "Thank You");     
@@ -348,6 +458,7 @@ class Dealers extends CI_Controller {
             $error_message = 'Updated successfully';
 
             if( $result >= 1 ) {
+                
 
                 $this->session->set_flashdata('class', "alert-success");
                 $this->session->set_flashdata('icon', "fa-check");

@@ -1,4 +1,4 @@
-<?= $this->load->view('container/header.php')?>
+<?= $this->load->view('container/header.php', '',  true )?>
 <section class="inner-page-bg pb-5">
 	<div class="container">
 		<div class="row align-items-center">
@@ -19,6 +19,21 @@
 					<h2 class="text-red">Track Your Order</h2>
                     <div class="p-3">
                         <form id="track-form">
+                            	<div class="col-sm-12 col-md-12 col-lg-12 ">
+						    <strong>
+						    
+						    <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault1" checked value="normal_order">
+                              <label class="form-check-label" for="flexRadioDefault1">
+                                Normal Order
+                              </label>
+                                <span style="margin-left:5%;">
+                                    <input class="form-check-input" type="radio" name="order_type" id="flexRadioDefault2" value="custom_order" >
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Customize Order
+                                    </label>
+                                </span></strong>
+						       
+						    </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-4 pt-4">
                                     <div class="md-form">
@@ -49,7 +64,7 @@
 	</div>
 </section>
 
-<?= $this->load->view('container/footer.php')?>
+<?= $this->load->view('container/footer.php', null,  true)?>
 <script>
     $('#track-form').validate({
         rules: {

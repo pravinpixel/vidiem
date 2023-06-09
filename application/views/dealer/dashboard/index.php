@@ -18,18 +18,8 @@
                 </div>
             </div>
             <div class="col-sm-12 col-md-12 col-lg-6 text-center">
-                <h2 class="get-started-heading p-0 mb-3">When you can customize your kitchen, </br>
-                    Why not your kitchen appliances? </span></h2>
-                <p class="text-center">For the <strong style="font-weight: 700;">1st time in the world</strong>, the
-                    house of Maya Appliances brings you the opportunity to build your very own Mixer Grinder to
-                    perfectly suit your everyday cooking needs. With Vidiem By You, you can make cooking the most joyous
-                    thing you do every day by making your favourite dishes in a mixer grinder designed by you!
-                    <br /><br />Pick from a wide variety of body styles, colours, motors, & jars and customize your
-                    mixie with a personalised message too. There are over 3 Million combinations to choose from! <br>At
-                    Maya Appliances we bring you kitchen solutions and innovations that make life in the kitchen easy,
-                    convenient and most of all fun! <br /><strong
-                        style="font-weight: 700; color:#000; font-size:16px;">Vidiem by you</strong> <strong
-                        class="text-red" style="font-weight: 700; font-size:16px;">– My Vidiem, My Choice!</strong></p>
+               	<h2 class="get-started-heading p-0 mb-3 mt-3"><strong>Designed by You for You</strong></h2>
+                 <p class="text-center">For the <strong style="font-weight: 700;">1st time in the world</strong>, the house of Maya Appliances brings you the opportunity to build your very own Mixer Grinder to perfectly suit your everyday cooking needs. With Vidiem By You, you can make cooking the most joyous thing you do every day by making your favourite dishes in a mixer grinder designed by you!  <br/><br/>Pick from a wide variety of body styles, colours, motors, & jars and customize your mixie with a personalised message too. There are over 3 Million combinations to choose from! <br>At Maya Appliances we bring you kitchen solutions and innovations that make life in the kitchen easy, convenient and most of all fun!  <br/><strong style="font-weight: 700; color:#000; font-size:16px;">Vidiem by you</strong> <strong class="text-red" style="font-weight: 700; font-size:16px;">– My Vidiem, My Choice!</strong></p>
                 <a href="<?= base_url(); ?>vidiem-by-you-customization/"
                     class="red-btn d-inline-block w-auto start-customize-btn">Start Customizing</a>
                 <iframe src="https://www.youtube.com/embed/SuJTgr5GgqM" title="Vidiem" frameborder="0"

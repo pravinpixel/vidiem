@@ -20,12 +20,23 @@ class Location extends CI_Controller {
     {
         $data['details']    = $this->LocationsModel->getLocation($dealer_id);
         $data['dealer_id']  = $dealer_id;
+        $this->db->select('dealer_type')->from('vidiem_dealers');
+        $query = $this->db->where('id',$dealer_id);
+        $query = $this->db->get();
+        $row = $query->row();
+        $data['dealer_type']=$row->dealer_type;
         $this->load->view('Backend/dealers/location/index', $data);
     }
 
     public function add_edit($dealer_id, $id = null)
     {   
-        
+      
+        $this->db->select('dealer_type')->from('vidiem_dealers');
+        $query = $this->db->where('id',$dealer_id);
+        $query = $this->db->get();
+        $row = $query->row();
+        $dealer_type=$row->dealer_type;
+        $ard_charge=$this->FunctionModel->Select_Fields('id,service_charge','vidiem_ard_service_charge',array('dealer_type'=>'sub_dealer'));
         $action_btn         = 'Save';
         $action             = 'Add';
         $info               = '';
@@ -39,9 +50,65 @@ class Location extends CI_Controller {
                                 'action' => $action,
                                 'info' => $info,
                                 'dealer_id' => $dealer_id,
-                                'id' => $id
+                                'id' => $id,
+                                'dealer_type' =>$dealer_type,
+                                'ard_charge' => $ard_charge
                             );
         $this->load->view('Backend/dealers/location/add_edit_form', $params);
+    }
+
+
+    	public function file_selected_test_subdealer(){
+
+        $id         = $this->input->post('id');
+        $info       = $this->DealersModel->getInfoById('vidiem_dealers', $id);
+
+        if( isset( $info->image ) && !empty( $info->image ) && isset($_FILES['logo']['name']) && $_FILES['logo']['name'] =="" ) {
+            return true;
+        }
+        $allowed_mime_type_arr = array('image/gif','image/jpeg','image/pjpeg','image/png','image/x-png');
+        $mime = get_mime_by_extension($_FILES['logo']['name']);
+        
+        if(isset($_FILES['logo']['name']) && $_FILES['logo']['name']!=""){
+            if(in_array($mime, $allowed_mime_type_arr)){
+
+                if($_FILES['logo']['size'] != 0){
+                    $upload_dir = './uploads/dealer';
+                    if (!is_dir($upload_dir)) {
+                         mkdir($upload_dir);
+                    }
+                    if(file_exists($upload_dir.'/'.$_FILES['logo']['name'])){
+                            list($file_name)=explode('.',$_FILES['logo']['name']);
+                            $file_name=$file_name.'_'.substr(md5(rand()),0,5);
+                        }else{
+                            list($file_name)=explode('.',$_FILES['logo']['name']);
+                        }
+                    $config['upload_path']   = $upload_dir;
+                    $config['allowed_types'] = 'jpg|png|jpeg';
+                    $config['file_name']     = $file_name;
+                    $config['overwrite']     = false;
+                    $config['max_size']	     = '5120';
+            
+                    $this->upload->initialize($config);
+                    if (!$this->upload->do_upload('logo')){
+                        $this->form_validation->set_message('file_selected_test', $this->upload->display_errors('<p class=error>','</p>'));
+                        return false;
+                    }
+                    else{
+                        $this->upload_data['logo'] =  $this->upload->data();
+                        return true;
+                    }
+                }
+
+                return true;
+            }else{
+                $this->form_validation->set_message('file_selected_test', 'Please select only gif/jpg/png file.');
+                return false;
+            }
+        }else{
+            $this->form_validation->set_message('file_selected_test', 'Please choose a file to upload.');
+            return true;
+        }
     }
 
     public function save()
@@ -54,16 +121,26 @@ class Location extends CI_Controller {
         $this->form_validation->set_rules('email', 'Email Id', 'required');
         $this->form_validation->set_rules('mobile_no', 'Mobile Number', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
+        $this->form_validation->set_rules('logo', 'Logo', 'callback_file_selected_test_subdealer');
         
         if ($this->form_validation->run() == FALSE)
         {
+            $this->db->select('dealer_type')->from('vidiem_dealers');
+            $query = $this->db->where('id',$dealer_id);
+            $query = $this->db->get();
+            $row = $query->row();
+            $dealer_type=$row->dealer_type;
+            $ard_charge=$this->FunctionModel->Select_Fields('id,service_charge','vidiem_ard_service_charge',array('dealer_type'=>'sub_dealer'));
+    
 
             $action_btn     = 'Save';
             $action         = 'Add';
 
             $params         = array(
                                 'action_btn' => $action_btn,
-                                'action' => $action
+                                'action' => $action,
+                                'dealer_type' =>$dealer_type,
+                                'ard_charge' => $ard_charge
                             );
             $this->load->view('Backend/dealers/location/add_edit_form', $params);
 
@@ -89,8 +166,17 @@ class Location extends CI_Controller {
                                 'post_code'         => $this->input->post('post_code'),
                                 'status'            => '1',                            
                             );
+                            	 if( isset( $this->upload_data['logo']['file_name'] ) && !empty( $this->upload_data['logo']['file_name'] ) ) {
+                $InsertData['sub_dealer_logo']        = $this->upload_data['logo']['file_name'];
+            }
 
-            
+                            if($this->input->post('sub_dealer')=='ard')
+                            {
+                                $InsertData['sub_dealer_service_charge_id']=$this->input->post('service_charge_id');
+                                $InsertData['sub_dealer_gst_no']=$this->input->post('gst_no');
+                                $InsertData['sub_dealer_cin_no']=$this->input->post('cin_no');
+                                $InsertData['sub_dealer_pan_no']=$this->input->post('pan_no');
+                            }
             if( isset( $id ) && !empty( $id ) ) {
                 $InsertData['updated_at' ]      = date('Y-m-d H:i:s');
                 $result                         = $this->FunctionModel->Update($InsertData,'vidiem_dealer_locations', ['id' => $id]);

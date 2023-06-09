@@ -52,6 +52,43 @@
                     <input type="hidden" name="id" value="<?= $info->id ?? '' ?>">
                     <div class="form-group">
                         <label for="dealer_erp_code" class="col-sm-2 control-label">
+                          Dealer  Type
+                            <span class="red">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-10">
+                            <select name="dealer_type" id="dealer_type" class="form-control" required onchange="return check_ard();">
+                                <option value="">Select Dealer Type</option>
+                                <option  <?php if($info->dealer_type =='ard')
+                { echo 'selected'; }?> value="ard">ARD</option>
+                                <option  <?php if($info->dealer_type=='dealer')
+                { echo 'selected'; }?>  value="dealer">Dealer</option>
+                            </select>
+                            <?= form_error('dealer_type'); ?>
+                        </div>
+                    </div> 
+                    <div class="form-group" id="service_charge"
+                    <?php if($info->dealer_type=='dealer') { ?> style="display:none;" <?php } ?>>
+                        <label for="ard_charge_id" class="col-sm-2 control-label">
+                         ARD Service Charge
+                            <span class="red">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-10">
+                            <select name="ard_charge_id" id="ard_charge_id" class="form-control" required>
+                                <option value="">ARD Service Charge</option>
+                                <?php foreach($ard_charge as $ard_charges) {
+                                    ?>
+                                    <option value="<?php echo $ard_charges['id']; ?>"  <?php if($ard_charges['id']==$info->ard_service_charge_id){
+                                        echo 'selected';
+                                    } ?>> <?php echo $ard_charges['service_charge']; ?>% </option>
+                                <?php 
+                                } ?>
+                               
+                            </select>
+                            
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label for="dealer_erp_code" class="col-sm-2 control-label">
                             Dealer Code
                             <span class="red">*</span>
                         </label>
@@ -260,6 +297,24 @@
                             <?= form_error('gstin_no'); ?>
                         </div>
                     </div>
+                     <div id="ard_pan_cin"  <?php if($info->dealer_type=='dealer') { ?> style="display:none;" <?php } ?>>
+                      <div class="form-group">
+                        <label for="cin_no" class="col-sm-2 control-label">CIN No</label>
+                        <div class="col-md-6 col-sm-10" id="divcity">
+                            <input type="text" class="form-control"  id="cin_no" name="cin_no"
+                                value="<?= set_value('cin_no',@$info->ard_cin); ?>">
+                            <?= form_error('cin_no'); ?>
+                        </div>
+                    </div>
+                      <div class="form-group">
+                        <label for="pan_no" class="col-sm-2 control-label">PAN No</label>
+                        <div class="col-md-6 col-sm-10" id="divcity">
+                            <input type="text" class="form-control"  id="pan_no" name="pan_no"
+                                value="<?= set_value('pan_no',@$info->ard_pan); ?>">
+                            <?= form_error('pan_no'); ?>
+                        </div>
+                    </div>
+                    </div>
                     <div class="form-group">
                         <label for="bank_name" class="col-sm-2 control-label">Bank</label>
                         <div class="col-md-6 col-sm-10" id="divcity">
@@ -310,6 +365,20 @@
 <?php $this->load->view('Backend/container/footer', '', null); ?>
 
 <script>
+    function check_ard()
+    {
+        var dealer_type=$("#dealer_type").val();
+        if(dealer_type=='ard')
+        {
+            $("#service_charge").show();
+            $("#ard_pan_cin").show();
+        }
+        else
+        {
+            $("#service_charge").hide();
+              $("#ard_pan_cin").hide();
+        }
+    }
     
 $(document).ready(function() {
     $('#dealer_form').validate({

@@ -14,7 +14,12 @@
         }
     </style>
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+   
+
+    <?php if($dealer_type=='dealer')
+            { ?>
+   
+   <section class="content-header">
         <h1>
             Dealer Branch Location Management
         </h1>
@@ -24,6 +29,20 @@
             <li class="active">Add</li>
         </ol>
     </section>
+    <?php } else { ?> 
+        <section class="content-header">
+        <h1>
+            ARD Sub Dealer Management
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="<?= base_url('Admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="<?= base_url().'Admin/dealer_management/'.$dealer_id.'/location'; ?>"> ARD Sub Location Management </a></li>
+            <li class="active">Add</li>
+        </ol>
+    </section>
+<?php 
+    }
+    ?>
     <?php $states = $this->ProjectModel->states(); ?>
     <!-- Main content -->
     <section class="content">
@@ -38,9 +57,20 @@
             <div class="col-md-12">
                 <!-- Horizontal Form -->
                 <div class="box box-info">
-                    <div class="box-header with-border">
+                <?php if($dealer_type=='dealer')
+            { ?>
+   
+   <div class="box-header with-border">
                         <h3 class="box-title">Add Dealer Locations</h3>
                     </div>
+    <?php } else { ?> 
+        <div class="box-header with-border">
+                        <h3 class="box-title">Add ARD Dealer Locations</h3>
+                    </div>
+<?php 
+    }
+    ?>
+                   
                     <!-- /.box-header -->
                     <!-- form start -->
                     <div class="text-center">
@@ -126,6 +156,79 @@
                                         <?= form_error('mobile_no'); ?>
                                     </div>
                                 </div>
+                                <input type="hidden" name="sub_dealer" id="sub_dealer" value="<?php echo $dealer_type; ?>">
+                                <?php if($dealer_type=='ard')
+                                { ?>                                   
+
+                    <div class="form-group">
+                                    <label for="service_charge_id" class="col-sm-4 control-label">  Dealer Service Charge<span
+                                            class="red">*</span></label>
+                                    <div class="col-sm-8 form-margin-10">
+                                    <select name="service_charge_id" id="service_charge_id" class="form-control" required>
+                                <option value="">Sub Dealer Service Charge</option>
+                                <?php foreach($ard_charge as $ard_charges) {
+                                    ?>
+                                    <option value="<?php echo $ard_charges['id']; ?>"  <?php if($ard_charges['id']==$info->sub_dealer_service_charge_id){
+                                        echo 'selected';
+                                    } ?>> <?php echo $ard_charges['service_charge']; ?>% </option>
+                                <?php 
+                                } ?>
+                               
+                            </select>
+                                    </div>
+                                </div>
+                                
+                                 <div class="form-group">
+                                    <label for="logo" class=" col-sm-4 control-label">
+                                       Sub Dealer Logo
+                                      
+                                    </label>
+                                    <div class="col-sm-8 form-margin-10">
+                                        <input type="file" class="form-control"  id="logo" name="logo"
+                                            >
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="gst_no" class=" col-sm-4 control-label">
+                                       GST No
+                                        <span class="red">*</span>
+                                    </label>
+                                    <div class="col-sm-8 form-margin-10">
+                                        <input type="text" class="form-control" required id="gst_no" name="gst_no"
+                                            value="<?= set_value('gst_no',@$info->sub_dealer_gst_no); ?>">
+                                        <?= form_error('gst_no'); ?>
+                                    </div>
+                                </div>
+                              
+                              
+                              <div class="form-group">
+                                    <label for="cin_no" class=" col-sm-4 control-label">
+                                       CIN No
+                                        <span class="red">*</span>
+                                    </label>
+                                    <div class="col-sm-8 form-margin-10">
+                                        <input type="text" class="form-control" required id="cin_no" name="cin_no"
+                                            value="<?= set_value('cin_no',@$info->sub_dealer_cin_no); ?>">
+                                        <?= form_error('cin_no'); ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pan_no" class=" col-sm-4 control-label">
+                                        PAN No
+                                        <span class="red">*</span>
+                                    </label>
+                                    <div class="col-sm-8 form-margin-10">
+                                        <input type="text" class="form-control" required id="pan_no" name="pan_no"
+                                            value="<?= set_value('pan_no',@$info->sub_dealer_pan_no); ?>">
+                                        <?= form_error('pan_no'); ?>
+                                    </div>
+                                </div>
+
+                              
+
+                            <?php }?>
                                
                                 <div class="form-group">
                                     <label for="address" class="col-sm-4 control-label">Address<span
@@ -233,7 +336,7 @@
                                         </div>
                                         <hr>
                                         <div class="form-group">
-                                        <span>https://www.vidiem.in/vidiem-dealer/qrlogin?userid=<?= @$info->s_user_name ?>&password=<?= @base64_encode($info->open_password) ?></span>
+                                            <span>https://www.vidiem.in/vidiem-dealer/qrlogin?userid=<?= @$info->s_user_name ?>&password=<?= @base64_encode($info->open_password) ?></span>
                                         </div>
                                         
                                     </div>

@@ -52,7 +52,8 @@ class customizemotor extends CI_Controller {
         if($this->input->method() == 'post') {
             $this->form_validation->set_rules('motorname', 'Motor name', 'trim|required|edit_unique_customize[vidiem_motors.motorname.category_id.motor_id.'.$id.']');
 			$this->form_validation->set_rules('price','Price','required');	
-			$this->form_validation->set_rules('code','Code','required');			
+			$this->form_validation->set_rules('code','Code','required');	
+			$this->form_validation->set_rules('priority','Priority','required');
 			$this->form_validation->set_rules('basepath','Image','callback_image_upload');
             if ($this->form_validation->run() == FALSE) { 
 				  $data['action']="Create";
@@ -72,7 +73,8 @@ class customizemotor extends CI_Controller {
 				"sortby"=>ltrim($this->input->post('sortby')),
 				"userid" 	=> $this->session->userdata("user_id"),
 				"createddate"        => Date('Y-m-d H:i:s'),	
-                "modifieddate"        =>Date('Y-m-d H:i:s'),	
+                "modifieddate"        =>Date('Y-m-d H:i:s'),
+                "priority"    => $this->input->post('priority'),
             ];
             $result = $this->FunctionModel->Insert($createdatavalue,'vidiem_motors',array('motor_id' => $id));
 			
@@ -130,7 +132,8 @@ class customizemotor extends CI_Controller {
 		
             $this->form_validation->set_rules('motorname', 'Motor name', 'trim|required|edit_unique_customize[vidiem_motors.motorname.category_id.motor_id.'.$id.']');
 		  	$this->form_validation->set_rules('price','Price','required');		
-		  	$this->form_validation->set_rules('code','Code','required');		
+		  	$this->form_validation->set_rules('code','Code','required');
+		  	$this->form_validation->set_rules('priority','Priority','required');
 			$this->form_validation->set_rules('basepath','Image','callback_edit_image_upload['.$id.']');
             if ($this->form_validation->run() == FALSE) { 
                 $data['dataitems'] = $this->CustomizeModel->getDataArrById($id,"vidiem_motors","motor_id");
@@ -143,6 +146,7 @@ class customizemotor extends CI_Controller {
 				"basepath"    => $this->upload_data['file']['file_name'],
 				"price"    => ltrim($this->input->post('price')),
 				"code"    => ltrim($this->input->post('code')),
+			    "priority"    => $this->input->post('priority'),
 				"sortby"=>ltrim($this->input->post('sortby')),
 				"userid" 	=> $this->session->userdata("user_id"),	
                 "modifieddate"        => Date('Y-m-d H:i:s'),	

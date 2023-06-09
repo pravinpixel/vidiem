@@ -7,6 +7,7 @@
     <div class="box-header with-border">
         <h3>Update Counter Payment Information</h3>
     </div>
+
     <div class="row">
         <div class="col-sm-12">
             <form class="form-horizontal" enctype="multipart/form-data" id="counter_form" method="post" novalidate="novalidate">
@@ -23,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label for="order_id" class="col-sm-4 control-label">
-                            Order No
+                           Reference No
                             <span class="red">*</span>
                         </label>
                         <div class="col-sm-8">
@@ -32,12 +33,25 @@
                     </div>
                     <div class="form-group">
                         <label for="order_id" class="col-sm-4 control-label">
-                            Order ID
+                             Order No
                             <span class="red">*</span>
                         </label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" id="order_id" required="" name="order_id" value="<?= $order_data->code ?? '' ?>" readonly>
+                         <div class="col-sm-8">
+                            <?php
+                              if (isset($order_data->inv_code) && !empty($order_data->inv_code)) {
+                                  $order_ch_code= $order_data->inv_code;
+                              }
+                              else
+                              {
+                                   $order_ch_code= $order_data->order_no;
+                              }
+                            ?>
+                            <input type="text" class="form-control" id="order_id" required="" name="order_id"   value="<?= $order_ch_code  ?>" readonly >
                         </div>
+                       <!-- <div class="col-sm-8">
+                            <input type="text" class="form-control" id="order_id" name="order_id"   value="<?= @$order_data->inv_code ?? $order_data->order_no  ?>"  readonly>
+                        </div>-->
+                        
                     </div>
 
                     <div class="form-group">
@@ -129,8 +143,11 @@
                             <input type="text" class="form-control" id="promoter_code" name="promoter_code" value="<?= $order_data->promoter_code ?? '' ?>">
                         </div>
                     </div>
+                     
 
                     <?php
+                    if($dealer_type=='dealer')
+                    {
                     if (isset($order_data->dealer_invoice) && !empty($order_data->dealer_invoice)) {
                         $path = './uploads/dealer/orders/' . $order_data->dealer_invoice;
                         if (file_exists($path)) { ?>
@@ -157,6 +174,66 @@
                             </div>
                         </div>
                     <?php } ?>
+                    <?php }
+                    else if($dealer_type=='ard' && $user_type=='counter_person' ) {
+                    if (isset($order_data->sub_dealer_service_bill) && !empty($order_data->sub_dealer_service_bill)) {
+                        $path = './uploads/dealer/orders/' . $order_data->sub_dealer_service_bill;
+                        if (file_exists($path)) { ?>
+                            <div class="form-group">
+                                <label for="sub_dealer_service_bill" class="col-sm-4 control-label">
+                                    Uploaded Sub Dealer Service Bill 
+                                </label>
+                                <div class="col-sm-8">
+                                    <div id="dealer-pane">
+                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>uploads/dealer/orders/<?= $order_data->sub_dealer_service_bill ?>" target="_blank"> View File </a> 
+                                        <!-- <a href="javascript:void(0)" class="btn btn-sm btn-primary" onclick="return reupload('dealer');" > Reupload </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        <?php    }
+                    } else {
+                        ?>
+                        <div class="form-group">
+                            <label for="sub_dealer_service_bill" class="col-sm-4 control-label">
+                                Upload Sub Dealer Service Bill 
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="file" name="sub_dealer_service_bill" id="sub_dealer_service_bill" class="form-control">
+                            </div>
+                        </div>
+                    <?php } ?>
+                    
+                    
+                    
+                    <?php }
+                    else if($dealer_type=='ard' && $user_type=='admin' )  { 
+                        if (isset($order_data->ard_service_bill) && !empty($order_data->ard_service_bill)) {
+                        $path = './uploads/dealer/orders/' . $order_data->ard_service_bill;
+                        if (file_exists($path)) { ?>
+                            <div class="form-group">
+                                <label for="ard_service_bill" class="col-sm-4 control-label">
+                                    Uploaded Sub Dealer Service Bill 
+                                </label>
+                                <div class="col-sm-8">
+                                    <div id="dealer-pane">
+                                        <a class="btn btn-sm btn-info" href="<?= base_url() ?>uploads/dealer/orders/<?= $order_data->ard_service_bill ?>" target="_blank"> View File </a> 
+                                        <!-- <a href="javascript:void(0)" class="btn btn-sm btn-primary" onclick="return reupload('dealer');" > Reupload </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        <?php    }
+                    } else {
+                        ?>
+                        <div class="form-group">
+                            <label for="ard_service_bill" class="col-sm-4 control-label">
+                                UploadSub Dealer Service Bill 
+                            </label>
+                            <div class="col-sm-8">
+                                <input type="file" name="ard_service_bill" id="ard_service_bill" class="form-control">
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php }?>
 
                     <div class="form-group">
                         <label for="vidiem_invoice" class="col-sm-4 control-label">

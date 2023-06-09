@@ -41,13 +41,13 @@ if( isset( $dealer_session['user']) ) {
 					<h2>Need Service Support?</h2>
 				</div>
 				<div class="col-sm-12 col-md-4 col-lg-4">
-					<a href="<?= base_url(); ?>book-home-service" class="footer-support">
+					<a href="<?= base_url(); ?>complaint-registration" class="footer-support">
 						<i class="fa fa-chevron-right"></i>
 						<span>
 							<img src="<?= base_url(); ?>assets/front-end/images/register.png" alt="" class="img-fluid"/>
 						</span>
-						<h3>Book Home Service</h3>
-						Submit your complaint online and book a home service, our support team will get in touch with you
+						<h3>Register your complaint</h3>
+						Submit your complaint online and our support team will get in touch with you
 					</a>
 				</div>
 				<div class="col-sm-12 col-md-4 col-lg-4">
@@ -86,7 +86,7 @@ if( isset( $dealer_session['user']) ) {
 								<?php if (!empty($cat_menu)) {
 								  foreach ($cat_menu as $info) { ?>
 									<li>
-									<a href="<?= base_url($info['slug']); ?>"><?= $info['name']; ?></a>
+									<a href="<?= base_url('category/' . $info['slug']); ?>"><?= $info['name']; ?></a>
 									</li>
 								<?php }
 								} ?>
@@ -137,7 +137,7 @@ if( isset( $dealer_session['user']) ) {
 									<a href="<?= base_url('shipping-delivery');?>">Shipping &amp; Delivery</a>
 								</li>
 								<li>
-									<a href="<?= base_url('track-order'); ?>">Order Tracking</a>
+									<a href="<?= base_url('tracking'); ?>">Order Tracking</a>
 								</li>
 								<!--<li>
 									<a href="#">Shipping</a>

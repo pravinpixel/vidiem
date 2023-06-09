@@ -120,6 +120,13 @@
                   </div>
                 </div>
 				
+				                <div class="form-group">
+                  <label for="priority" class="col-sm-2 control-label">Priority<span class="red">*</span></label>
+                  <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" required id="priority" name="priority" value="<?= set_value('priority',@$dataitems->priority); ?>">
+                    <?= form_error('priority'); ?>
+                  </div>
+                </div>
 			
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label"></label>

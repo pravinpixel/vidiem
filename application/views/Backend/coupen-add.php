@@ -5,12 +5,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Coupon
+        Coupen
         <!-- <small>new</small> -->
       </h1>
       <ol class="breadcrumb">
         <li><a href="<?= base_url('Admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?= base_url('Admin/coupen'); ?>">Coupon</a></li>
+        <li><a href="<?= base_url('Admin/coupen'); ?>">Coupen</a></li>
         <li class="active">Add</li>
       </ol>
     </section>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="inputCode" class="col-sm-2 control-label">Coupon Code</label>
+                  <label for="inputCode" class="col-sm-2 control-label">Coupen Code</label>
                   <div class="col-md-6 col-sm-10">
                     <input type="text" class="form-control" id="inputCode" name="code" value="<?= set_value('code'); ?>">
                     <?= form_error('code'); ?>
@@ -87,9 +87,9 @@
                     <?= form_error('max_discount'); ?>
                   </div>
                 </div>
-      <h4 class="box-title">Coupon Code Usage</h4>          
+      <h4 class="box-title">Coupen Code Usage</h4>          
                 <div class="form-group">
-                  <label for="inputMaxUsage" class="col-sm-2 control-label">Max. Time Coupon Usage</label>
+                  <label for="inputMaxUsage" class="col-sm-2 control-label">Max. Time Coupen Usage</label>
                   <div class="col-md-6 col-sm-10">
                     <input type="text" class="form-control" id="inputMaxUsage" name="max_usage" value="<?= set_value('max_usage'); ?>">
                     <?= form_error('max_usage'); ?>
@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="inputMaxPerUser" class="col-sm-2 control-label">Max. Time Coupon Usage Per User</label>
+                  <label for="inputMaxPerUser" class="col-sm-2 control-label">Max. Time Coupen Usage Per User</label>
                   <div class="col-md-6 col-sm-10">
                     <input type="text" class="form-control" id="inputMaxPerUser" name="max_per_user" value="<?= set_value('max_per_user'); ?>">
                     <?= form_error('max_per_user'); ?>

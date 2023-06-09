@@ -193,17 +193,12 @@
 				
 			<div class="row search_div serach_listing tab-content">
 			   <?php foreach($product_list as $data){ 
-
-				
-					$product_cat_slug = (!empty($categoryseo[0]['slug'])) ? $categoryseo[0]['slug'] : 'product';
-
-
-	
-				?>
+			   $product_cat_slug = (!empty($categoryseo[0]['slug'])) ? $categoryseo[0]['slug'] : 'product';
+			   ?>
 				<div class="col-sm-12 col-md-6 col-lg-4 mb-5">
 					
 				<div class="product-listing-item">
-				<!--	<a href="<?= base_url($categoryseo[0]['slug'].'/'.$data['slug']); ?>">  -->
+				<!--	<a href="<?= base_url('product/'.$data['slug']); ?>">  -->
 	              <?php if($data['id']==114) { ?>
 				    	<a href="<?= base_url('vidiem-adc'); ?>">
 				    <?php } else if($data['id']==122) { ?>
@@ -211,7 +206,8 @@
 					   <?php } else if($data['id']==137) { ?>
 				    	<a href="<?= base_url('vidiem-tusker'); ?>">	
 				    <?php } else { ?>
-					<a href="<?= base_url($product_cat_slug.'/'.$data['slug']); ?>">
+					<!--<a href="<?= base_url('product/'.$data['slug']); ?>">-->
+						<a href="<?= base_url($product_cat_slug.'/'.$data['slug']); ?>">
 					<?php } ?>  
 					    
 					    

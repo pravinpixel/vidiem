@@ -274,8 +274,17 @@ class Orders extends CI_Controller {
 			'notes'        => $this->input->post('notes'),
 			'modified'     => date('Y-m-d H:i:s')
 		);
+		
         $status=$this->input->post('status');
+         $ins_trac['order_id']       = $id;        
+        $ins_trac['created_at']     = date('Y-m-d H:i:s');
+        $ins_trac['notes']          = $this->input->post('notes');
+        $ins_trac['tracking']       = $this->input->post('tracking_code');
+        $ins_trac['couried']        = $this->input->post('courier');
+        $ins_trac['order_status']   = $status;
+        $ins_trac['order_type']     = 'normal_order';
         if($status==5){
+             $ins_trac['status_name']= 'Order in Process';  
              $order_info=$this->FunctionModel->Select_Fields_Row('client_id,inv_code,amount,created','vidiem_order',array('id'=>$id));
              $clt_info=$this->FunctionModel->Select_Fields_Row('name,mobile_no,email','vidiem_clients',array('id'=>$order_info['client_id']));
              $sms_content='sir your order on vidiem site is in processing';
@@ -294,6 +303,7 @@ class Orders extends CI_Controller {
 	
         }
         if($status==2){
+             $ins_trac['status_name']    = 'Order Shipped';
               $order_info=$this->FunctionModel->Select_Fields_Row('client_id,inv_code,amount,created,billing_mobile_no','vidiem_order',array('id'=>$id));
              $courier_id=$this->input->post('courier');
              $tracking_code=$this->input->post('tracking_code');
@@ -321,6 +331,7 @@ class Orders extends CI_Controller {
     $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,care@mayaappliances.com",$msg,$subject,InfoMail);
         }
         if($status==3){
+             $ins_trac['status_name']    = 'Order Delivered';
             $UpdateData['delivered_at']=date('Y-m-d');
 
             $order_info=$this->FunctionModel->Select_Fields_Row('client_id,inv_code,amount,created,billing_mobile_no','vidiem_order',array('id'=>$id));
@@ -341,6 +352,7 @@ class Orders extends CI_Controller {
     $this->FunctionModel->sendmail1($clt_info['email'],$msg,$subject,InfoMail);
     $this->FunctionModel->sendmail1("onlinesales@mayaappliances.com,care@mayaappliances.com",$msg,$subject,InfoMail);
         }
+          $this->FunctionModel->Insert($ins_trac,' vidiem_order_tracking');
 		$this->FunctionModel->Update($UpdateData,'vidiem_order',array('id'=>$id));
 		echo 1; exit;
 	}
@@ -391,7 +403,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $return['modal_content'].='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['billing_company_name'].'</li>';
                 }
                  $return['modal_content'].='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' - '.@$order_data['billing_address2'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' <br/> '.@$order_data['billing_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['billing_city'].'-'.$order_data['billing_zip'].'
                 </li>
@@ -421,7 +433,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                  $return['modal_content'].='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['delivery_company_name'].'</li>';
                 }
                  $return['modal_content'].='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' - '.@$order_data['delivery_address2'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' <br/> '.@$order_data['delivery_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['delivery_city'].'-'.$order_data['delivery_zip'].'
                 </li>
@@ -685,7 +697,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                   $data['content'].='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['billing_company_name'].'</li>';
                 }
                   $data['content'].='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' - '.@$order_data['billing_address2'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['billing_address'].' <br/> '.@$order_data['billing_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['billing_city'].'-'.$order_data['billing_zip'].'
                 </li>
@@ -715,7 +727,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
                   $data['content'].='<li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Name</span> : &nbsp; '.@$order_data['delivery_company_name'].'</li>';
                 }
                   $data['content'].='</li>
-                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' - '.@$order_data['delivery_address2'].'
+                <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">Address</span> : &nbsp; '.@$order_data['delivery_address'].' <br/> '.@$order_data['delivery_address2'].'
                 </li>
                 <li style="font-size:14px;"><span style="width:22%;list-style:none;line-height:28px; display:inline-block;">City-Zip</span> : &nbsp; '.@$order_data['delivery_city'].'-'.$order_data['delivery_zip'].'
                 </li>

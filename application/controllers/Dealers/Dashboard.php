@@ -16,7 +16,12 @@ class Dashboard extends CI_Controller {
 
     public function index()
     {
-
+        $dealer_id=$this->session->userdata('dealer_session')['dealer']['id'];
+        $this->db->select('dealer_type')->from('vidiem_dealers');
+        $query = $this->db->where('id',$dealer_id);
+        $query = $this->db->get();
+        $row = $query->row();
+        $dealer_type=$row->dealer_type;
         $orders         = $this->DealersModel->getDealerOrdersAll();
         
         $ordersAll      = new ArrayObject();
@@ -33,9 +38,12 @@ class Dashboard extends CI_Controller {
         if( isset( $user_type ) && $user_type == 'admin' ) {
             $locations  = $this->DealersModel->getDealerLocations($this->session->userdata('dealer_session')['dealer']['id']);
         }
+        //print_r($user_type); die;
         $params         = array(
                             'orders' => $orders,
-                            'locations' => $locations
+                            'locations' => $locations,
+                            'dealer_type' => $dealer_type,
+                            'user_type' => $user_type
                         );
         
         $this->load->view('Backend/dealers/dashboard/index', $params);
@@ -56,14 +64,26 @@ class Dashboard extends CI_Controller {
 		$jarInfo            = $this->CustomizeModel->getOrderJarsDetails($id);
 		
         $client             = $this->FunctionModel->Select_Row('vidiem_clients',array('id'=>$order_data['client_id']));
+        $dealer_id=$this->session->userdata('dealer_session')['dealer']['id'];
+        $this->db->select('dealer_type')->from('vidiem_dealers');
+        $query = $this->db->where('id',$dealer_id);
+        $query = $this->db->get();
+        $row = $query->row();
+        $dealer_type=$row->dealer_type;
+        $user_type  = $this->session->userdata('dealer_session')['user']['user_type'];
+
+        
         
         $params             = array(
                                 'order_data' => $orders,
                                 'order_items' => $productItems,
                                 'jarInfo' => $jarInfo,
                                 'basicItemInfo' => $basicItemInfo,
-                                'order_id' => $id
+                                'order_id' => $id,
+                                'dealer_type' =>$dealer_type,
+                                'user_type' => $user_type
                             );
+                           
                             
         $this->load->view( 'Backend/dealers/form/counter_payment', $params );
     }
@@ -224,7 +244,7 @@ class Dashboard extends CI_Controller {
                                             }
                                         if($basiciteminfo['package_id']!='' && !empty($basiciteminfo['package_id'])) {				
                                             $invoice    .= '<tr>
-                                                            <td> Gift Wrapping Preference </td>
+                                                            <td> Packaging </td>
                                                             <td>'.$basiciteminfo['packagename'].'</td>
                                                             <td>'.$basiciteminfo['packageprice'].'</td>
                                                         </tr> ';

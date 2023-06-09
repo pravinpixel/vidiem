@@ -28,6 +28,27 @@ class TrackingModel extends CI_Model {
             return null;
         }
     }
+    
+    public function getNormalOrder( $invoice_no, $email ) 
+    {
+        $this->db->select('vidiem_order.*, vidiem_clients.name as client_name')
+                            ->join('vidiem_clients', 'vidiem_clients.id = vidiem_order.client_id', 'left');
+        $this->db->group_start(); 
+            $this->db->where('inv_code', $invoice_no );
+            $this->db->or_where('code', $invoice_no );
+        $this->db->group_end();                    
+        $this->db->group_start();
+            $this->db->where('vidiem_order.billing_emailid', $email);
+            $this->db->or_where('vidiem_clients.email', $email);
+        $this->db->group_end();
+
+        $info   = $this->db->get('vidiem_order');
+        if( isset( $info ) && $info->num_rows() > 0 ) {
+            return $info->row();
+        } else {
+            return null;
+        }
+    }
 
     public function getOrderTrackingData($order_no, $order_type )
     {
@@ -40,7 +61,9 @@ class TrackingModel extends CI_Model {
         if( isset( $details ) && $details->num_rows() > 0 ) {
             return $details->result();
         } else {
-            return null;
+            
+                return null;
+            
         }
     }
 

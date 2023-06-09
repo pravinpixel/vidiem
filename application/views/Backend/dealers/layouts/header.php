@@ -74,7 +74,7 @@
 <body class="hold-transition <?= $this->session->userdata('user_theme_color'); ?> sidebar-mini <?= $this->session->userdata('user_menu_style'); ?>">
 <div class="wrapper">
 
-  <header class="main-header">
+  <header class="main-header"> 
     <!-- Logo -->
     <div class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -91,10 +91,29 @@
       <a href="#" class="dealer-top-name"> 
         <span class="title">
           <?= $this->session->userdata('dealer_session')['dealer']['display_name'] ?? '' ?>
+           
+           
         </span>
         
         <span > &nbsp;| &nbsp;VIDIEM BY YOU ORDER MANAGEMENT ( <?= $this->session->userdata('dealer_session')['location']['location_name'] ?? ''  ?> - <?= $this->session->userdata('dealer_session')['location']['location_code'] ?? ''  ?>) </span>
       </a>
+       <?php
+          if($user_type=='admin' && $dealer_type=='ard' )
+          {
+          ?>
+
+         
+             <span class="label label-warning">ARD</span>
+           
+    
+       
+          <?php } else if($user_type=='counter_person' && $dealer_type=='ard') {  ?>
+              
+         
+        <span class="label label-warning">Sub Dealer</span>
+           
+ 
+          <?php } ?>
       <div class="navbar-custom-menu">
        <ul class="nav navbar-nav">
           

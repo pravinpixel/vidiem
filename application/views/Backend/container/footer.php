@@ -25,6 +25,46 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js"></script>
+    
+<script>
+
+function download_pdf( class_name ) {
+       const options = {
+              margin: 0.15,
+              filename: 'Invoice.pdf',
+              image: { 
+                type: 'jpeg', 
+                quality: 0.98 
+              },
+              html2canvas: { 
+                scale: 2 
+              },
+              jsPDF: { 
+                unit: 'in', 
+                format: 'legal', 
+                orientation: 'portrait' 
+              }
+            }
+
+            var objstr = document.getElementById('print-content').innerHTML;
+            var strr = '<html><head><title>Testing</title>';   
+            strr += '</head><body>';
+            strr += '<div style="font-size:9px">'+objstr+'</div>';
+            strr += '</body></html>';
+
+              var element = document.getElementById('print-content');
+              //html2pdf().from(element).set(options).save();
+              //html2pdf(element);
+              html2pdf().from(strr).set(options).save();
+}
+
+</script>
+
 <!--<script src="<?= LAYOUT_URL; ?>/js/jquery.min.js" type="text/javascript"></script>-->
 <!-- jQuery UI 1.11.4 -->
 <script src="<?= LAYOUT_URL; ?>plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -220,5 +260,7 @@ function isNumber(evt) {
 
  
 </script>
+
+
 </body>
 </html>

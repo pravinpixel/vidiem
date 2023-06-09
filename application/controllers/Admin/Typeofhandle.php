@@ -149,6 +149,23 @@ class Typeofhandle extends CI_Controller {
                 "modifieddate"        => Date('Y-m-d H:i:s'),	
             ];
        
+       
+       	// $checkProductMapptingData  = $this->CustomizeModel->checkProductMapping($id,"vidiem_jar","typeofhandle_id");
+			
+        // //  print_r($checkProductMapptingData);exit;
+        
+        // if(!empty($checkProductMapptingData))
+        // {
+        //     // print_r("1111");exit;
+        //   $this->session->set_flashdata('class', "alert-danger");
+        //     $this->session->set_flashdata('icon', "fa-warning");
+        //     $this->session->set_flashdata('msg', "Type of Handle is mapping with product.");
+           
+        //      return redirect('Admin/Typeofhandle/index');
+           
+        // }
+       
+       
             $result = $this->FunctionModel->Update($update_status,'vidiem_typeofhandle',array('typeofhandle_id' => $id));
 			
 			// print_r($this->db->last_query());  
@@ -167,20 +184,37 @@ class Typeofhandle extends CI_Controller {
         return redirect('Admin/Typeofhandle/index');
     }
     public function delete($id = NULL) {
+        
         if(hasPermission('customizable_delete') != true){
+            
 			$this->session->set_flashdata('class', "alert-danger");
 			$this->session->set_flashdata('icon', "fa-warning");
 			$this->session->set_flashdata('msg', "Access denied.");
 			redirect('Admin/dashboard', 'refresh');
 		} 
         if(empty($id) || $this->input->method() != 'post'){
+            
             $this->session->set_flashdata('class', "alert-warning");	 
             $this->session->set_flashdata('error', "<span class='entypo-attention'></span> Something Wrong.");	
             return redirect('Admin/Typeofhandle/index');
         }
+        
         $dataarr = $this->CustomizeModel->getDataArrById($id,"vidiem_typeofhandle","typeofhandle_id");
         
-		
+        
+         $checkProductMapptingData  = $this->CustomizeModel->checkProductMapping($id,"vidiem_jar","typeofhandle_id");
+        
+        if(!empty($checkProductMapptingData))
+        {
+           $this->session->set_flashdata('class', "alert-danger");
+            $this->session->set_flashdata('icon', "fa-warning");
+            $this->session->set_flashdata('msg', "Type of Handle is mapping with product.");
+           
+             return redirect('Admin/Typeofhandle/index');
+           
+        }
+       
+
 		  if(!isset($dataarr->typeofhandle_id) || $dataarr->typeofhandle_id=='' ){
       
 			
@@ -217,7 +251,7 @@ class Typeofhandle extends CI_Controller {
     }
 
     public function display_datatble_list(){
-		
+	
 		$searchbycloums=["typeofhandlename"];
 		
         $length=$this->input->post('length');
