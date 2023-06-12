@@ -1042,7 +1042,6 @@ class CustomizeModel extends CI_Model
             $this->FunctionModel->send_office_mail($dealer_info['email'], $mail_content, $client_mail_subject, InfoMail);
             $this->FunctionModel->send_office_mail($clt_info['email'], $mail_content, $client_mail_subject, InfoMail);
             $this->FunctionModel->send_office_mail($admin_mail_ids, $mail_content, $client_mail_subject, InfoMail);
-            $this->FunctionModel->send_office_mail($admin_to_mail_list, $mail_content, $client_mail_subject, InfoMail);
             
              /******* Showing Interest Mail Content End ********/
             
@@ -1051,8 +1050,6 @@ class CustomizeModel extends CI_Model
             $this->ProjectModel->SMSContent($clt_info['mobile_no'], $sms_content);
             $sms_content    = 'Dear Dealer ' . $dealer_info['display_name'] . ' - '.$dealer_info['location_name']. ', Our Customer showing interest on Vidiem By You. To confirm order ' . $order_info['order_no'] . ', please collect the amount in bill counter. -VIDIEM';
             $this->ProjectModel->SMSContent($dealer_info['mobile_no'], $sms_content);
-            
-            
             
             
               /***** SMS Content Customer and Dealer End ****/

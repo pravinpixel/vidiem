@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><?= @$title ??''; ?></title>
+<title><?= @$title; ?></title>
     <link rel="stylesheet" href="<?php echo base_url('assets/front-end/css/bootstrap.css'); ?>">
         <link rel="stylesheet" href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>

@@ -15,10 +15,10 @@ defined('SHOW_DEBUG_BACKTRACE') OR define('SHOW_DEBUG_BACKTRACE', TRUE);
 
 // Develeper Code
 
-$root = "https://".$_SERVER['HTTP_HOST'];
+$root = "http://".$_SERVER['HTTP_HOST'];
 $root .= dirname($_SERVER['SCRIPT_NAME']);
   
- define("LAYOUT_URL",$root."assets/back-end/");
+ define("LAYOUT_URL",$root."/assets/back-end/");
  ///   Mail Functionality Configration /////
  define("DevMail","it@vidiem.in");
  define("InfoMail","care@vidiem.in");

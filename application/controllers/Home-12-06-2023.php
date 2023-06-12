@@ -4751,18 +4751,14 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
     </div>
     </div>';
     // echo $data['content']; exit;
-    $this->load->view('Backend/pdf-page',$data);
-      //$html=$this->load->view('Backend/pdf-page',$data,true);
+   // $this->load->view('Backend/pdf-page',$data);
+      $html=$this->load->view('Backend/pdf-page',$data,true);
         //this the the PDF filename that user will get to download
         $pdfFilePath ="invoice-".$inv_info['inv_code'].".pdf";
         //load mPDF library
          $this->load->library('m_pdf');
-         $this->m_pdf->pdf->AddPage(
-            'P', // L - landscape, P - portrait
-            '',
-            '', 
-            '', 
-            '',
+         $this->m_pdf->pdf->AddPage('P', // L - landscape, P - portrait
+            '', '', '', '',
             7, // margin_left
             3, // margin right
             5, // margin top
@@ -4770,7 +4766,7 @@ Oggiam Thoraipakkam,<br>Chennai - 600097, Tamilnadu, INDIA.</li>
             5, // margin header
             5); // margin footer
        //generate the PDF from the given html
-         $this->m_pdf->pdf->WriteHTML($data);
+         $this->m_pdf->pdf->WriteHTML($html);
         //download it.
         $this->m_pdf->pdf->Output($pdfFilePath, "D"); 
     }	
@@ -6797,7 +6793,7 @@ public function deletecartjar(){
             
             $cart_id            = $this->CheckCartId();	
                 
-            $this->CustomizeModel->Custom_NewOrderNotification($order_id);
+           // $this->CustomizeModel->Custom_NewOrderNotification($order_id);
                 
             $this->CustomizeModel->Cartdestroy($cart_id);
             $this->session->set_flashdata('title', "Thank You");     
