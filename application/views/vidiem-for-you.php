@@ -582,7 +582,7 @@ if( isset( $dealer_session['user']) ) {
                                 <div class="text-center position-relative"><span class="mobile-text">Personalise with a Special Message</span></div>
                                 <div class="row justify-content-center">
                                     <div class="col-12 col-sm-12 col-md-8">
-                                        <input required type="text" maxlength="15" class="form-control"
+                                        <input  type="text" maxlength="15" class="form-control jsrequired"
                                             onblur="funsaveimportedtext(this.value);"
                                             value="<?php echo $cartitems['bodyinfo'][0]['canvas_text']; ?>"
                                             id="type-message" />
