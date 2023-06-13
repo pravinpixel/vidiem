@@ -162,8 +162,8 @@ if( isset( $dealer_session['user']) ) {
 		<script type="text/javascript" src="<?= base_url(); ?>assets/front-end/js/additional-methods.js"></script>
 		<script type="text/javascript" src="<?= base_url(); ?>assets/front-end/js/date-time-picker.min.js"></script>
 		<!--<script async defer crossorigin="anonymous" src="<?= base_url(); ?>assets/front-end/js/sdk.js"></script>-->
-
-
+		
+		
 		<div id="VideoModal" class="modal fade" tabindex="-1" role="dialog"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					  <i class="lni lni-close"></i>
 					</button>

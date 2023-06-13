@@ -23,37 +23,25 @@
              <p class="text-center">For the <strong style="font-weight: 700;">1st time in the world</strong>, the house of Maya Appliances brings you the opportunity to build your very own Mixer Grinder to perfectly suit your everyday cooking needs. With Vidiem By You, you can make cooking the most joyous thing you do every day by making your favourite dishes in a mixer grinder designed by you!  <br/><br/>Pick from a wide variety of body styles, colours, motors, & jars and customize your mixie with a personalised message too. There are over 3 Million combinations to choose from! <br>At Maya Appliances we bring you kitchen solutions and innovations that make life in the kitchen easy, convenient and most of all fun!  <br/><strong style="font-weight: 700; color:#000; font-size:16px;">Vidiem by you</strong> <strong class="text-red" style="font-weight: 700; font-size:16px;">– My Vidiem, My Choice!</strong></p>
              <a href="<?= base_url(); ?>vidiem-by-you-customization/" class="red-btn d-inline-block w-auto start-customize-btn">Start Customizing</a>
 			 <ul id="video-tabs" class="nav nav-tabs">
-                <li class="nav-item"><a href="" data-target="#tamil" data-toggle="tab" class="nav-link active">Tamil</a></li>
-                <li class="nav-item"><a href="" data-target="#english" data-toggle="tab" class="nav-link">English</a></li>
-                <li class="nav-item"><a href="" data-target="#malayalam" data-toggle="tab" class="nav-link">Malayalam</a></li>
-				<li class="nav-item"><a href="" data-target="#hindi" data-toggle="tab" class="nav-link">Hindi</a></li>
+                <li class="nav-item"><a href="" data-target="#tamil" id="video1Play" data-toggle="tab" class="nav-link active">Tamil</a></li>
+                <li class="nav-item"><a href="" data-target="#english" id="video2Play" data-toggle="tab" class="nav-link">English</a></li>
+                <li class="nav-item"><a href="" data-target="#malayalam" id="video3Play" data-toggle="tab" class="nav-link">Malayalam</a></li>
+				<li class="nav-item"><a href="" data-target="#hindi" id="video4Play" data-toggle="tab" class="nav-link">Hindi</a></li>
             </ul>
             <div id="video-tabs-Content" class="tab-content">
                 <div id="tamil" class="tab-pane active show">
-                    <iframe src="https://www.youtube.com/embed/ai2OPonHtcQ?rel=0" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/ai2OPonHtcQ?rel=0" id="video1" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
                 </div>
                 <div id="english" class="tab-pane">
-                    <iframe src="https://www.youtube.com/embed/eUcNTFeQvWM?rel=0" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/eUcNTFeQvWM?rel=0" id="video2" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
                 </div>
                 <div id="malayalam" class="tab-pane">
-                    <iframe src="https://www.youtube.com/embed/a9AhaAlqyQk?rel=0" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/a9AhaAlqyQk?rel=0" id="video3" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
                 </div>
 				<div id="hindi" class="tab-pane">
-                    <iframe src="https://www.youtube.com/embed/6DSbGbp03Bw?rel=0" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/6DSbGbp03Bw?rel=0" id="video4" title="Vidiem" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="get-started-video" allowfullscreen></iframe>
                 </div>
-            </div>
-			
-			<div class="slick">
-    <div class="item youtube">
-      <iframe id="youtube" width="920" height="518" src="https://www.youtube-nocookie.com/embed/ScMzIvxBSi4?rel=0&amp;enablejsapi=1" frameborder="0" allowfullscreen></iframe> <!-- Make sure to enable the API by appending the "&enablejsapi=1" parameter onto the URL. -->
-      <p class="caption">YouTube</p>
-    </div>
-    <div class="item vimeo">
-      <iframe id="vimeo" src="https://player.vimeo.com/video/251408432?byline=0&portrait=0&api=1" width="920" height="517" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <!-- Make sure to enable the API by appending the "&api=1" parameter onto the URL. -->
-      <p class="caption">Vimeo</p>
-    </div>
-  </div>
-				
+            </div>				
          	</div>
         </div>
     </div> 
@@ -62,3 +50,64 @@
 
 
 <?php require_once('container/footer-customize.php')?>
+<script>
+ $("#video1Play").click(function() {
+      $("#video2").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video3").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video4").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+ });
+
+ $("#video2Play").click(function() {
+      $("#video1").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video3").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video4").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+ });
+ 
+ $("#video3Play").click(function() {
+      $("#video1").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video2").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video4").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+ });
+ 
+  $("#video4Play").click(function() {
+      $("#video1").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video2").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+	  $("#video3").each(function(index) {
+        $(this).attr('src', $(this).attr('src'));
+        return false;
+      });
+ });
+</script>
