@@ -39,6 +39,60 @@ body.modal-open {
     background: url('../images/loading.gif') 50% 50% no-repeat rgba(255, 255, 255, 0.98);
 }
 
+#video-tabs.nav-tabs .nav-item{
+	width: 25%;
+}
+
+#video-tabs.nav-tabs .nav-item .nav-link{
+	font-size: 16px;
+	border-radius: 0px;
+	border: none;
+	margin: 0px 1px;
+	color: #666;
+	background: #FFF !important;
+	border-top: 3px solid #ededed !important;
+}
+
+#video-tabs.nav-tabs .nav-item .nav-link:hover{
+	color: #F7000A;
+}
+
+#video-tabs.nav-tabs .nav-item .nav-link.active{
+	background: #ebebeb !important;
+	color: #000;
+	border-top: 3px solid #F7000A !important;
+}
+
+#video-tabs-Content.tab-content{
+	background: linear-gradient(180deg, rgba(243,243,243,1) 0%, rgba(255,255,255,1) 100%) !important;
+	padding: 20px 20px 0px 20px;
+}
+
+#video-tabs-Content.tab-content .tab-pane{
+	transition: all 0.3s ease;
+}
+
+#video-tabs-Content.tab-content .tab-pane.active{
+	animation:fadeInUp 1s ease backwards;
+	transition: all 0.3s ease;
+}
+
+
+@keyframes fadeInUp{
+  0%{transform:translate(0px, 50px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+
+
+@media (max-width: 760px){
+	#video-tabs.nav-tabs .nav-item .nav-link{
+		font-size: 13px;
+	}
+	#video-tabs-Content.tab-content{
+	padding: 0px 10px 0px 10px;
+	}
+}
+
 .header-text {
     font-weight: 400;
     font-size: 24px;
